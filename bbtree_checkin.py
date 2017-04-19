@@ -38,6 +38,13 @@ dict_user_info = {
         "//2Omry/n/0OuLgmfYzoOb0BitUFHsI18Zl5bRxu4QR1wjV2J0S2gkrYga9KO4TeTw39fQzvk45kKVUZi6tDEQq7KYdublbyxH"
         "90q+EhXoiaOGC/SGv3Hn46hV7BzR2XVq+sGSbIljtoIJfhzPdtMPaNTYM3jK3iGdSRA3Qw5wo"
         "lrM5CoMKQQA266PQH0ArYXoxjQT09l6ADT0pjFEnpif"
+        "j/sZi03wsc0bV1hefsSXmsYZoR5x7gX7YQyggwS0vl4+bCQpKlp+XwjAfi3duOY4=",
+    'qp':
+        "gaYP/g3PUh5xMy432Y3LiDasGu2fzfIyuoD1GTk+Sz"
+        "Wxv3olzYBWBIdAeAPikfQRTmENCOAeAthgNBvDlc4PU"
+        "//2Omry/n/0OuLgmfYzoOb0BitUFHsI18Zl5bRxu4QR1wjV2J0S2gkrYga9KO4TeTw39fQzvk45kKVUZi6tDEQq7KYdublbyxH"
+        "90q+EhXoiaOGC/SGv3Hn46hV7BzR2XVq+sGSbIljtoIJfhzPdtMPaNTYM3jK3iGdSRA3Qw5wo"
+        "KKDtIJafKQjHj8fAZ9LLucasLSfnrdbxunuS6uv/1+v"
         "j/sZi03wsc0bV1hefsSXmsYZoR5x7gX7YQyggwS0vl4+bCQpKlp+XwjAfi3duOY4="
 }
 
@@ -45,7 +52,7 @@ dict_user_info = {
 for k, v in dict_user_info.items():
     data_json = {
         "data": v,
-        "data_ver": 34,
+        "data_ver": 35,
         "ios_arm64_flag": 1,
         "uuid": "d492dd329a0cd0624df8ced1c741202a"
     }
