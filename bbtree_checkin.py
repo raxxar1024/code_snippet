@@ -45,7 +45,14 @@ dict_user_info = {
         "//2Omry/n/0OuLgmfYzoOb0BitUFHsI18Zl5bRxu4QR1wjV2J0S2gkrYga9KO4TeTw39fQzvk45kKVUZi6tDEQq7KYdublbyxH"
         "90q+EhXoiaOGC/SGv3Hn46hV7BzR2XVq+sGSbIljtoIJfhzPdtMPaNTYM3jK3iGdSRA3Qw5wo"
         "KKDtIJafKQjHj8fAZ9LLucasLSfnrdbxunuS6uv/1+v"
-        "j/sZi03wsc0bV1hefsSXmsYZoR5x7gX7YQyggwS0vl4+bCQpKlp+XwjAfi3duOY4="
+        "j/sZi03wsc0bV1hefsSXmsYZoR5x7gX7YQyggwS0vl4+bCQpKlp+XwjAfi3duOY4=",
+    'zqr':
+        "gaYP/g3PUh5xMy432Y3LiDasGu2fzfIyuoD1GTk+Sz"
+        "W7R6Ba7c4k8d5KYXDrJrVXtUH/FGnQhT7Civ/iPKWS2"
+        "v/2Omry/n/0OuLgmfYzoOb0BitUFHsI18Zl5bRxu4QR1wjV2J0S2gkrYga9KO4TeTw39fQzvk45kKVUZi6tDEQq7KYdublbyxH"
+        "90q+EhXoiaOGC/SGv3Hn46hV7BzR2XVq+sGSbIljtoIJfhzPdtMPaNTYM3jK3iGdSRA3Qw5wo"
+        "u/a4Axf5sphf64MAvXbm0+1K8t03miuxq0X+puMX5oj"
+        "j/sZi03wsc0bV1hefsSXmsYZoR5x7gX7YQyggwS0vl4+bCQpKlp+XwjAfi3duOY4=",
 }
 
 
