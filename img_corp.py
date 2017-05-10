@@ -4,10 +4,8 @@ import os
 import os.path
 
 
-IMAGE_X1 = 75
-IMAGE_Y1 = 75
-IMAGE_X2 = 1575
-IMAGE_Y2 = 1200
+IMAGE_BORDER = 150
+
 ROOT_DIR = "ori/"
 BACK_DIR = "corp/"
 
@@ -16,8 +14,11 @@ def corp(img_path, bak_path):
     # 打开图片句柄
     im = Image.open(img_path)
 
+    width = im.size[0]
+    height = im.size[1]
+
     # 设定裁剪区域
-    box = (IMAGE_X1, IMAGE_Y1, IMAGE_X2, IMAGE_Y2)
+    box = (IMAGE_BORDER, IMAGE_BORDER, width-IMAGE_BORDER, height-IMAGE_BORDER)
 
     # 裁剪图片，并获取句柄region
     region = im.crop(box)
