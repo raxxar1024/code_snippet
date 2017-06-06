@@ -5,6 +5,7 @@ import simplejson
 import urllib2
 import urllib
 import json
+import time
 
 
 checkin_host = "https://pro.zhihuishu.bbtree.com/service/v2/user/sigin_in"
@@ -93,6 +94,7 @@ for k, v in dict_user_info.items():
     f = urllib.urlopen(checkin_host, params, post_header)
     rsp = f.read()
     print(rsp)
+    time.sleep(3)
 
 
 
