@@ -12,20 +12,20 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
-        tmp1 = l1
-        tmp2 = l2
+        # tmp1 = l1
+        # tmp2 = l2
         jinwei = 0
         tmp_result = ListNode(0)
         result = tmp_result
-        while tmp1 or tmp2 or jinwei == 1:
-            tmp_result.next = ListNode(0)
-            tmp_result = tmp_result.next
-            if tmp1:
-                val1 = tmp1.val
+        while l1 or l2:
+            if l1:
+                val1 = l1.val
+                l1 = l1.next
             else:
                 val1 = 0
-            if tmp2:
-                val2 = tmp2.val
+            if l2:
+                val2 = l2.val
+                l2 = l2.next
             else:
                 val2 = 0
             val = val1 + val2 + jinwei
@@ -34,11 +34,10 @@ class Solution(object):
                 jinwei = 1
             else:
                 jinwei = 0
-            tmp_result.val = val
-            if tmp1:
-                tmp1 = tmp1.next
-            if tmp2:
-                tmp2 = tmp2.next
+            tmp_result.next = ListNode(val)
+            tmp_result = tmp_result.next
+        if jinwei == 1:
+            tmp_result.next = ListNode(1)
         return result.next
 
 if __name__ == "__main__":
