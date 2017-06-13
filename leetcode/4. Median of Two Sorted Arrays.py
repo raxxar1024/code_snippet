@@ -5,6 +5,12 @@ class Solution(object):
         :type nums2: List[int]
         :rtype: float
         """
+        nums = nums1 + nums2
+        nums.sort()
+        if len(nums)%2 == 1:
+            return nums[len(nums)/2]
+        else:
+            return (nums[len(nums)/2-1] + nums[len(nums)/2]) / 2.0
 
 
 if __name__ == "__main__":
