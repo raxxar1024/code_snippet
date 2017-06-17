@@ -33,9 +33,10 @@ class Solution(object):
         for i in xrange(1, len(P)-1):
             if P[i] > P[max_i]:
                 max_i = i
-        start = (max_i - 1 - P[max_i])/2
-        # return s[(max_i-1-P[max_i])/2: (max_i+1+P[max_i])/2]
-        return s[start: start + P[max_i]]
+
+        return s[(max_i-1-P[max_i])/2: (max_i-1+P[max_i])/2]
+        # start = (max_i - 1 - P[max_i])/2
+        # return s[start: start + P[max_i]]
 
 
 if __name__ == "__main__":
