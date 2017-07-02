@@ -24,6 +24,9 @@ class Solution(object):
                     if s[i - 1] == p[j - 2] or p[j - 2] == '.':
                         result[i][j] = result[i - 1][j]
 
+                    if result[i][j-2] is True:
+                        result[i][j] = True
+
         return result[-1][-1]
 
 
