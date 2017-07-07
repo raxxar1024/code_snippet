@@ -1,33 +1,28 @@
-import time
 class Solution(object):
     def threeSum(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        now = time.time()
-
-        nums.sort()
-        len_num, tmp = len(nums), []
-        for idx in xrange(len_num-2):
-            a, i, j = nums[idx], idx+1, len_num-1
-            while i < j:
-                the_sum = a + nums[i] + nums[j]
-                if the_sum == 0:
-                    tmp.append([a, nums[i], nums[j]])
-                    i += 1
-                if the_sum > 0:
-                    j -= 1
-                if the_sum < 0:
-                    i += 1
-
-        tmp2 = []
-        for o_nums in tmp:
-            if o_nums not in tmp2:
-                tmp2.append(o_nums)
-
-        print(time.time() - now)
-        return tmp2
+        nums, result, i = sorted(nums), [], 0
+        while i < len(nums) - 2:
+            if i == 0 or nums[i] != nums[i - 1]:
+                j, k = i + 1, len(nums) - 1
+                while j < k:
+                    if nums[i] + nums[j] + nums[k] < 0:
+                        j += 1
+                    elif nums[i] + nums[j] + nums[k] > 0:
+                        k -= 1
+                    else:
+                        result.append([nums[i], nums[j], nums[k]])
+                        j, k = j + 1, k - 1
+                        while j < k and nums[j] == nums[j - 1]:
+                            j += 1
+                        while j < k and nums[k] == nums[k + 1]:
+                            k -= 1
+            i += 1
+            
+        return result
 
 
 if __name__ == "__main__":
@@ -36,7 +31,7 @@ if __name__ == "__main__":
     assert Solution().threeSum([-4, -2, -2, -2, 0, 1, 2, 2, 2, 3, 3, 4, 4, 6, 6]) == [[-4, -2, 6], [-4, 0, 4],
                                                                                       [-4, 1, 3], [-4, 2, 2],
                                                                                       [-2, -2, 4], [-2, 0, 2]]
-    assert Solution().threeSum(
+    assert len(Solution().threeSum(
         [82597, -9243, 62390, 83030, -97960, -26521, -61011, 83390, -38677, 12333, 75987, 46091, 83794, 19355, -71037,
          -6242, -28801, 324, 1202, -90885, -2989, -95597, -34333, 35528, 5680, 89093, -90606, 50360, -29393, -27012,
          53313, 65213, 99818, -82405, -41661, -3333, -51952, 72135, -1523, 26377, 74685, 96992, 92263, 15929, 5467,
@@ -241,7 +236,7 @@ if __name__ == "__main__":
          -84360, -22684, -16832, -67949, -38077, -38987, -32847, 51443, -53580, -13505, 9344, -92337, 26585, 70458,
          -52764, -67471, -68411, -1119, -2072, -93476, 67981, 40887, -89304, -12235, 41488, 1454, 5355, -34855, -72080,
          24514, -58305, 3340, 34331, 8731, 77451, -64983, -57876, 82874, 62481, -32754, -39902, 22451, -79095, -23904,
-         78409, -7418, 77916]) == [[-4, -2, 6], [-4, 0, 4],[-4, 1, 3], [-4, 2, 2],[-2, -2, 4], [-2, 0, 2]]
+         78409, -7418, 77916])) == 16258
 
 
 
