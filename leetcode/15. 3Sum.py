@@ -4,25 +4,33 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[List[int]]
         """
-        nums, result, i = sorted(nums), [], 0
-        while i < len(nums) - 2:
-            if i == 0 or nums[i] != nums[i - 1]:
-                j, k = i + 1, len(nums) - 1
-                while j < k:
-                    if nums[i] + nums[j] + nums[k] < 0:
-                        j += 1
-                    elif nums[i] + nums[j] + nums[k] > 0:
-                        k -= 1
-                    else:
-                        result.append([nums[i], nums[j], nums[k]])
-                        j, k = j + 1, k - 1
-                        while j < k and nums[j] == nums[j - 1]:
-                            j += 1
-                        while j < k and nums[k] == nums[k + 1]:
-                            k -= 1
-            i += 1
-            
-        return result
+        nums.sort()
+        len_num, tmp = len(nums), []
+        for idx in xrange(len_num-2):
+            if idx == 0 or nums[idx] != nums[idx-1]:
+                a, i, j = nums[idx], idx+1, len_num-1
+                while i < j:
+                    the_sum = a + nums[i] + nums[j]
+                    if the_sum == 0:
+                        tmp.append([a, nums[i], nums[j]])
+                        i += 1
+                        j -= 1
+                        while i < j:
+                            if nums[i] == nums[i-1]:
+                                i += 1
+                            else:
+                                break
+                        while i < j:
+                            if nums[j] == nums[j+1]:
+                                j -= 1
+                            else:
+                                break
+                    if the_sum > 0:
+                        j -= 1
+                    if the_sum < 0:
+                        i += 1
+            idx += 1
+        return tmp
 
 
 if __name__ == "__main__":
