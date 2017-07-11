@@ -12,26 +12,19 @@ class Solution(object):
         :type n: int
         :rtype: ListNode
         """
+        dummy = ListNode(-1)
+        p1, p2 = dummy, dummy
+        dummy.next = head
+        for i in xrange(n):
+            p1 = p1.next
 
-        length = 0
-        idx = 0
-        result_tmp = ListNode(0)
-        result = result_tmp
+        tmp = p2
+        while p1.next:
+            p2 = p2.next
+            p1 = p1.next
+        p2.next = p2.next.next
 
-        tmp = head
-        while tmp:
-            length += 1
-            tmp = tmp.next
-
-        tmp = head
-        while tmp:
-            if idx != length-n:
-                result_tmp.next = ListNode(tmp.val)
-                result_tmp = result_tmp.next
-            tmp = tmp.next
-            idx += 1
-
-        return result.next
+        return tmp.next
 
 
 if __name__ == "__main__":
