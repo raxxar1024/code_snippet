@@ -17,7 +17,7 @@ class Solution(object):
                     for item_2 in hash_table[target-k]:
                         [a, b], [c, d] = item_1, item_2
                         if a is not c and a is not d and b is not c and b is not d:
-                            tmp = sorted(nums[a], nums[b], nums[c], nums[d])
+                            tmp = sorted([nums[a], nums[b], nums[c], nums[d]])
                             if tmp not in result:
                                 result.append(tmp)
 
