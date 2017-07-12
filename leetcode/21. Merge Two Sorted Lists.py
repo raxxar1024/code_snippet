@@ -4,6 +4,7 @@ class ListNode(object):
         self.val = x
         self.next = None
 
+
 class Solution(object):
     def mergeTwoLists(self, l1, l2):
         """
@@ -11,23 +12,17 @@ class Solution(object):
         :type l2: ListNode
         :rtype: ListNode
         """
-        dummy = ListNode(-1)
-        result = dummy
-        while l1 or l2:
-            if not l1:
-                dummy.next = ListNode(l2.val)
-                l2 = l2.next
-            elif not l2:
-                dummy.next = ListNode(l1.val)
-                l1 = l1.next
-            elif l1.val > l2.val:
-                dummy.next = ListNode(l2.val)
+        current = dummy = ListNode(-1)
+        while l1 and l2:
+            if l1.val > l2.val:
+                current.next = l2
                 l2 = l2.next
             else:
-                dummy.next = ListNode(l1.val)
+                current.next = l1
                 l1 = l1.next
-            dummy = dummy.next
-        return result.next
+            current = current.next
+        current.next = l1 or l2
+        return dummy.next
 
 
 if __name__ == "__main__":
