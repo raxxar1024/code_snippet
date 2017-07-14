@@ -6,7 +6,7 @@ class ListNode(object):
 
 
 class Solution(object):
-    def mergeKLists(self, lists):
+    def mergeKLists2(self, lists):
         """
         :type lists: List[ListNode]
         :rtype: ListNode
@@ -43,6 +43,27 @@ class Solution(object):
             dummy = dummy.next
         dummy.next = p1 or p2
         return result.next
+
+    def mergeKLists(self, lists):
+        """
+        :type lists: List[ListNode]
+        :rtype: ListNode
+        """
+        import heapq
+        heap_list = []
+        dummy = current = ListNode(-1)
+        for sorted_list in lists:
+            if sorted_list:
+                heapq.heappush(heap_list, (sorted_list.val, sorted_list))
+
+        while heap_list:
+            smallest = heapq.heappop(heap_list)[1]
+            current.next = smallest
+            current = current.next
+            if smallest.next:
+                heapq.heappush(heap_list, (smallest.next.val, smallest.next))
+
+        return dummy.next
 
 if __name__ == "__main__":
     l1 = ListNode(3)
