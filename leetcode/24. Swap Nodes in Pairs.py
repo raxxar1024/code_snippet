@@ -11,6 +11,17 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
+        dummy = current = ListNode(-1)
+        current.next = head
+        while current.next and current.next.next:
+            num1, num2, num3 = current.next, current.next.next, current.next.next.next
+            current.next = num2
+            num2.next = num1
+            num1.next = num3
+            current = num1
+
+        return dummy.next
+
 
 if __name__ == "__main__":
     l1, l1.next, l1.next.next, l1.next.next.next = ListNode(1), ListNode(2), ListNode(3), ListNode(4)
