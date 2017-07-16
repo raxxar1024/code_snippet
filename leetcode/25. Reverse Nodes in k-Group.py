@@ -12,6 +12,30 @@ class Solution(object):
         :type k: int
         :rtype: ListNode
         """
+        result = []
+        list_head = []
+        while head:
+            list_head.append(head.val)
+            head = head.next
+
+        count = len(list_head) / k
+
+        for i in xrange(count):
+            tmp1 = list_head[i*k:i*k+k]
+            tmp1.reverse()
+            result += tmp1
+        result += list_head[(count-1)*k+k:]
+
+        dummy = ListNode(-1)
+        current = dummy
+
+        for i in xrange(len(result)):
+            current.next = ListNode(result[i])
+            current = current.next
+
+        return dummy.next
+
+
 
 
 if __name__ == "__main__":
