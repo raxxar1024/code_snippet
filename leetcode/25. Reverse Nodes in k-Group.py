@@ -36,8 +36,6 @@ class Solution(object):
         return dummy.next
 
 
-
-
 if __name__ == "__main__":
     l1, l1.next, l1.next.next, l1.next.next.next, l1.next.next.next.next = \
         ListNode(1), ListNode(2), ListNode(3), ListNode(4), ListNode(5)
@@ -48,7 +46,8 @@ if __name__ == "__main__":
     assert result.next.next.next.val == 3
     assert result.next.next.next.next.val == 5
 
-    # l1, l1.next, l1.next.next, l1.next.next.next = ListNode(1), ListNode(2), ListNode(3), ListNode(4)
+    l1, l1.next, l1.next.next, l1.next.next.next, l1.next.next.next.next = \
+        ListNode(1), ListNode(2), ListNode(3), ListNode(4), ListNode(5)
     result = Solution().reverseKGroup(l1, 3)
     assert result.val == 3
     assert result.next.val == 2
