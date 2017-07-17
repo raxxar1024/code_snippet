@@ -74,7 +74,7 @@ dict_user_info = {
 for k, v in dict_user_info.items():
     data_json = {
         "data": v,
-        "data_ver": 35,
+        "data_ver": 39,
         "ios_arm64_flag": 1,
         "uuid": "d492dd329a0cd0624df8ced1c741202a"
     }
@@ -82,7 +82,7 @@ for k, v in dict_user_info.items():
     data_string = simplejson.dumps(data_json)
 
     post_header = {
-        "User-Agent": "WisdomTree/6.0.1 (iPhone; iOS 10.3.1; Scale/2.00)",
+        "User-Agent": "WisdomTree/6.4.2 (iPhone; iOS 10.3.2; Scale/2.00)",
         "Content-Type": "application/json",
         "Accept-Language": "zh-Hans-CN;q=1",
         "Accept-Encoding": "gzip, deflate",
