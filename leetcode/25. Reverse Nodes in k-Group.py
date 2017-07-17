@@ -6,7 +6,7 @@ class ListNode(object):
 
 
 class Solution(object):
-    def reverseKGroup(self, head, k):
+    def reverseKGroup2(self, head, k):
         """
         :type head: ListNode
         :type k: int
@@ -35,6 +35,38 @@ class Solution(object):
 
         return dummy.next
 
+    def reverseKGroup(self, head, k):
+        """
+        :type head: ListNode
+        :type k: int
+        :rtype: ListNode
+        """
+        cur_dummy = dummy = ListNode(-1)
+        cur = dummy.next = head
+        count = 0
+
+        while cur:
+            tmp = cur.next
+            count = (count + 1) % k
+
+            if count == 0:
+                tmp2 = cur_dummy.next
+                self.reverse(cur_dummy, cur.next)
+                cur_dummy = tmp2
+
+            cur = tmp
+
+        return dummy.next
+
+    def reverse(self, begin, end):
+        first = begin.next
+        cur = first.next
+        while cur != end:
+            first.next = cur.next
+            cur.next = begin.next
+            begin.next = cur
+            cur = first.next
+        
 
 if __name__ == "__main__":
     l1, l1.next, l1.next.next, l1.next.next.next, l1.next.next.next.next = \
