@@ -71,15 +71,13 @@ dict_user_info = {
 }
 
 
-for k, v in dict_user_info.items():
+def check_in(req_data):
     data_json = {
-        "data": v,
+        "data": req_data,
         "data_ver": 39,
         "ios_arm64_flag": 1,
         "uuid": "d492dd329a0cd0624df8ced1c741202a"
     }
-
-    data_string = simplejson.dumps(data_json)
 
     post_header = {
         "User-Agent": "WisdomTree/6.4.2 (iPhone; iOS 10.3.2; Scale/2.00)",
@@ -90,11 +88,22 @@ for k, v in dict_user_info.items():
     }
 
     params = json.dumps(data_json)
+    print k
     print params
-    f = urllib.urlopen(checkin_host, params, post_header)
-    rsp = f.read()
-    print(rsp)
-    time.sleep(3)
+    while True:
+        f = urllib.urlopen(checkin_host, params, post_header)
+        rsp = f.read()
+        print(rsp)
+        if "HTTP Status 415" not in rsp:
+            break
+        time.sleep(3)
+
+if __name__ == "__main__":
+    list_success = []
+    for k, v in dict_user_info.items():
+        check_in(v)
+
+
 
 
 
