@@ -58,6 +58,7 @@ dict_user_info['lys'] = 'gaYP/g3PUh5xMy432Y3LiDasGu2fzfIyuoD1GTk+Sz'
 
 
 def check_in(req_data):
+    count = 0
     data_json = {
         "data": req_data,
         "data_ver": 39,
@@ -83,6 +84,10 @@ def check_in(req_data):
         if "HTTP Status 415" not in rsp:
             break
         time.sleep(3)
+        if count > 5:
+            break
+        else:
+            count += 1
 
 
 if __name__ == "__main__":
