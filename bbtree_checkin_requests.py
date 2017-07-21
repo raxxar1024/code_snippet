@@ -15,6 +15,13 @@ HEADER = {
 if __name__ == "__main__":
     dict_user_info = collections.OrderedDict()
     dict_user_info['yjw'] = "gaYP/g3PUh5xMy432Y3LiDasGu2fzfIyuoD1GTk+SzWhgkKJ1LdLWjnZUHRLt/b+FI8iBDY9n+dLu7f6ojvfJ//2Omry/n/0OuLgmfYzoOb0BitUFHsI18Zl5bRxu4QRJ2zx42MI6d3+TYdvwRg+8lMfmdoXCa1M3XfUjRKGD3Eq7KYdublbyxH90q+EhXoiaOGC/SGv3Hn46hV7BzR2Xa4LQKFxWD87gr+5LoDpopvaNTYM3jK3iGdSRA3Qw5wo5eq6HevAY5UZCjyxHytsvVgBLgvlkFk9tp8BsPh6KQOuinkcnN00KTWDBEeSxoBNtUOMXz5pz5SLq5nGYgpj7JCOanxvQjbD1KTDIjoxHDtj5adHVgAxdITMoVI0HDZAAqd5cmvGt81ca+9LP+7fJ0IVsv3T5FafOtNOWJAhfIkEfzCbqw0WHCrjad/yxkAyz99aVuYTj6SJ8OtsHNf5y6/oxpuCX6R7BUwE4jnPz+TS+GOHvWzZmCJSn3IgVl0l"
+    # dict_user_info['qhd'] = ""
+    dict_user_info['yaj'] = "gaYP/g3PUh5xMy432Y3LiDasGu2fzfIyuoD1GTk+SzVo/ZOicJj0a7RE4tN/lcxX4Nr4PNf3qIjLGWOP5zIjG//2Omry/n/0OuLgmfYzoOb0BitUFHsI18Zl5bRxu4QRJ2zx42MI6d3+TYdvwRg+8lMfmdoXCa1M3XfUjRKGD3Eq7KYdublbyxH90q+EhXoiaOGC/SGv3Hn46hV7BzR2Xa4LQKFxWD87gr+5LoDpopvaNTYM3jK3iGdSRA3Qw5wolrM5CoMKQQA266PQH0ArYX38bi8k9ad978B9xDMR3OmuinkcnN00KTWDBEeSxoBNtUOMXz5pz5SLq5nGYgpj7JCOanxvQjbD1KTDIjoxHDtj5adHVgAxdITMoVI0HDZAAqd5cmvGt81ca+9LP+7fJ0IVsv3T5FafOtNOWJAhfIkEfzCbqw0WHCrjad/yxkAyz99aVuYTj6SJ8OtsHNf5y6/oxpuCX6R7BUwE4jnPz+TS+GOHvWzZmCJSn3IgVl0l"
+    # dict_user_info['zqr'] = ""
+    # dict_user_info['qp'] = ""
+    dict_user_info['zyz'] = "gaYP/g3PUh5xMy432Y3LiDasGu2fzfIyuoD1GTk+SzWgESDAE4A0w3P8lPlgkNUIi4T+qWsyVW064ujXW0UXNv/2Omry/n/0OuLgmfYzoOb0BitUFHsI18Zl5bRxu4QRJ2zx42MI6d3+TYdvwRg+8lMfmdoXCa1M3XfUjRKGD3Eq7KYdublbyxH90q+EhXoiaOGC/SGv3Hn46hV7BzR2Xa4LQKFxWD87gr+5LoDpopvaNTYM3jK3iGdSRA3Qw5wo5eq6HevAY5UZCjyxHytsvRra5VFoXGqhiOXvkETTZ26uinkcnN00KTWDBEeSxoBNtUOMXz5pz5SLq5nGYgpj7JCOanxvQjbD1KTDIjoxHDtj5adHVgAxdITMoVI0HDZAAqd5cmvGt81ca+9LP+7fJ0IVsv3T5FafOtNOWJAhfIkEfzCbqw0WHCrjad/yxkAyz99aVuYTj6SJ8OtsHNf5y6/oxpuCX6R7BUwE4jnPz+TS+GOHvWzZmCJSn3IgVl0l"
+    # dict_user_info['yj'] = ""
+    # dict_user_info['lys'] = ""
 
     for k in dict_user_info:
         print k
@@ -26,9 +33,4 @@ if __name__ == "__main__":
         }
         r = requests.post(SIGN_IN_URL, json=data_json, headers=HEADER, verify=False)
         print r.status_code
-
-
-
-
-
 
