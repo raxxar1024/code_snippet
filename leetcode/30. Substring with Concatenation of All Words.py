@@ -9,20 +9,32 @@ class Solution(object):
         word_len = len(words[0])
         string_len = len(s)
         result = []
+        dict_words = {}
+        for word in words:
+            if word in dict_words:
+                dict_words[word] += 1
+            else:
+                dict_words[word] = 1
+
         for i in xrange(0, string_len-word_count*word_len+1):
-            words_copy = [item for item in words]
-            if self.is_match(s[i:i+word_count*word_len], words_copy):
+            if self.is_match(s[i:i+word_count*word_len], dict_words, word_len):
                 result.append(i)
         return result
 
-    def is_match(self, s, p):
-        word_len = len(p[0])
+    def is_match(self, s, d, word_len):
+        dict_words_tmp = {}
         for i in xrange(0, len(s), word_len):
-            try:
-                idx = p.index(s[i:i+word_len])
-            except ValueError:
+            tmp_word = s[i:i+word_len]
+            if tmp_word in d:
+                if tmp_word in dict_words_tmp:
+                    if dict_words_tmp[tmp_word] == d[tmp_word]:
+                        return False
+                    else:
+                        dict_words_tmp[tmp_word] += 1
+                else:
+                    dict_words_tmp[tmp_word] = 1
+            else:
                 return False
-            del p[idx]
         return True
 
 
