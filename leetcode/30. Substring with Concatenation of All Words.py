@@ -1,3 +1,4 @@
+import collections
 class Solution(object):
     def findSubstring(self, s, words):
         """
@@ -5,35 +6,22 @@ class Solution(object):
         :type words: List[str]
         :rtype: List[int]
         """
-        word_count = len(words)
-        word_len = len(words[0])
-        string_len = len(s)
-        result = []
-        dict_words = {}
+        result, word_count, word_len = [], len(words), len(words[0])
+        dict_words = collections.defaultdict(int)
         for word in words:
-            if word in dict_words:
-                dict_words[word] += 1
-            else:
-                dict_words[word] = 1
+            dict_words[word] += 1
 
-        for i in xrange(0, string_len-word_count*word_len+1):
+        for i in xrange(0, len(s)-word_count*word_len+1):
             if self.is_match(s[i:i+word_count*word_len], dict_words, word_len):
                 result.append(i)
         return result
 
     def is_match(self, s, d, word_len):
-        dict_words_tmp = {}
+        dict_words_tmp = collections.defaultdict(int)
         for i in xrange(0, len(s), word_len):
             tmp_word = s[i:i+word_len]
-            if tmp_word in d:
-                if tmp_word in dict_words_tmp:
-                    if dict_words_tmp[tmp_word] == d[tmp_word]:
-                        return False
-                    else:
-                        dict_words_tmp[tmp_word] += 1
-                else:
-                    dict_words_tmp[tmp_word] = 1
-            else:
+            dict_words_tmp[tmp_word] += 1
+            if dict_words_tmp[tmp_word] > d[tmp_word]:
                 return False
         return True
 
