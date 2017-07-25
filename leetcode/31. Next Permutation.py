@@ -4,23 +4,21 @@ class Solution(object):
         :type nums: List[int]
         :rtype: void Do not return anything, modify nums in-place instead.
         """
-        i = len(nums)-2
-        if i == -1:
+        k, l = -1, 0
+        for i in xrange(len(nums)-1):
+            if nums[i] < nums[i+1]:
+                k = i
+
+        if k == -1:
+            nums.reverse()
             return
 
-        while nums[i] >= nums[i+1]:
-            i -= 1
-            if i == -1:
-                nums.reverse()
-                return
+        for i in xrange(k+1, len(nums)):
+            if nums[i] > nums[k]:
+                l = i
 
-        j = len(nums)-1
-        while nums[i] >= nums[j] and j >= 0:
-            j -= 1
-
-        nums[i], nums[j] = nums[j], nums[i]
-        nums[i+1:] = nums[:i:-1]
-        return
+        nums[k], nums[l] = nums[l], nums[k]
+        nums[k+1:] = nums[:k:-1]
 
 
 if __name__ == "__main__":
