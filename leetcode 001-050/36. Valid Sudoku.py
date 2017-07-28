@@ -4,26 +4,21 @@ class Solution(object):
         :type board: List[List[str]]
         :rtype: bool
         """
-        def is_valid(x, y, t):
-            for k in xrange(9):
-                if board[k][y] == t and k != x:
-                    return False
-            for k in xrange(9):
-                if board[x][k] == t and k != y:
-                    return False
-            for k in xrange(3):
-                for l in xrange(3):
-                    if board[x/3*3+k][y/3*3+l] == t and x != x/3*3+k and y != y/3*3+l:
-                        return False
-            return True
+        def is_valid(xs):
+            xs = filter(lambda x: x != '.', xs)
+            return len(set(xs)) == len(xs)
 
         for i in xrange(9):
-            for j in xrange(9):
-                tmp = board[i][j]
-                if tmp == '.':
-                    continue
-                if is_valid(i, j, tmp) is False:
+            if is_valid([board[i][j] for j in xrange(9)]) is False:
+                return False
+            if is_valid([board[j][i] for j in xrange(9)]) is False:
+                return False
+
+        for i in xrange(3):
+            for j in xrange(3):
+                if is_valid([board[i*3+m][j*3+n] for m in xrange(3) for n in xrange(3)]) is False:
                     return False
+
         return True
 
 
