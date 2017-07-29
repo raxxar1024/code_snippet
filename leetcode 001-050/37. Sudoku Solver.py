@@ -4,6 +4,33 @@ class Solution(object):
         :type board: List[List[str]]
         :rtype: void Do not return anything, modify board in-place instead.
         """
+        def is_valid(x, y, board):
+            for i in xrange(9):
+                if board[i][y] == board[x][y] and i != x:
+                    return False
+            for i in xrange(9):
+                if board[x][i] == board[x][y] and i != y:
+                    return False
+            for i in xrange(3):
+                for j in xrange(3):
+                    m, n = x/3*3+i, y/3*3+j
+                    if board[m][n] == board[x][y] and m != x and n != y:
+                        return False
+            return True
+
+        def solver(board):
+            for i in xrange(9):
+                for j in xrange(9):
+                    if board[i][j] == '.':
+                        for k in xrange(9):
+                            board[i][j] = chr(ord("1") + k)
+                            if is_valid(i, j, board) and solver(board):
+                                return True
+                            board[i][j] = '.'
+                        return False
+            return True
+
+        solver(board)
 
 
 if __name__ == "__main__":
