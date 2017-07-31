@@ -1,5 +1,5 @@
 class Solution(object):
-    def combinationSum(self, candidates, target):
+    def combinationSum2(self, candidates, target):
         """
         :type candidates: List[int]
         :type target: int
@@ -29,6 +29,20 @@ class Solution(object):
         results = []
         find_result([])
         return results
+
+    def combinationSum(self, candidates, target):
+        result = []
+        self.combinationSumRecu(sorted(candidates), 0, result, [], target)
+        return result
+
+    def combinationSumRecu(self, candidates, start, result, intermediate, target):
+        if target == 0:
+            result.append(list(intermediate))
+        while start < len(candidates) and candidates[start] <= target:
+            intermediate.append(candidates[start])
+            self.combinationSumRecu(candidates, start, result, intermediate, target-candidates[start])
+            intermediate.pop()
+            start += 1
 
 
 if __name__ == "__main__":
