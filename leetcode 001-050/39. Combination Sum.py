@@ -6,6 +6,7 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         from copy import deepcopy
+
         def find_result(l):
             tmp = sum(l)
             if tmp == target:
@@ -19,20 +20,18 @@ class Solution(object):
             else:
                 for i in candidates:
                     l.append(i)
-                    find_result(l)
+                    if find_result(l) is False:
+                        l.pop()
+                        break
                     l.pop()
-                return False
-
+                return True
+        candidates.sort()
         results = []
         find_result([])
         return results
 
 
 if __name__ == "__main__":
-    assert Solution().combinationSum([2, 3, 6, 7], 7) == [
-        [2, 2, 3], [7]
-    ]
-    assert Solution().combinationSum([1, 2], 4) == [
-        [1, 1, 1, 1], [1, 1, 2], [2, 2]
-    ]
-
+    assert Solution().combinationSum([8, 7, 4, 3], 11) == [[3, 4, 4], [3, 8], [4, 7]]
+    assert Solution().combinationSum([2, 3, 6, 7], 7) == [[2, 2, 3], [7]]
+    assert Solution().combinationSum([1, 2], 4) == [[1, 1, 1, 1], [1, 1, 2], [2, 2]]
