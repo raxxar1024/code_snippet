@@ -5,10 +5,34 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
+        from copy import deepcopy
+        def find_result(l):
+            tmp = sum(l)
+            if tmp == target:
+                tmp_l = deepcopy(l)
+                tmp_l.sort()
+                if tmp_l not in results:
+                    results.append(tmp_l)
+                return True
+            elif tmp > target:
+                return False
+            else:
+                for i in candidates:
+                    l.append(i)
+                    find_result(l)
+                    l.pop()
+                return False
+
+        results = []
+        find_result([])
+        return results
 
 
 if __name__ == "__main__":
     assert Solution().combinationSum([2, 3, 6, 7], 7) == [
-        [7],
-        [2, 2, 3]
+        [2, 2, 3], [7]
     ]
+    assert Solution().combinationSum([1, 2], 4) == [
+        [1, 1, 1, 1], [1, 1, 2], [2, 2]
+    ]
+
