@@ -5,12 +5,10 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
-        from copy import deepcopy
-
         def find_result(l):
             tmp = sum(l)
             if tmp == target:
-                tmp_l = deepcopy(l)
+                tmp_l = list(l)
                 tmp_l.sort()
                 if tmp_l not in results:
                     results.append(tmp_l)
