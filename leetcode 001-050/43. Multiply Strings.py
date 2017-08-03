@@ -22,22 +22,20 @@ class Solution(object):
         multiply = [0] * (len(num1) + len(num2))
         for i in xrange(len(num1)):
             for j in xrange(len(num2)):
-                multiply[i + j] += (ord(num1[i]) - ord("0")) * (ord(num2[j]) - ord("0"))
+                tmp = (ord(num1[i]) - ord("0")) * (ord(num2[j]) - ord("0"))
+                multiply[i + j] += tmp
+                multiply[i + j + 1] += multiply[i + j]/10
+                multiply[i + j] %= 10
 
-        for i in xrange(len(multiply) - 1):
-            multiply[i + 1] += multiply[i] / 10
-            multiply[i] %= 10
+        def int2chr(ch):
+            return chr(ch + ord("0"))
 
-        i = len(multiply) - 1
-        is_start = False
-        result = ""
-        while i >= 0:
-            if multiply[i] != 0 or is_start is True:
-                is_start = True
-                result += chr(multiply[i] + ord("0"))
-            i -= 1
+        result = "".join(map(int2chr, multiply[::-1]))
 
-        return result if result != "" else "0"
+        for i in xrange(len(result)):
+            if result[i] != "0":
+                return result[i:]
+        return "0"
 
 
 if __name__ == "__main__":
