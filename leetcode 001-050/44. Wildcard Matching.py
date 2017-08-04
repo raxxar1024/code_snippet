@@ -28,9 +28,32 @@ class Solution(object):
         :type p: str
         :rtype: bool
         """
+        if len(s) == 0:
+            i = 0
+            while i < len(p):
+                if p[i] != "*":
+                    return False
+                i += 1
+            return True
+        if len(p) == 0:
+            return False
+        if s[0] == p[0] or p[0] == "?":
+            return self.isMatch(s[1:], p[1:])
+        elif p[0] == "*":
+            i = 0
+            while i < len(s):
+                if self.isMatch(s[i:], p[1:]) or len(p[1:]) == 0:
+                    return True
+                i += 1
+            return False
+        else:
+            return False
 
 
 if __name__ == "__main__":
+    assert Solution().isMatch("babaaababaabababbbbbbaabaabbabababbaababbaaabbbaaab",
+                              "***bba**a*bbba**aab**b") is False
+    assert Solution().isMatch("ho", "ho**") is True
     assert Solution().isMatch("aa", "a") is False
     assert Solution().isMatch("aa", "aa") is True
     assert Solution().isMatch("aaa", "aa") is False
