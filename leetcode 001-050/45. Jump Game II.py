@@ -17,12 +17,19 @@ You can assume that you can always reach the last index.
 
 
 class Solution(object):
-	def jump(self, nums):
-		"""
-		:type nums: List[int]
-		:rtype: int
-		"""
+    def jump(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        tmp, last, count = 0, 0, 0
+        for i in xrange(len(nums)):
+            if i > last:
+                last = tmp
+                count += 1
+            tmp = max(tmp, i + nums[i])
+        return count
 
 
 if __name__ == "__main__":
-	assert Solution().jump([2, 3, 1, 1, 4]) == 2
+    assert Solution().jump([2, 3, 1, 1, 4]) == 2
