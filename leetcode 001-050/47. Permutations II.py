@@ -19,13 +19,16 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         result = []
+        nums.sort()
 
         def gen_permute(l1, l2):
-            if len(l2) == 0 and l1 not in result:
+            if len(l2) == 0:
                 result.append(l1)
                 return
             else:
                 for i in xrange(len(l2)):
+                    if l2[i] == l2[i-1] and i > 0:
+                        continue
                     tmp1, tmp2 = list(l1), list(l2)
                     tmp1.append(tmp2[i])
                     del tmp2[i]
