@@ -13,7 +13,7 @@ For example,
 
 
 class Solution(object):
-    def permute(self, nums):
+    def permuteUnique(self, nums):
         """
         :type nums: List[int]
         :rtype: List[List[int]]
@@ -21,7 +21,7 @@ class Solution(object):
         result = []
 
         def gen_permute(l1, l2):
-            if len(l2) == 0:
+            if len(l2) == 0 and l1 not in result:
                 result.append(l1)
                 return
             else:
@@ -36,7 +36,7 @@ class Solution(object):
 
 
 if __name__ == "__main__":
-    assert Solution().permute([1, 1, 2]) == [
+    assert Solution().permuteUnique([1, 1, 2]) == [
         [1, 1, 2],
         [1, 2, 1],
         [2, 1, 1]
