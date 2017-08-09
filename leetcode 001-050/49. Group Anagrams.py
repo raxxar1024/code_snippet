@@ -24,15 +24,14 @@ class Solution(object):
         results = OrderedDict()
         result = []
         for o_str in strs:
-            tmp_list = list(o_str)
-            tmp_list.sort()
-            tmp = str(tmp_list)
-            if tmp in results.keys():
+            tmp = "".join(sorted(o_str))
+            if tmp in results:
                 results[tmp].append(o_str)
             else:
                 results[tmp] = [o_str]
 
         for k, v in results.items():
+            v.sort()
             result.append(v)
 
         return result
