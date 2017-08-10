@@ -11,17 +11,17 @@ class Solution(object):
         :type n: int
         :rtype: float
         """
-        result = 1
-        if n > 0:
-            while n > 0:
-                result *= x
-                n -= 1
+        if n < 0:
+            return 1.0/self.myPow(x, -n)
+        elif n == 0:
+            return 1.0
         else:
-            while n < 0:
-                result /= x
-                n += 1
-        return result
+            tmp = self.myPow(x, n/2)
+            if n % 2 == 1:
+                return tmp * tmp * x
+            else:
+                return tmp * tmp
 
 
 if __name__ == "__main__":
-    assert Solution().myPow(8.88023, 3) == 700.28148
+    assert Solution().myPow(8.88023, 3) == 700.281482945
