@@ -30,6 +30,37 @@ class Solution(object):
         :type n: int
         :rtype: List[List[str]]
         """
+        positions = []
+
+        def DFS(xs, ys, xy_diff, xy_sum):
+            if n == len(xs):
+                positions.append([xs, ys])
+                return
+            for x in xrange(n):
+                for y in xrange(n):
+                    if x not in xs and y not in ys and (x - y) not in xy_diff and (x + y) not in xy_sum:
+                        DFS(xs + [x], ys + [y], xy_diff + [x - y], xy_sum + [x + y])
+
+        DFS([], [], [], [])
+
+        def convert_pos_matrix(position):
+            tmp = [["." for i in xrange(n)] for j in xrange(n)]
+            result = []
+            xs, ys = position[0], position[1]
+            for i in xrange(len(xs)):
+                tmp[xs[i]][ys[i]] = "Q"
+            for i in xrange(len(tmp)):
+                result.append("".join(tmp[i]))
+
+            return result
+
+        results = []
+        for k in xrange(len(positions)):
+            tmp_result = convert_pos_matrix(positions[k])
+            if tmp_result not in results:
+                results.append(tmp_result)
+
+        return results
 
 
 if __name__ == "__main__":
