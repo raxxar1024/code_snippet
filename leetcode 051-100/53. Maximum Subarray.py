@@ -18,7 +18,17 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        max_sub_sum = nums[0]
+        tmp = 0
+        for i in xrange(len(nums)):
+            tmp += nums[i]
+            if tmp > max_sub_sum:
+                max_sub_sum = tmp
+            if tmp <= 0:
+                tmp = 0
+        return max_sub_sum
 
 
 if __name__ == "__main__":
+    assert Solution().maxSubArray([-1]) == -1
     assert Solution().maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]) == 6
