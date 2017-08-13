@@ -18,14 +18,11 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        max_sub_sum = nums[0]
-        tmp = 0
+        max_sub_sum, tmp = nums[0], 0
         for i in xrange(len(nums)):
             tmp += nums[i]
-            if tmp > max_sub_sum:
-                max_sub_sum = tmp
-            if tmp <= 0:
-                tmp = 0
+            max_sub_sum = max(tmp, max_sub_sum)
+            tmp = max(tmp, 0)
         return max_sub_sum
 
 
