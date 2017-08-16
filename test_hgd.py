@@ -19,11 +19,7 @@ def enter_discussion(name, code, pwd):
     b.find_by_name('submit').first.click()
 
     # enter discuss-detail
-    b.visit('http://192.168.1.131:8002/discuss-detail_19')
-
-    while True:
-        import time
-        time.sleep(5)
+    b.visit('http://192.168.1.131:8002/discuss-detail_25')
 
 
 def reg(name, code, pwd):
@@ -44,6 +40,6 @@ def reg(name, code, pwd):
 
 
 if __name__ == '__main__':
-    # enter_discussion(u'张三', '123', '1')
     for i in xrange(25):
-        reg(u"测试00"+str(i+1), "1000"+str(i+1), "123456")
+        # reg(u"测试00"+str(i+1), "1000"+str(i+1), "123456")
+        enter_discussion(u"测试00" + str(i + 1), "1000" + str(i + 1), "123456")
