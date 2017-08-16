@@ -31,9 +31,26 @@ class Solution(object):
         :type newInterval: Interval
         :rtype: List[Interval]
         """
+        result, i = [], 0
+
+        while i < len(intervals) and intervals[i].end < newInterval.start:
+            result += [intervals[i]]
+            i += 1
+
+        while i < len(intervals) and intervals[i].start <= newInterval.end:
+            newInterval = Interval(min(intervals[i].start, newInterval.start),
+                                   max(intervals[i].end, newInterval.end))
+            i += 1
+        result += [newInterval]
+        result += intervals[i:]
+
+        return result
 
 
 if __name__ == "__main__":
-    print Solution().insert([Interval(1, 3), Interval(6, 7)], Interval(2, 5))
+    print Solution().insert([Interval(1, 5)], Interval(0, 1))
+    print Solution().insert([Interval(1, 5)], Interval(6, 7))
+    print Solution().insert([], Interval(5, 7))
+    print Solution().insert([Interval(1, 3), Interval(6, 9)], Interval(2, 5))
     print Solution().insert([Interval(1, 2), Interval(3, 5), Interval(6, 7), Interval(8, 10), Interval(12, 16)],
                             Interval(4, 9))
