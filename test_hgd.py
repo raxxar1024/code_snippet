@@ -2,10 +2,12 @@
 
 from splinter.browser import Browser
 
+HOST_NAME = "http://192.168.1.247:8000"
+
 
 def enter_discussion(name, code, pwd):
     b = Browser()
-    b.visit("http://192.168.1.131:8002")
+    b.visit(HOST_NAME)
 
     # login in
     b.fill('name', name)
@@ -19,12 +21,12 @@ def enter_discussion(name, code, pwd):
     b.find_by_name('submit').first.click()
 
     # enter discuss-detail
-    b.visit('http://192.168.1.131:8002/discuss-detail_25')
+    b.visit(HOST_NAME + '/discuss-detail_25')
 
 
 def reg(name, code, pwd):
     b = Browser()
-    b.visit("http://192.168.1.131:8002/reg")
+    b.visit(HOST_NAME + "/reg")
 
     # reg
     b.fill('name', name)
