@@ -24,6 +24,19 @@ class Solution(object):
         :type k: int
         :rtype: str
         """
+        list_n = [i for i in xrange(1, n + 1)]
+        result = ""
+        k -= 1
+        while len(list_n) > 1:
+            index = k / self.factorial(len(list_n) - 1)
+            k %= self.factorial(len(list_n) - 1)
+            result += str(list_n[index])
+            del list_n[index]
+        result += str(list_n[0])
+        return result
+
+    def factorial(self, n):
+        return reduce(lambda x, y: x * y, xrange(1, n + 1))
 
 
 if __name__ == "__main__":
