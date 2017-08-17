@@ -19,7 +19,16 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
+        words = s.split(" ")
+        length = 0
+        for i in reversed(xrange(len(words))):
+            if len(words[i]) != 0:
+                length = len(words[i])
+                break
+        return length
 
 
 if __name__ == "__main__":
+    assert Solution().lengthOfLastWord("Today is a nice day") == 3
+    assert Solution().lengthOfLastWord("H  ") == 1
     assert Solution().lengthOfLastWord("Hello World") == 5
