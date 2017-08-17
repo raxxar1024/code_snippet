@@ -21,7 +21,7 @@ class Solution(object):
         :rtype: List[List[int]]
         """
         top, bottom, left, right = 0, n - 1, 0, n - 1
-        result = [[0 for i in xrange(n)] for i in xrange(n)]
+        result = [[0 for _ in xrange(n)] for _ in xrange(n)]
         i = 0
         while i < n * n:
             for k in xrange(left, right + 1):
