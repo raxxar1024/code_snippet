@@ -24,35 +24,24 @@ class Solution(object):
         """
         if head is None:
             return None
-        prev = ListNode(-1)
-        prev.next = head
-        tmp = head
-        count = 0
-        while tmp:
-            if tmp.next is None:
-                tmp.next = head
-                break
+
+        tmp, count = head, 1
+        while tmp.next:
             tmp = tmp.next
             count += 1
+        tmp.next = head
 
-        k %= (count+1)
-        for i in xrange(count + 1 - k):
+        prev = tmp = head
+        for _ in xrange(count - k % count):
+            prev = tmp
             tmp = tmp.next
 
-        prev.next = tmp.next
-        tmp.next = None
+        prev.next = None
 
-        return prev.next
+        return tmp
 
 
 if __name__ == "__main__":
-    result = Solution().rotateRight([], 2)
-    assert result.val == 4
-    assert result.next.val == 5
-    assert result.next.next.val == 1
-    assert result.next.next.next.val == 2
-    assert result.next.next.next.next.val == 3
-
     l1, l1.next, l1.next.next, l1.next.next.next, l1.next.next.next.next = \
         ListNode(1), ListNode(2), ListNode(3), ListNode(4), ListNode(5)
     result = Solution().rotateRight(l1, 2)
