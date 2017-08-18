@@ -22,7 +22,20 @@ class Solution(object):
         :rtype: int
         """
 
+        def unique_path(m, n):
+            if m == 1 and n == 1:
+                return 1
+            elif m == 1:
+                return unique_path(m, n - 1)
+            elif n == 1:
+                return unique_path(m - 1, n)
+            else:
+                return unique_path(m - 1, n) + unique_path(m, n - 1)
+
+        return unique_path(m, n)
+
 
 if __name__ == "__main__":
+    assert Solution().uniquePaths(23, 12) == 193536720
     assert Solution().uniquePaths(1, 2) == 1
     assert Solution().uniquePaths(3, 7) == 28
