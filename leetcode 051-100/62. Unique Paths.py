@@ -21,21 +21,17 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
+        result = [[1 for _ in xrange(n)] for _ in xrange(m)]
 
-        def unique_path(m, n):
-            if m == 1 and n == 1:
-                return 1
-            elif m == 1:
-                return unique_path(m, n - 1)
-            elif n == 1:
-                return unique_path(m - 1, n)
-            else:
-                return unique_path(m - 1, n) + unique_path(m, n - 1)
-
-        return unique_path(m, n)
+        for i in xrange(1, m):
+            for j in xrange(1, n):
+                result[i][j] = result[i - 1][j] + result[i][j - 1]
+                
+        return result[m - 1][n - 1]
 
 
 if __name__ == "__main__":
+    assert Solution().uniquePaths(99, 99) == 5716592448890534420436582360196242777068052430850904489000
     assert Solution().uniquePaths(23, 12) == 193536720
     assert Solution().uniquePaths(1, 2) == 1
     assert Solution().uniquePaths(3, 7) == 28
