@@ -30,6 +30,8 @@ class Solution(object):
         return result[m - 1][n - 1]
 
     def uniquePaths(self, m, n):
+        if m < n:
+            m, n = n, m
         result = [1] * n
         for i in xrange(1, m):
             for j in xrange(1, n):
