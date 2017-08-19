@@ -15,7 +15,7 @@ Note: m and n will be at most 100.
 
 
 class Solution(object):
-    def uniquePaths(self, m, n):
+    def uniquePaths2(self, m, n):
         """
         :type m: int
         :type n: int
@@ -26,8 +26,15 @@ class Solution(object):
         for i in xrange(1, m):
             for j in xrange(1, n):
                 result[i][j] = result[i - 1][j] + result[i][j - 1]
-                
+
         return result[m - 1][n - 1]
+
+    def uniquePaths(self, m, n):
+        result = [1] * n
+        for i in xrange(1, m):
+            for j in xrange(1, n):
+                result[j] += result[j - 1]
+        return result[n - 1]
 
 
 if __name__ == "__main__":
