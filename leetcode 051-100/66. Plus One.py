@@ -14,7 +14,20 @@ class Solution(object):
         :type digits: List[int]
         :rtype: List[int]
         """
+        carry = 0
+        digits[-1] += 1
+        for i in reversed(xrange(len(digits))):
+            digits[i] += carry
+            carry = digits[i] / 10
+            digits[i] %= 10
+
+        if carry == 1:
+            return [1] + digits
+        else:
+            return digits
 
 
 if __name__ == "__main__":
-    assert Solution().plusOne([0]) is [1]
+    assert Solution().plusOne([1, 0]) == [1, 1]
+    assert Solution().plusOne([9, 9]) == [1, 0, 0]
+    assert Solution().plusOne([0]) == [1]
