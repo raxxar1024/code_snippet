@@ -16,29 +16,20 @@ class Solution(object):
         :type b: str
         :rtype: str
         """
-        len_a, len_b = len(a), len(b)
-        if len_a > len_b:
-            b = "0" * (len_a - len_b) + b
-        else:
-            a = "0" * (len_b - len_a) + a
-
-        carry = 0
-        tmp = [0] * max(len_a, len_b)
-        for i in reversed(xrange(max(len_a, len_b))):
-            tmp[i] = int(a[i]) + int(b[i]) + carry
-            carry = tmp[i] / 2
-            tmp[i] %= 2
+        carry, result, a, b = 0, "", a[::-1], b[::-1]
+        for i in xrange(max(len(a), len(b))):
+            tmp = carry
+            if i < len(a):
+                tmp += int(a[i])
+            if i < len(b):
+                tmp += int(b[i])
+            carry = tmp / 2
+            result += str(tmp % 2)
         if carry == 1:
-            tmp = [1] + tmp
-
-        result = ""
-        for i in xrange(len(tmp)):
-            result += str(tmp[i])
-
-        return result
-
-
+            result += "1"
+        return result[::-1]
 
 
 if __name__ == "__main__":
+    assert Solution().addBinary("10", "1") == "11"
     assert Solution().addBinary("11", "1") == "100"
