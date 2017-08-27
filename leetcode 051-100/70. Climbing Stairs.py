@@ -15,6 +15,13 @@ class Solution(object):
         :rtype: int
         """
 
+        result = [1, 2]
+        for i in xrange(2, n):
+            result.append(result[-1] + result[-2])
+        return result[n - 1]
+
 
 if __name__ == "__main__":
+    assert Solution().climbStairs(1) == 1
+    assert Solution().climbStairs(35) == 14930352
     assert Solution().climbStairs(3) == 3
