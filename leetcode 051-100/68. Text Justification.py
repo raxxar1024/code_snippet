@@ -28,7 +28,7 @@ Note: Each word is guaranteed not to exceed L in length.
 
 
 class Solution(object):
-    def fullJustify(self, words, maxWidth):
+    def fullJustify_me(self, words, maxWidth):
         """
         :type words: List[str]
         :type maxWidth: int
@@ -92,16 +92,55 @@ class Solution(object):
 
         return result
 
+    def fullJustify(self, words, maxWidth):
+        """
+        :type words: List[str]
+        :type maxWidth: int
+        :rtype: List[str]
+        """
+
+        def connect(words, maxWidth, start, end, length, is_last):
+            s = ""
+            n = end - start
+            for i in xrange(n):
+                s += words[i + start]
+                s += " " * space_count(i, n, length, is_last, maxWidth)
+            if is_last or n == 1:
+                s += " " * (maxWidth - len(s))
+            return s
+
+        def space_count(i, n, length, is_last, maxWidth):
+            if i < n - 1:
+                return 1 if is_last else ((maxWidth - length) / (n - 1) + int(i < (maxWidth - length) % (n - 1)))
+            return 0
+
+        res = []
+        begin, length = 0, 0
+        for i in xrange(len(words)):
+            if length + len(words[i]) + (i - begin) > maxWidth:
+                res.append(connect(words, maxWidth, begin, i, length, False))
+                begin, length = i, 0
+            length += len(words[i])
+
+        # last line
+        res.append(connect(words, maxWidth, begin, len(words), length, True))
+        return res
+
 
 if __name__ == "__main__":
-    assert Solution().fullJustify(["Don't", "go", "around", "saying", "the", "world", "owes", "you", "a", "living;",
-                                   "the", "world", "owes", "you", "nothing;", "it", "was", "here", "first."], 30) == [
+    assert Solution().fullJustify(["Listen", "to", "many,", "speak", "to", "a", "few."], 6) == [
+        "Listen", "to    ",
+        "many, ", "speak ",
+        "to   a", "few.  "
+    ]
+    assert Solution().fullJustify(
+        ["Don't", "go", "around", "saying", "the", "world", "owes", "you", "a", "living;", "the", "world", "owes",
+         "you", "nothing;", "it", "was", "here", "first."], 30) == [
                "Don't  go  around  saying  the",
                "world  owes  you a living; the",
                "world owes you nothing; it was",
                "here first.                   "
            ]
-
     assert Solution().fullJustify([""], 0) == [""]
     assert Solution().fullJustify(["What", "must", "be", "shall", "be."], 12) == [
         "What must be",
