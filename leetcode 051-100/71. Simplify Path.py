@@ -21,27 +21,15 @@ class Solution(object):
         :type path: str
         :rtype: str
         """
-        words = path.split("/")
-        result_words_tmp = []
+        result, words = [], path.split("/")
 
-        for i in xrange(len(words)):
-            if words[i] == "." or words[i] == "":
-                continue
-            else:
-                result_words_tmp.append(words[i])
+        for word in words:
+            if word == ".." and result:
+                result.pop()
+            elif word != ".." and word != "." and word:
+                result.append(word)
 
-        if len(result_words_tmp) == 0:
-            return "/"
-
-        result_words = []
-        for i in xrange(len(result_words_tmp)):
-            if result_words_tmp[i] == "..":
-                if len(result_words) != 0:
-                    result_words.pop()
-            else:
-                result_words.append(result_words_tmp[i])
-
-        return "/" + "/".join(result_words)
+        return "/" + "/".join(result)
 
 
 if __name__ == "__main__":
