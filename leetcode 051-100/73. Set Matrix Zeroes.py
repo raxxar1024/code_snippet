@@ -17,15 +17,9 @@ class Solution(object):
         :rtype: void Do not return anything, modify matrix in-place instead.
         """
         m, n = len(matrix[0]), len(matrix)
-        first_row, first_column = False, False
-        for i in xrange(m):
-            if matrix[0][i] == 0:
-                first_row = True
-                break
-        for i in xrange(n):
-            if matrix[i][0] == 0:
-                first_column = True
-                break
+
+        first_row = reduce(lambda init, i: init or matrix[0][i] == 0, xrange(m), False)
+        first_column = reduce(lambda init, i: init or matrix[i][0] == 0, xrange(n), False)
 
         for i in xrange(1, m):
             for j in xrange(1, n):
