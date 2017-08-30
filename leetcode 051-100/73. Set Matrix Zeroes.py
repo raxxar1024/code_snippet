@@ -18,8 +18,8 @@ class Solution(object):
         """
         m, n = len(matrix[0]), len(matrix)
 
-        first_row = reduce(lambda init, i: init or matrix[0][i] == 0, xrange(m), False)
-        first_column = reduce(lambda init, i: init or matrix[i][0] == 0, xrange(n), False)
+        first_row = reduce(lambda init, _: init or matrix[0][_] == 0, xrange(m), False)
+        first_column = reduce(lambda init, _: init or matrix[_][0] == 0, xrange(n), False)
 
         for i in xrange(1, m):
             for j in xrange(1, n):
