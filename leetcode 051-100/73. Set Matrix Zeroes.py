@@ -16,8 +16,41 @@ class Solution(object):
         :type matrix: List[List[int]]
         :rtype: void Do not return anything, modify matrix in-place instead.
         """
+        m, n = len(matrix[0]), len(matrix)
+        first_row, first_column = False, False
+        for i in xrange(m):
+            if matrix[0][i] == 0:
+                first_row = True
+                break
+        for i in xrange(n):
+            if matrix[i][0] == 0:
+                first_column = True
+                break
+
+        for i in xrange(1, m):
+            for j in xrange(1, n):
+                if matrix[j][i] == 0:
+                    matrix[0][i], matrix[j][0] = 0, 0
+
+        for i in xrange(1, m):
+            for j in xrange(1, n):
+                if matrix[0][i] == 0 or matrix[j][0] == 0:
+                    matrix[j][i] = 0
+
+        if first_row:
+            for i in xrange(m):
+                matrix[0][i] = 0
+
+        if first_column:
+            for i in xrange(n):
+                matrix[i][0] = 0
 
 
 if __name__ == "__main__":
-    assert Solution().setZeroes([[0]]) == [[0]]
-    assert Solution().setZeroes([[1, 2, 3], [4, 0, 6], [7, 8, 9]]) == [[1, 0, 3], [0, 0, 0], [7, 0, 9]]
+    matrix = [[0]]
+    Solution().setZeroes(matrix)
+    assert matrix == [[0]]
+
+    matrix = [[1, 2, 3], [4, 0, 6], [7, 8, 9]]
+    Solution().setZeroes(matrix)
+    assert matrix == [[1, 0, 3], [0, 0, 0], [7, 0, 9]]
