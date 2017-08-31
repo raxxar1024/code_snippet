@@ -30,24 +30,13 @@ class Solution(object):
         if len(matrix[0]) == 0:
             return False
         m, n = len(matrix), len(matrix[0])
-        begin, end = 0, m - 1
+        begin, end = 0, m * n - 1
         while begin <= end:
             middle = (begin + end) / 2
-            if matrix[middle][0] < target:
+            row, column = middle / n, middle % n
+            if matrix[row][column] < target:
                 begin = middle + 1
-            elif matrix[middle][0] > target:
-                end = middle - 1
-            else:
-                return True
-
-        row = begin - 1
-
-        begin, end = 0, n - 1
-        while begin <= end:
-            middle = (begin + end) / 2
-            if matrix[row][middle] < target:
-                begin = middle + 1
-            elif matrix[row][middle] > target:
+            elif matrix[row][column] > target:
                 end = middle - 1
             else:
                 return True
