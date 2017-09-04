@@ -27,15 +27,15 @@ class Solution(object):
         return result
 
     def combine_rec(self, n, result, start, intermediate, k):
-        if k == 0:
+        if len(intermediate) == k:
             result.append(intermediate[:])
+        elif len(intermediate) + (n - start) < k:
+            return
         else:
             for i in xrange(start, n):
-                intermediate.append(i + 1)
-                self.combine_rec(n, result, i + 1, intermediate, k - 1)
-                intermediate.pop()
+                self.combine_rec(n, result, i + 1, intermediate + [i + 1], k)
 
 
 if __name__ == "__main__":
-    print Solution().combine(20, 16)
-    assert Solution().combine(4, 2) == [[2, 4], [3, 4], [2, 3], [1, 2], [1, 3], [1, 4], ]
+    Solution().combine(20, 16)
+    assert Solution().combine(4, 2) == [[1, 2], [1, 3], [1, 4], [2, 3], [2, 4], [3, 4]]
