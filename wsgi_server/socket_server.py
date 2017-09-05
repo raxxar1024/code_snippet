@@ -1,4 +1,3 @@
-# 文件位置:/code/chapter2/section2/socket_server.py
 # coding:utf-8
 
 import socket
