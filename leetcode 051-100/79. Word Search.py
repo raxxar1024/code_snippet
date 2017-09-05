@@ -27,6 +27,28 @@ class Solution(object):
         :type word: str
         :rtype: bool
         """
+        visit = [[False for _ in xrange(len(board[0]))] for _ in xrange(len(board))]
+        for i in xrange(len(board)):
+            for j in xrange(len(board[0])):
+                if self.check(board, word, i, j, 0, visit):
+                    return True
+        return False
+
+    def check(self, board, word, i, j, idx, visit):
+        if idx == len(word):
+            return True
+
+        if i < 0 or i >= len(board) or j < 0 or j >= len(board[0]) or visit[i][j] or board[i][j] != word[idx]:
+            return False
+
+        visit[i][j] = True
+        result = self.check(board, word, i + 1, j, idx + 1, visit) or \
+                 self.check(board, word, i, j + 1, idx + 1, visit) or \
+                 self.check(board, word, i - 1, j, idx + 1, visit) or \
+                 self.check(board, word, i, j - 1, idx + 1, visit)
+        visit[i][j] = False
+
+        return result
 
 
 if __name__ == "__main__":
