@@ -21,6 +21,18 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
+        dummy = ListNode(0)
+        prev, curr = dummy, head
+        prev.next = curr
+        while curr:
+            if curr.next and curr.val == curr.next.val:
+                prev.next = curr.next
+            else:
+                prev.next = curr
+                prev = curr
+            curr = curr.next
+
+        return dummy.next
 
 
 if __name__ == "__main__":
