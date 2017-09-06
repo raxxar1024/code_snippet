@@ -17,24 +17,18 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        dict_nums, delete_list = {}, []
-        
-        for i in xrange(len(nums)):
-            if nums[i] in dict_nums:
-                if dict_nums[nums[i]] >= 2:
-                    delete_list.append(i)
-                else:
-                    dict_nums[nums[i]] += 1
-            else:
-                dict_nums[nums[i]] = 1
-
-        for i in reversed(delete_list):
-            del nums[i]
-
-        return len(nums)
+        if not nums:
+            return 0
+        last, same = 0, False
+        for i in xrange(1, len(nums)):
+            if nums[i] != nums[last] or not same:
+                same = nums[i] == nums[last]
+                last += 1
+                nums[last] = nums[i]
+        return last + 1
 
 
 if __name__ == "__main__":
-    list_int = [1, 1, 1, 2, 2, 3]
-    assert Solution().removeDuplicates(list_int) == 5
-    assert list_int == [1, 1, 2, 2, 3]
+    assert Solution().removeDuplicates([]) == 0
+    assert Solution().removeDuplicates([1]) == 1
+    assert Solution().removeDuplicates([1, 1, 1, 2, 2, 3]) == 5
