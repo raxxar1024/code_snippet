@@ -25,6 +25,22 @@ class Solution(object):
         :type x: int
         :rtype: ListNode
         """
+        dummy_1 = ListNode(-1)
+        dummy_2 = ListNode(-1)
+        curr = head
+        prev_1, curr_1 = dummy_1, dummy_1.next
+        prev_2, curr_2 = dummy_2, dummy_2.next
+
+        while curr:
+            if curr.val < x:
+                prev_1.next = ListNode(curr.val)
+                prev_1 = prev_1.next
+            else:
+                prev_2.next = ListNode(curr.val)
+                prev_2 = prev_2.next
+            curr = curr.next
+        prev_1.next = dummy_2.next
+        return dummy_1.next
 
 
 if __name__ == "__main__":
