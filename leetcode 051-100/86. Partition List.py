@@ -25,25 +25,29 @@ class Solution(object):
         :type x: int
         :rtype: ListNode
         """
-        dummy_1 = ListNode(-1)
-        dummy_2 = ListNode(-1)
-        curr = head
-        prev_1, curr_1 = dummy_1, dummy_1.next
-        prev_2, curr_2 = dummy_2, dummy_2.next
+        dummy_1, dummy_2 = ListNode(-1), ListNode(-1)
+        prev_1, prev_2 = dummy_1, dummy_2
 
-        while curr:
-            if curr.val < x:
-                prev_1.next = ListNode(curr.val)
+        while head:
+            if head.val < x:
+                prev_1.next = head
                 prev_1 = prev_1.next
             else:
-                prev_2.next = ListNode(curr.val)
+                prev_2.next = head
                 prev_2 = prev_2.next
-            curr = curr.next
+            head = head.next
+
         prev_1.next = dummy_2.next
+        prev_2.next = None
         return dummy_1.next
 
 
 if __name__ == "__main__":
+    l1, l1.next = ListNode(2), ListNode(1)
+    result = Solution().partition(l1, 2)
+    assert result.val == 1
+    assert result.next.val == 2
+
     l1, l1.next, l1.next.next, l1.next.next.next, l1.next.next.next.next, l1.next.next.next.next.next = \
         ListNode(1), ListNode(4), ListNode(3), ListNode(2), ListNode(5), ListNode(2)
     result = Solution().partition(l1, 3)
