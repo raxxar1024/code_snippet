@@ -21,6 +21,19 @@ class Solution(object):
         :type heights: List[int]
         :rtype: int
         """
+        increasing, max_area, i = [], 0, 0
+        heights.append(0)
+        while i < len(heights):
+            if not increasing or heights[increasing[-1]] <= heights[i]:
+                increasing.append(i)
+                i += 1
+            else:
+                last = increasing.pop()
+                if not increasing:
+                    max_area = max(max_area, heights[last] * i)
+                else:
+                    max_area = max(max_area, heights[last] * (i - increasing[-1] - 1))
+        return max_area
 
 
 if __name__ == "__main__":
