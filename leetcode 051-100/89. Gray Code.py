@@ -27,6 +27,10 @@ class Solution(object):
         :type n: int
         :rtype: List[int]
         """
+        result = []
+        for i in xrange(1 << n):
+            result.append(i >> 1 ^ i)
+        return result
 
 
 if __name__ == "__main__":
