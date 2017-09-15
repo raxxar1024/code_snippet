@@ -29,7 +29,19 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
-        
+        result = []
+
+        def get_node_result(node):
+            if not node:
+                return
+            get_node_result(node.left)
+            result.append(node.val)
+            get_node_result(node.right)
+            return
+
+        get_node_result(root)
+        return result
+
 
 if __name__ == "__main__":
     t1, t2, t3 = TreeNode(1), TreeNode(2), TreeNode(3)
