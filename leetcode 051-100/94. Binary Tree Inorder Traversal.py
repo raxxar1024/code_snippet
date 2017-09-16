@@ -30,6 +30,31 @@ class Solution(object):
         :rtype: List[int]
         """
         result = []
+        curr = root
+        while curr:
+            if not curr.left:
+                result.append(curr.val)
+                curr = curr.right
+            else:
+                node = curr.left
+                while node.right and node.right != curr:
+                    node = node.right
+
+                if not node.right:
+                    node.right = curr
+                    curr = curr.left
+                else:
+                    result.append(curr.val)
+                    # node.right = None # this line can be added if want to hold whole tree no change
+                    curr = curr.right
+        return result
+
+    def inorderTraversal_2(self, root):
+        """
+        :type root: TreeNode
+        :rtype: List[int]
+        """
+        result = []
 
         def get_node_result(node):
             if not node:
