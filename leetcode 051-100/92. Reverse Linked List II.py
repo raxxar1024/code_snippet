@@ -28,6 +28,20 @@ class Solution(object):
         :type n: int
         :rtype: ListNode
         """
+        dummy, curr, diff = ListNode(-1), head, n - m + 1
+        dummy.next = curr
+
+        last_un_swap = dummy
+        while curr and m > 1:
+            curr, last_un_swap, m = curr.next, curr, m - 1
+
+        prev, first_swap = last_un_swap, curr
+        while curr and diff > 0:
+            curr.next, prev, curr, diff = prev, curr, curr.next, diff - 1
+
+        last_un_swap.next, first_swap.next = prev, curr
+
+        return dummy.next
 
 
 if __name__ == "__main__":
