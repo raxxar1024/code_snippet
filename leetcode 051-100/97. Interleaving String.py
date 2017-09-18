@@ -20,29 +20,23 @@ class Solution(object):
         :type s3: str
         :rtype: bool
         """
-        len_1, len_2, len_3 = len(s1), len(s2), len(s3)
-        if len_1 + len_2 != len_3:
+        if len(s1) + len(s2) != len(s3):
             return False
-        if len_3 == 0:
-            return True
-        ret_1, ret_2 = False, False
-        if len_1 == 0:
-            if s2 == s3:
-                return True
-            else:
-                return False
-        if len_2 == 0:
-            if s1 == s3:
-                return True
-            else:
-                return False
+        match = [[False for _ in xrange(len(s1) + 1)] for _ in xrange(len(s2) + 1)]
+        match[0][0] = True
+        for i in xrange(1, len(s1) + 1):
+            match[0][i] = match[0][i-1] and s1[i-1] == s3[i-1]
+        for i in xrange(1, len(s2)+1):
+            match[i][0] = match[i-1][0] and s2[i-1] == s3[i-1]
 
-        if s1[0] == s3[0]:
-            ret_1 = self.isInterleave(s1[1:], s2, s3[1:])
-        if s2[0] == s3[0]:
-            ret_2 = self.isInterleave(s1, s2[1:], s3[1:])
+        for i in xrange(1, len(s1) + 1):
+            for j in xrange(1, len(s2)+1):
+                match[j][i] = (match[j][i-1] and s1[i-1] == s3[i+j-1]) or (match[j-1][i] and s2[j-1] == s3[i+j-1])
 
-        return ret_1 or ret_2
+        return match[-1][-1]
+
+
+
 
 
 if __name__ == "__main__":
