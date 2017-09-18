@@ -30,7 +30,26 @@ class Solution(object):
         :type n: int
         :rtype: List[TreeNode]
         """
+        if n == 0:
+            return []
+        return self.generateTreesRecu(1, n)
+
+    def generateTreesRecu(self, low, high):
+        result = []
+        if low > high:
+            result.append(None)
+        for i in xrange(low, high + 1):
+            left = self.generateTreesRecu(low, i - 1)
+            right = self.generateTreesRecu(i + 1, high)
+            for j in left:
+                for k in right:
+                    curr = TreeNode(i)
+                    curr.left = j
+                    curr.right = k
+                    result.append(curr)
+        return result
 
 
 if __name__ == "__main__":
+    print Solution().generateTrees(0)
     print Solution().generateTrees(3)
