@@ -34,6 +34,13 @@ class Solution(object):
         :type root: TreeNode
         :rtype: bool
         """
+        return self.is_valid_BST_recu(root, float("-inf"), float("inf"))
+
+    def is_valid_BST_recu(self, node, low, high):
+        if not node:
+            return True
+        return low < node.val < high and self.is_valid_BST_recu(node.left, low, node.val) and self.is_valid_BST_recu(
+            node.right, node.val, high)
 
 
 if __name__ == "__main__":
