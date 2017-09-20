@@ -29,7 +29,7 @@ class TreeNode(object):
 
 
 class Solution(object):
-    def isValidBST(self, root):
+    def isValidBST_2(self, root):
         """
         :type root: TreeNode
         :rtype: bool
@@ -41,6 +41,33 @@ class Solution(object):
             return True
         return low < node.val < high and self.is_valid_BST_recu(node.left, low, node.val) and self.is_valid_BST_recu(
             node.right, node.val, high)
+
+    def isValidBST(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        prev, curr = None, root
+        while curr:
+            if not curr.left:
+                if prev and prev.val >= curr.val:
+                    return False
+                prev = curr
+                curr = curr.right
+            else:
+                node = curr.left
+                while node.right and node.right != curr:
+                    node = node.right
+                if not node.right:
+                    node.right = curr
+                    curr = curr.left
+                else:
+                    if prev and prev.val >= curr.val:
+                        return False
+                    node.right = None
+                    prev = curr
+                    curr = curr.right
+        return True
 
 
 if __name__ == "__main__":
