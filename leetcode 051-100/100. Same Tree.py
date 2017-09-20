@@ -21,15 +21,26 @@ class Solution(object):
         :type q: TreeNode
         :rtype: bool
         """
+        if p is None and q:
+            return False
+        if p and q is None:
+            return False
+        if not p and not q:
+            return True
+        if p.val != q.val:
+            return False
+        else:
+            return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
 
 
 if __name__ == "__main__":
     tree_1 = TreeNode(1)
     tree_1.left = TreeNode(2)
     tree_1.right = TreeNode(3)
+    assert Solution().isSameTree(tree_1, None) is False
     assert Solution().isSameTree(tree_1, tree_1) is True
 
-    tree_1 = TreeNode(2)
-    tree_1.left = TreeNode(1)
-    tree_1.right = TreeNode(3)
-    assert Solution().isSameTree(tree_1, tree_1) is False
+    tree_2 = TreeNode(2)
+    tree_2.left = TreeNode(1)
+    tree_2.right = TreeNode(3)
+    assert Solution().isSameTree(tree_1, tree_2) is False
