@@ -21,16 +21,11 @@ class Solution(object):
         :type q: TreeNode
         :rtype: bool
         """
-        if p is None and q:
-            return False
-        if p and q is None:
-            return False
         if not p and not q:
             return True
-        if p.val != q.val:
-            return False
-        else:
-            return self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        if p and q:
+            return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+        return False
 
 
 if __name__ == "__main__":
