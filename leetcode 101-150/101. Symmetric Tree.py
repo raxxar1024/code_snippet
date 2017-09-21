@@ -35,6 +35,18 @@ class Solution(object):
         :rtype: bool
         """
 
+        if root is None:
+            return True
+        else:
+            def is_mirror(p, q):
+                if p is None and q is None:
+                    return True
+                if p and q:
+                    return p.val == q.val and is_mirror(p.left, q.right) and is_mirror(p.right, q.left)
+                return False
+
+            return is_mirror(root.left, root.right)
+
 
 if __name__ == "__main__":
     tree_1 = TreeNode(1)
