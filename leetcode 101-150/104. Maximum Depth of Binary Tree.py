@@ -20,6 +20,20 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
+        if root is None:
+            return 0
+        current = [root]
+        level = 0
+        while current:
+            next_level = []
+            for node in current:
+                if node.left:
+                    next_level.append(node.left)
+                if node.right:
+                    next_level.append(node.right)
+            current = next_level
+            level += 1
+        return level
 
 
 if __name__ == "__main__":
