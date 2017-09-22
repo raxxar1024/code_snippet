@@ -29,7 +29,7 @@ class TreeNode(object):
 
 
 class Solution(object):
-    def isSymmetric(self, root):
+    def isSymmetric_2(self, root):
         """
         :type root: TreeNode
         :rtype: bool
@@ -46,6 +46,32 @@ class Solution(object):
                 return False
 
             return is_mirror(root.left, root.right)
+
+    def isSymmetric(self, root):
+        """
+        :type root: TreeNode
+        :rtype: bool
+        """
+        if root is None:
+            return True
+
+        stack = []
+        stack.append(root.left)
+        stack.append(root.right)
+        while stack:
+            p, q = stack.pop(), stack.pop()
+            if p is None and q is None:
+                continue
+            if p is None or q is None or p.val != q.val:
+                return False
+
+            stack.append(p.left)
+            stack.append(q.right)
+
+            stack.append(q.left)
+            stack.append(p.right)
+
+        return True
 
 
 if __name__ == "__main__":
