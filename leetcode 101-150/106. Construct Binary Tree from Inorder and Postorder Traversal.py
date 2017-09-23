@@ -22,6 +22,20 @@ class Solution(object):
         :type postorder: List[int]
         :rtype: TreeNode
         """
+        if len(postorder) == 0:
+            return None
+
+        root_val = postorder[-1]
+        root = TreeNode(root_val)
+        if len(inorder) == 1:
+            return root
+
+        idx = inorder.index(root_val)
+
+        root.left = self.buildTree(inorder[:idx], postorder[:idx])
+        root.right = self.buildTree(inorder[idx + 1:], postorder[idx:-1])
+
+        return root
 
 
 if __name__ == "__main__":
@@ -31,6 +45,6 @@ if __name__ == "__main__":
     assert tree_1.right.val == 3
     assert tree_1.left.left.val == 4
     assert tree_1.left.right.val == 5
-    assert tree_1.right.left.val == 6
+    assert tree_1.right.left.val == 8
     assert tree_1.right.right.val == 7
-    assert tree_1.right.left.right.val == 8
+    assert tree_1.right.left.left.val == 6
