@@ -25,6 +25,21 @@ class Solution(object):
         :type head: ListNode
         :rtype: TreeNode
         """
+        nums = []
+        while head:
+            nums.append(head.val)
+            head = head.next
+
+        def sorted_array_to_BST(nums):
+            if len(nums) == 0:
+                return None
+            mid = len(nums) / 2
+            root = TreeNode(nums[mid])
+            root.left = sorted_array_to_BST(nums[:mid])
+            root.right = sorted_array_to_BST(nums[mid + 1:])
+            return root
+
+        return sorted_array_to_BST(nums)
 
 
 if __name__ == "__main__":
