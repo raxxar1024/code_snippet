@@ -32,6 +32,23 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[List[int]]
         """
+        if root is None:
+            return []
+        result = []
+        current = [root]
+        while current:
+            next_level = []
+            vals = []
+            for node in current:
+                if node.left:
+                    next_level.append(node.left)
+                if node.right:
+                    next_level.append(node.right)
+                vals.append(node.val)
+            current = next_level
+            result.append(vals)
+        result.reverse()
+        return result
 
 
 if __name__ == "__main__":
