@@ -25,23 +25,11 @@ class Solution(object):
             return True
 
         def get_depth(r):
-            depth = 0
             if r is None:
-                return depth
-            current = [r]
-            while current:
-                depth += 1
-                next_level = []
-                for node in current:
-                    if node.left:
-                        next_level.append(node.left)
-                    if node.right:
-                        next_level.append(node.right)
-                current = next_level
-            return depth
+                return 0
+            return max(get_depth(r.left), get_depth(r.right)) + 1
 
-        depth_1 = get_depth(root.left)
-        depth_2 = get_depth(root.right)
+        depth_1, depth_2 = get_depth(root.left), get_depth(root.right)
         if abs(depth_1 - depth_2) <= 1 and self.isBalanced(root.left) and self.isBalanced(root.right):
             return True
         else:
