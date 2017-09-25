@@ -35,6 +35,21 @@ class Solution(object):
         :type sum: int
         :rtype: List[List[int]]
         """
+        result = []
+        if root is None:
+            return result
+
+        def get_path_list(node, tmp, tmp_list):
+            if node is None:
+                return
+            if node.left is None and node.right is None and node.val == tmp:
+                result.append(tmp_list + [node.val])
+            else:
+                get_path_list(node.left, tmp - node.val, tmp_list + [node.val])
+                get_path_list(node.right, tmp - node.val, tmp_list + [node.val])
+
+        get_path_list(root, sum, [])
+        return result
 
 
 if __name__ == "__main__":
