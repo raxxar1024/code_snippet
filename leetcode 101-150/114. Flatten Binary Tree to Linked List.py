@@ -39,11 +39,19 @@ class TreeNode(object):
 
 
 class Solution(object):
+    list_head = None
+
     def flatten(self, root):
         """
         :type root: TreeNode
         :rtype: void Do not return anything, modify root in-place instead.
         """
+        if root:
+            self.flatten(root.right)
+            self.flatten(root.left)
+            root.right = self.list_head
+            root.left = None
+            self.list_head = root
 
 
 if __name__ == "__main__":
