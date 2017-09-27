@@ -20,6 +20,16 @@ class Solution(object):
         :type t: str
         :rtype: int
         """
+        df = [[0 for _ in xrange(len(t) + 1)] for _ in xrange(len(s) + 1)]
+        for i in xrange(len(s) + 1):
+            df[i][0] = 1
+
+        for i in xrange(1, len(s) + 1):
+            for j in xrange(1, len(t) + 1):
+                df[i][j] = df[i-1][j]
+                if s[i-1] == t[j-1]:
+                    df[i][j] += df[i-1][j-1]
+        return df[-1][-1]
 
 
 if __name__ == "__main__":
