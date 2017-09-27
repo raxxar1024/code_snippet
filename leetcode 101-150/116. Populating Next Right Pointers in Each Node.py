@@ -59,7 +59,7 @@ class Solution:
                 for i in xrange(len(next_level) - 1):
                     next_level[i].next = next_level[i + 1]
 
-    def connect(self, root):
+    def connect_2(self, root):
         if root is None:
             return
         if root.left:
@@ -68,6 +68,17 @@ class Solution:
             root.right.next = root.next.left
         self.connect(root.left)
         self.connect(root.right)
+
+    def connect(self, root):
+        head = root
+        while head:
+            curr = head
+            while curr and curr.left:
+                curr.left.next = curr.right
+                if curr.next:
+                    curr.right.next = curr.next.left
+                curr = curr.next
+            head = head.left
 
 
 if __name__ == "__main__":
