@@ -44,7 +44,20 @@ class Solution:
     # @param root, a tree link node
     # @return nothing
     def connect(self, root):
-        return
+        if root is None:
+            return
+        current = [root]
+        while current:
+            next_level = []
+            for node in current:
+                if node.left:
+                    next_level.append(node.left)
+                if node.right:
+                    next_level.append(node.right)
+            current = next_level
+            if len(next_level) > 1:
+                for i in xrange(len(next_level) - 1):
+                    next_level[i].next = next_level[i + 1]
 
 
 if __name__ == "__main__":
@@ -55,8 +68,8 @@ if __name__ == "__main__":
     tree_link_1.right = TreeLinkNode(3)
     tree_link_1.right.left = TreeLinkNode(6)
     tree_link_1.right.right = TreeLinkNode(7)
-    Solution.connect(tree_link_1)
-    assert tree_link_1.left.next == tree_link_1.left
-    assert tree_link_1.left.left.next == tree_link_1.left.right
-    assert tree_link_1.left.right.next == tree_link_1.right.left
-    assert tree_link_1.right.left.next == tree_link_1.right.right
+    Solution().connect(tree_link_1)
+    assert tree_link_1.left.next.val == tree_link_1.right.val
+    assert tree_link_1.left.left.next.val == tree_link_1.left.right.val
+    assert tree_link_1.left.right.next.val == tree_link_1.right.left.val
+    assert tree_link_1.right.left.next.val == tree_link_1.right.right.val
