@@ -43,7 +43,7 @@ class TreeLinkNode:
 class Solution:
     # @param root, a tree link node
     # @return nothing
-    def connect(self, root):
+    def connect_1(self, root):
         if root is None:
             return
         current = [root]
@@ -58,6 +58,16 @@ class Solution:
             if len(next_level) > 1:
                 for i in xrange(len(next_level) - 1):
                     next_level[i].next = next_level[i + 1]
+
+    def connect(self, root):
+        if root is None:
+            return
+        if root.left:
+            root.left.next = root.right
+        if root.right and root.next:
+            root.right.next = root.next.left
+        self.connect(root.left)
+        self.connect(root.right)
 
 
 if __name__ == "__main__":
