@@ -36,6 +36,20 @@ class Solution:
     # @param root, a tree link node
     # @return nothing
     def connect(self, root):
+        if root is None:
+            return
+        current = [root]
+        while current:
+            next_level = []
+            for node in current:
+                if node.left:
+                    next_level.append(node.left)
+                if node.right:
+                    next_level.append(node.right)
+            current = next_level
+            if len(next_level) > 1:
+                for i in xrange(len(next_level) - 1):
+                    next_level[i].next = next_level[i + 1]
         return
 
 
