@@ -21,6 +21,18 @@ class Solution(object):
         :type numRows: int
         :rtype: List[List[int]]
         """
+        if numRows == 0:
+            return []
+        if numRows == 1:
+            return [[1]]
+        result = [[1]]
+        for i in xrange(numRows - 1):
+            next_level = [1]
+            for j in xrange(len(result[-1]) - 1):
+                next_level.append(result[-1][j] + result[-1][j + 1])
+            next_level.append(1)
+            result.append(next_level)
+        return result
 
 
 if __name__ == "__main__":
