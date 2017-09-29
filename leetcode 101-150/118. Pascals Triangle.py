@@ -16,7 +16,7 @@ Return
 
 
 class Solution(object):
-    def generate(self, numRows):
+    def generate_1(self, numRows):
         """
         :type numRows: int
         :rtype: List[List[int]]
@@ -33,6 +33,14 @@ class Solution(object):
             next_level.append(1)
             result.append(next_level)
         return result
+
+    def generate(self, numRows):
+        if numRows == 0:
+            return []
+        result = [[1]]
+        for i in xrange(numRows-1):
+            result.append(map(lambda x, y: x + y, result[-1] + [0], [0] + result[-1]))
+        return result[:]
 
 
 if __name__ == "__main__":
