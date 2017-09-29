@@ -16,7 +16,12 @@ class Solution(object):
         :type rowIndex: int
         :rtype: List[int]
         """
+        result = [1]
+        for i in xrange(rowIndex):
+            result = map(lambda x, y: x + y, result + [0], [0] + result)
+        return result
 
 
 if __name__ == "__main__":
     assert Solution().getRow(3) == [1, 3, 3, 1]
+    assert Solution().getRow(4) == [1, 4, 6, 4, 1]
