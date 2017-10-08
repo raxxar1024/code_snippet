@@ -19,26 +19,18 @@ class Solution(object):
         :type s: str
         :rtype: bool
         """
-
-        def is_char(c):
-            if ord('a') <= ord(c) <= ord('z') or ord('A') <= ord(c) <= ord('Z') or ord('0') <= ord(c) <= ord('9'):
-                return True
-            else:
-                return False
-
         left, right = 0, len(s) - 1
         while left < right:
-            if not is_char(s[left]):
+            if not s[left].isalnum():
                 left += 1
                 continue
-            if not is_char(s[right]):
+            if not s[right].isalnum():
                 right -= 1
                 continue
             if s[left].lower() != s[right].lower():
                 return False
             else:
-                left += 1
-                right -= 1
+                left, right = left + 1, right - 1
         return True
 
 
