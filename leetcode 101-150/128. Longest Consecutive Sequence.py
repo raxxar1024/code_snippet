@@ -11,7 +11,7 @@ Your algorithm should run in O(n) complexity.
 
 
 class Solution(object):
-    def longestConsecutive(self, nums):
+    def longestConsecutive_2(self, nums):
         """
         :type nums: List[int]
         :rtype: int
@@ -31,6 +31,22 @@ class Solution(object):
             max_len = max(max_len, tmp_len)
         return max_len
 
+    def longestConsecutive(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if len(nums) == 0:
+            return 0
+        result, lengths = 1, {key: 0 for key in nums}
+        for i in nums:
+            if lengths[i] == 0:
+                lengths[i] = 1
+                left, right = lengths.get(i - 1, 0), lengths.get(i + 1, 0)
+                length = 1 + left + right
+                result, lengths[i - left], lengths[i + right] = max(result, length), length, length
+        return result
+    
 
 if __name__ == "__main__":
     assert Solution().longestConsecutive([1, 2, 0, 1]) == 3
