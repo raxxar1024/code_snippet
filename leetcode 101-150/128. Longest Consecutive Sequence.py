@@ -16,7 +16,22 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        nums = list(set(nums))
+        nums.sort()
+        if len(nums) == 0:
+            return 0
+        prev, max_len, tmp_len = nums[0], 1, 1
+        for i in xrange(1, len(nums)):
+            if nums[i] == prev + 1:
+                tmp_len += 1
+                prev = nums[i]
+            else:
+                tmp_len = 1
+                prev = nums[i]
+            max_len = max(max_len, tmp_len)
+        return max_len
 
 
 if __name__ == "__main__":
+    assert Solution().longestConsecutive([1, 2, 0, 1]) == 3
     assert Solution().longestConsecutive([100, 4, 200, 1, 3, 2]) == 4
