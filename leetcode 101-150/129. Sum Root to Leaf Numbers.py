@@ -32,20 +32,15 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
-        if root is None:
+        return self.sumNumbersRecu(root, 0)
+
+    def sumNumbersRecu(self, node, tmp_num):
+        if node is None:
             return 0
-        words = []
-
-        def get_word(node, tmp_word):
-            if node.left:
-                get_word(node.left, tmp_word + str(node.left.val))
-            if node.right:
-                get_word(node.right, tmp_word + str(node.right.val))
-            if node.left is None and node.right is None:
-                words.append(tmp_word)
-
-        get_word(root, str(root.val))
-        return sum(map(int, words))
+        if node.left is None and node.right is None:
+            return tmp_num * 10 + node.val
+        return self.sumNumbersRecu(node.left, tmp_num * 10 + node.val) + self.sumNumbersRecu(node.right,
+                                                                                             tmp_num * 10 + node.val)
 
 
 if __name__ == "__main__":
