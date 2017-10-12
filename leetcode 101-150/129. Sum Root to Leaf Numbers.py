@@ -32,6 +32,20 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
+        if root is None:
+            return 0
+        words = []
+
+        def get_word(node, tmp_word):
+            if node.left:
+                get_word(node.left, tmp_word + str(node.left.val))
+            if node.right:
+                get_word(node.right, tmp_word + str(node.right.val))
+            if node.left is None and node.right is None:
+                words.append(tmp_word)
+
+        get_word(root, str(root.val))
+        return sum(map(int, words))
 
 
 if __name__ == "__main__":
