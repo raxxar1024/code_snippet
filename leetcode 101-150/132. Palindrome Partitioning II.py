@@ -15,7 +15,21 @@ class Solution(object):
         :type s: str
         :rtype: int
         """
+        dp = [0 for _ in xrange(len(s) + 1)]
+        p = [[False for _ in xrange(len(s))] for _ in xrange(len(s))]
+
+        for i in xrange(len(s) + 1):
+            dp[i] = len(s) - i
+
+        for i in xrange(len(s) - 1, -1, -1):
+            for j in xrange(i, len(s)):
+                if s[i] == s[j] and (j - i < 2 or p[i + 1][j - 1]):
+                    p[i][j] = True
+                    dp[i] = min(dp[j + 1] + 1, dp[i])
+
+        return dp[0] - 1
 
 
 if __name__ == "__main__":
+    assert Solution().minCut("bb") == 0
     assert Solution().minCut("aab") == 1
