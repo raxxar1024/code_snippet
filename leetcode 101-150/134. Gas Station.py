@@ -20,6 +20,19 @@ class Solution(object):
         :type cost: List[int]
         :rtype: int
         """
+        start, current_sum, total_sum = 0, 0, 0
+        for i in xrange(len(gas)):
+            diff = gas[i] - cost[i]
+            current_sum += diff
+            total_sum += diff
+            if current_sum < 0:
+                start = i + 1
+                current_sum = 0
+
+        if total_sum >= 0:
+            return start
+        else:
+            return -1
 
 
 if __name__ == "__main__":
