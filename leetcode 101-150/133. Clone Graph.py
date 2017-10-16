@@ -35,7 +35,7 @@ class UndirectedGraphNode:
 class Solution:
     # @param node, a undirected graph node
     # @return a undirected graph node
-    def cloneGraph(self, node):
+    def cloneGraph_dfs(self, node):
         if node is None:
             return None
         visit_set = {}
@@ -50,6 +50,22 @@ class Solution:
             return output_node
 
         return dfs(node)
+
+    def cloneGraph(self, node):
+        if node is None:
+            return None
+
+        cloned_node = UndirectedGraphNode(node.label)
+        visit_set, queue = {node: cloned_node}, [node]
+        while queue:
+            tmp_node = queue.pop()
+            for neighbor in tmp_node.neighbors:
+                if neighbor not in visit_set:
+                    queue.append(neighbor)
+                    cloned_neighbor = UndirectedGraphNode(neighbor.label)
+                    visit_set[neighbor] = cloned_neighbor
+                visit_set[tmp_node].neighbors.append(visit_set[neighbor])
+        return cloned_node
 
 
 if __name__ == "__main__":
