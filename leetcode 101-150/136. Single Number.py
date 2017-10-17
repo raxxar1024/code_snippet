@@ -13,6 +13,8 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        import operator
+        return reduce(operator.xor, nums)
 
 
 if __name__ == "__main__":
