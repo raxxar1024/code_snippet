@@ -23,15 +23,14 @@ class Solution(object):
         :type wordDict: List[str]
         :rtype: bool
         """
-        def is_valid(tmp_s):
-            if not tmp_s:
-                return True
-            for i in xrange(len(tmp_s)):
-                if tmp_s[:i+1] in wordDict and is_valid(tmp_s[i+1:]):
-                    return True
-            return False
+        dp = [False for _ in xrange(len(s) + 1)]
+        dp[0] = True
+        for i in xrange(1, len(s)+1):
+            for j in xrange(i):
+                if dp[j] and s[j:i] in wordDict:
+                    dp[i] = True
+        return dp[-1]
 
-        return is_valid(s)
 
 if __name__ == "__main__":
     assert Solution().wordBreak("leetcode", ["leet", "code"]) is True
