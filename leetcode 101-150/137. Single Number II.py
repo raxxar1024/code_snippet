@@ -14,8 +14,14 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
-        import operator
-        return reduce(operator.xor, nums)
+        ones, twos, threes = 0, 0, 0
+        for num in nums:
+            twos |= (ones & num)
+            ones ^= num
+            threes = ~(ones & twos)
+            ones &= threes
+            twos &= threes
+        return ones
 
 
 if __name__ == "__main__":
