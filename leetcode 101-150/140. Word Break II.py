@@ -24,6 +24,18 @@ class Solution(object):
         :type wordDict: List[str]
         :rtype: List[str]
         """
+        result = []
+
+        def is_valid(tmp_s, intermediate):
+            if not tmp_s:
+                result.append(intermediate[1:])
+                return
+            for i in xrange(len(tmp_s)):
+                if tmp_s[:i + 1] in wordDict:
+                    is_valid(tmp_s[i + 1:], intermediate + " " + tmp_s[:i + 1])
+
+        is_valid(s, "")
+        return result
 
 
 if __name__ == "__main__":
