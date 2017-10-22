@@ -15,7 +15,7 @@ class ListNode(object):
 
 
 class Solution(object):
-    def hasCycle(self, head):
+    def hasCycle_1(self, head):
         """
         :type head: ListNode
         :rtype: bool
@@ -29,6 +29,18 @@ class Solution(object):
                 visited[head] = head.val
                 head = head.next
         return has_cycle
+
+    def hasCycle(self, head):
+        """
+        :type head: ListNode
+        :rtype: bool
+        """
+        fast, slow = head, head
+        while fast and fast.next:
+            fast, slow = fast.next.next, slow.next
+            if fast == slow:
+                return True
+        return False
 
 
 if __name__ == "__main__":
