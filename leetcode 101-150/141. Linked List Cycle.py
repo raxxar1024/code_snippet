@@ -20,6 +20,15 @@ class Solution(object):
         :type head: ListNode
         :rtype: bool
         """
+        visited = {}
+        has_cycle = False
+        while head:
+            if head in visited:
+                return True
+            else:
+                visited[head] = head.val
+                head = head.next
+        return has_cycle
 
 
 if __name__ == "__main__":
