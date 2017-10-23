@@ -24,17 +24,31 @@ class Solution(object):
         :type wordDict: List[str]
         :rtype: List[str]
         """
+
+        def check(tmp_s):
+            dp = [False for _ in xrange(len(tmp_s) + 1)]
+            dp[0] = True
+
+            for i in xrange(1, len(tmp_s) + 1):
+                for j in xrange(i):
+                    if dp[j] and tmp_s[j:i] in wordDict:
+                        dp[i] = True
+
+            return dp[-1]
+
         result = []
 
-        def is_valid(tmp_s, intermediate):
+        def dfs(tmp_s, intermediate):
             if not tmp_s:
                 result.append(intermediate[1:])
                 return
-            for i in xrange(len(tmp_s)):
-                if tmp_s[:i + 1] in wordDict:
-                    is_valid(tmp_s[i + 1:], intermediate + " " + tmp_s[:i + 1])
 
-        is_valid(s, "")
+            if check(tmp_s):
+                for k in xrange(len(tmp_s)):
+                    if tmp_s[:k + 1] in wordDict:
+                        dfs(tmp_s[k + 1:], intermediate + " " + tmp_s[:k + 1])
+
+        dfs(s, "")
         return result
 
 
