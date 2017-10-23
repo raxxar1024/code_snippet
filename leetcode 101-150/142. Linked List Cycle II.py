@@ -22,6 +22,14 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
+        visited = {}
+        while head:
+            if head in visited:
+                return head
+            else:
+                visited[head] = head.val
+                head = head.next
+        return None
 
 
 if __name__ == "__main__":
