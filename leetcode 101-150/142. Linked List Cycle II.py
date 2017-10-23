@@ -22,6 +22,15 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
+        slow, fast = head, head
+        while fast and fast.next:
+            slow, fast = slow.next, fast.next.next
+            if slow == fast:
+                fast = head
+                while slow != fast:
+                    slow, fast = slow.next, fast.next
+                return fast
+        return None
 
 
 if __name__ == "__main__":
