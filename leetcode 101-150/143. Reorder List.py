@@ -23,6 +23,23 @@ class Solution(object):
         :type head: ListNode
         :rtype: void Do not return anything, modify head in-place instead.
         """
+        fast, slow, prev = head, head, None
+        while fast and fast.next:
+            fast, slow, prev = fast.next.next, slow.next, slow
+        current, prev.next, prev = slow, None, None
+
+        while current:
+            current.next, prev, current = prev, current, current.next
+
+        l1, l2 = head, prev
+        dummy = ListNode(0)
+        current = dummy
+
+        while l1 and l2:
+            current.next, current, l1 = l1, l1, l1.next
+            current.next, current, l2 = l2, l2, l2.next
+
+        return dummy.next
 
 
 if __name__ == "__main__":
