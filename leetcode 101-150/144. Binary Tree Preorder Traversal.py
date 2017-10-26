@@ -29,6 +29,19 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
+        if not root:
+            return []
+        stack, result = [root], []
+
+        while stack:
+            item = stack.pop()
+            result.append(item.val)
+            if item.right:
+                stack.append(item.right)
+            if item.left:
+                stack.append(item.left)
+
+        return result
 
 
 if __name__ == "__main__":
