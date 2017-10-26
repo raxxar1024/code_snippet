@@ -23,6 +23,8 @@ class Solution(object):
         :type head: ListNode
         :rtype: void Do not return anything, modify head in-place instead.
         """
+        if not head or not head.next:
+            return
         fast, slow, prev = head, head, None
         while fast and fast.next:
             fast, slow, prev = fast.next.next, slow.next, slow
@@ -39,11 +41,12 @@ class Solution(object):
             current.next, current, l1 = l1, l1, l1.next
             current.next, current, l2 = l2, l2, l2.next
 
-        return dummy.next
-
 
 if __name__ == "__main__":
     node_1 = ListNode(1)
+    Solution().reorderList(node_1)
+    assert node_1.val == 1
+    assert node_1.next is None
     node_2 = ListNode(2)
     node_3 = ListNode(3)
     node_4 = ListNode(4)
