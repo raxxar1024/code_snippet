@@ -29,6 +29,22 @@ class Solution(object):
         :type root: TreeNode
         :rtype: List[int]
         """
+        if not root:
+            return []
+        stack, result = [(root, False)], []
+
+        while stack:
+            node, is_visited = stack.pop()
+            if not node:
+                continue
+            if is_visited:
+                result.append(node.val)
+            else:
+                stack.append((node, True))
+                stack.append((node.right, False))
+                stack.append((node.left, False))
+
+        return result
 
 
 if __name__ == "__main__":
