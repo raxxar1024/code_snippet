@@ -25,18 +25,29 @@ cache.get(4);       // returns 4
 
 """
 
+import collections
+
 
 class LRUCache(object):
     def __init__(self, capacity):
         """
         :type capacity: int
         """
+        self.cache = collections.OrderedDict()
+        self.capacity = capacity
 
     def get(self, key):
         """
         :type key: int
         :rtype: int
         """
+        if key in self.cache:
+            val = self.cache[key]
+            del self.cache[key]
+            self.cache[key] = val
+            return val
+        else:
+            return -1
 
     def put(self, key, value):
         """
@@ -44,6 +55,12 @@ class LRUCache(object):
         :type value: int
         :rtype: void
         """
+        if key in self.cache:
+            del self.cache[key]
+        else:
+            if len(self.cache) == self.capacity:
+                self.cache.popitem(last=False)
+        self.cache[key] = value
 
 
 if __name__ == "__main__":
