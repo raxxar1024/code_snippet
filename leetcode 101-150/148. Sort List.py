@@ -16,6 +16,32 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
+        if not head or not head.next:
+            return head
+        fast, slow, prev = head, head, None
+        while fast and fast.next:
+            fast, slow, prev = fast.next.next, slow.next, slow
+        prev.next = None
+
+        return self.merge(self.sortList(head), self.sortList(slow))
+
+    def merge(self, list_1, list_2):
+        dummy = curr = ListNode(0)
+
+        while list_1 and list_2:
+            if list_1.val < list_2.val:
+                curr.next = list_1
+                list_1 = list_1.next
+            else:
+                curr.next = list_2
+                list_2 = list_2.next
+            curr = curr.next
+
+        if list_1:
+            curr.next = list_1
+        if list_2:
+            curr.next = list_2
+        return dummy.next
 
 
 if __name__ == "__main__":
