@@ -16,29 +16,14 @@ class Solution(object):
         :type tokens: List[str]
         :rtype: int
         """
-
-        operators = ["+", "-", "*", "/"]
-        stack = []
-        for i in xrange(len(tokens)):
-            c = tokens[i]
-            if c in operators:
-                num_1 = stack.pop()
-                num_2 = stack.pop()
-                tmp = 0
-                if c == "+":
-                    tmp = num_2 + num_1
-                elif c == "-":
-                    tmp = num_2 - num_1
-                elif c == "*":
-                    tmp = num_2 * num_1
-                elif c == "/":
-                    tmp = abs(num_2) / abs(num_1)
-                    if num_1 * num_2 < 0:
-                        tmp *= -1
-                stack.append(tmp)
+        import operator
+        stack, operators = [], {"+": operator.add, "-": operator.sub, "*": operator.mul, "/": operator.div}
+        for token in tokens:
+            if token in operators:
+                num_1, num_2 = stack.pop(), stack.pop()
+                stack.append(int(operators[token](num_2 * 1.0, num_1)))
             else:
-                stack.append(int(tokens[i]))
-
+                stack.append(int(token))
         return stack[-1]
 
 
