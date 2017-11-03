@@ -27,7 +27,15 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
+        words = s.split(" ")
+        words.reverse()
+        res = ""
+        for word in words:
+            if word:
+                res += word + " "
+        return res[:-1]
 
 
 if __name__ == "__main__":
+    assert Solution().reverseWords("   ") == ""
     assert Solution().reverseWords("the sky is blue") == "blue is sky the"
