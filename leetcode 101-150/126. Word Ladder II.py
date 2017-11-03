@@ -31,6 +31,13 @@ Please reload the code definition to get the latest changes.
 
 
 class Solution(object):
+    def __init__(self):
+        self.result = []
+        self.word_list_set = set([])
+        self.shortest_len = 99
+        self.begin = ""
+        self.end = ""
+
     def findLadders(self, beginWord, endWord, wordList):
         """
         :type beginWord: str
@@ -38,9 +45,47 @@ class Solution(object):
         :type wordList: List[str]
         :rtype: List[List[str]]
         """
+        self.word_list_set = set(wordList)
+        self.begin = beginWord
+        self.end = endWord
+
+        self.find_next_word(beginWord, set([]), [])
+        results = []
+        for result in self.result:
+            if len(result) == self.shortest_len + 1:
+                results.append(result)
+        return results
+
+    def find_next_word(self, curr_word, visited, path):
+        if len(path) > self.shortest_len:
+            return
+        if curr_word == self.end:
+            self.shortest_len = len(path)
+            self.result.append([self.begin] + path)
+        else:
+            for i in xrange(len(curr_word)):
+                for c in "abcdefghijklmnopqrstuvwxyz":
+                    tmp_word = curr_word[:i] + c + curr_word[i + 1:]
+                    if tmp_word not in visited and tmp_word in self.word_list_set:
+                        new_visited = visited | set([tmp_word])
+                        new_path = path + [tmp_word]
+                        self.find_next_word(tmp_word, new_visited, new_path)
 
 
 if __name__ == "__main__":
+    assert Solution().findLadders("qa", "sq",
+                                  ["si", "go", "se", "cm", "so", "ph", "mt", "db", "mb", "sb", "kr", "ln", "tm", "le",
+                                   "av", "sm", "ar", "ci", "ca", "br", "ti", "ba", "to", "ra", "fa", "yo", "ow", "sn",
+                                   "ya", "cr", "po", "fe", "ho", "ma", "re", "or", "rn", "au", "ur", "rh", "sr", "tc",
+                                   "lt", "lo", "as", "fr", "nb", "yb", "if", "pb", "ge", "th", "pm", "rb", "sh", "co",
+                                   "ga", "li", "ha", "hz", "no", "bi", "di", "hi", "qa", "pi", "os", "uh", "wm", "an",
+                                   "me", "mo", "na", "la", "st", "er", "sc", "ne", "mn", "mi", "am", "ex", "pt", "io",
+                                   "be", "fm", "ta", "tb", "ni", "mr", "pa", "he", "lr", "sq", "ye"]) == [
+        ["a", "c"]
+    ]
+    assert Solution().findLadders("a", "c", ["a", "b", "c"]) == [
+        ["a", "c"]
+    ]
     assert Solution().findLadders("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"]) == [
         ["hit", "hot", "dot", "dog", "cog"],
         ["hit", "hot", "lot", "log", "cog"]
