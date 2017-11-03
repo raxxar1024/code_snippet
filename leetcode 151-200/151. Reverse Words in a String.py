@@ -27,13 +27,7 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
-        words = s.split(" ")
-        words.reverse()
-        res = ""
-        for word in words:
-            if word:
-                res += word + " "
-        return res[:-1]
+        return " ".join(reversed(s.split()))
 
 
 if __name__ == "__main__":
