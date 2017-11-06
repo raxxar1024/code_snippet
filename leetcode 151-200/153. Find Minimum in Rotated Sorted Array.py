@@ -16,6 +16,10 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        if nums[0] <= nums[len(nums) - 1]:
+            return nums[0]
+        mid = len(nums) / 2
+        return min(self.findMin(nums[:mid]), self.findMin(nums[mid:]))
 
 
 if __name__ == "__main__":
