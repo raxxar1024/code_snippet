@@ -30,6 +30,9 @@ Please reload the code definition to get the latest changes.
 """
 
 
+# https://discuss.leetcode.com/topic/8343/use-defaultdict-for-traceback-and-easy-writing-20-lines-python-code/9
+
+
 class Solution(object):
     def findLadders(self, beginWord, endWord, wordList):
         """
