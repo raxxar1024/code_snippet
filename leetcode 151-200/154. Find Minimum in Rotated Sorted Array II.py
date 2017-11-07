@@ -20,7 +20,14 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        if len(nums) == 1:
+            return nums[0]
+        if nums[0] < nums[len(nums) - 1]:
+            return nums[0]
+        mid = len(nums) / 2
+        return min(self.findMin(nums[:mid]), self.findMin(nums[mid:]))
 
 
 if __name__ == "__main__":
+    assert Solution().findMin([3, 3, 1, 3, 3]) == 1
     assert Solution().findMin([4, 5, 6, 7, 0, 1, 2, 3]) == 0
