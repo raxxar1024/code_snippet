@@ -24,30 +24,50 @@ class MinStack(object):
         """
         initialize your data structure here.
         """
+        self.min_stack = []
+        self.stack = []
 
     def push(self, x):
         """
         :type x: int
         :rtype: void
         """
+        self.stack.append(x)
+        if len(self.min_stack) == 0 or x <= self.min_stack[-1]:
+            self.min_stack.append(x)
 
     def pop(self):
         """
         :rtype: void
         """
+        x = self.stack.pop()
+        if x == self.min_stack[-1]:
+            self.min_stack.pop()
 
     def top(self):
         """
         :rtype: int
         """
+        return self.stack[-1]
 
     def getMin(self):
         """
         :rtype: int
         """
+        return self.min_stack[-1]
 
 
 if __name__ == "__main__":
+    minStack = MinStack()
+    minStack.push(0)
+    minStack.push(1)
+    minStack.push(0)
+    ret = minStack.getMin()
+    assert ret == 0
+    minStack.top()
+    ret = minStack.getMin()
+    assert ret == 0
+
     minStack = MinStack()
     minStack.push(-2)
     minStack.push(0)
@@ -59,3 +79,4 @@ if __name__ == "__main__":
     assert ret == 0
     ret = minStack.getMin()
     assert ret == -2
+
