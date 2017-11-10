@@ -35,8 +35,38 @@ class Solution(object):
         :type wordList: List[str]
         :rtype: int
         """
+        import collections
+        wordSet = set([])
+        for word in wordList:
+            wordSet.add(word)
+        level = set([beginWord])
+        parents = collections.defaultdict(set)
 
+        count = 1
+        while level and endWord not in parents:
+            count += 1
+            next_level = collections.defaultdict(set)
+            for word in level:
+                for i in xrange(len(word)):
+                    p1 = word[:i]
+                    p2 = word[i + 1:]
+                    for j in 'abcdefghijklmnopqrstuvwxyz':
+                        if word[i] != j:
+                            tmp = p1 + j + p2
+                            if tmp in wordSet and tmp not in parents:
+                                next_level[tmp].add(word)
+            level = next_level
+            parents.update(next_level)
+
+        res = [[endWord]]
+        while res and res[0][0] != beginWord:
+            res = [[p] + r for r in res for p in parents[r[0]]]
+        if res:
+            return len(res[0])
+        else:
+            return 0
 
 
 if __name__ == "__main__":
+    assert Solution().ladderLength("hit", "cog", ["hot", "dot", "dog", "lot", "log"]) == 5
     assert Solution().ladderLength("hit", "cog", ["hot", "dot", "dog", "lot", "log", "cog"]) == 5
