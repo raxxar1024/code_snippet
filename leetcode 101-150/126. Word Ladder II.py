@@ -52,15 +52,14 @@ class Solution(object):
         while level and endWord not in parents:
             next_level = collections.defaultdict(set)
             for word in level:
-                for i in range(len(beginWord)):
+                for i in xrange(len(word)):
                     p1 = word[:i]
                     p2 = word[i + 1:]
                     for j in 'abcdefghijklmnopqrstuvwxyz':
-                        # accelerate
                         if word[i] != j:
-                            childWord = p1 + j + p2
-                            if childWord in wordSet and childWord not in parents:
-                                next_level[childWord].add(word)
+                            tmp = p1 + j + p2
+                            if tmp in wordSet and tmp not in parents:
+                                next_level[tmp].add(word)
             level = next_level
             parents.update(next_level)
 
