@@ -21,15 +21,26 @@ Special thanks to @ts for adding this problem and creating all test cases.
 
 
 class Solution(object):
-    def findPeakElement(self, nums):
+    def findPeakElement_2(self, nums):
         """
         :type nums: List[int]
         :rtype: int
         """
         nums = [float("-inf")] + nums + [float("-inf")]
-        for i in xrange(1, len(nums)-1):
-            if nums[i] > nums[i-1] and nums[i] > nums[i+1]:
+        for i in xrange(1, len(nums) - 1):
+            if nums[i] > nums[i - 1] and nums[i] > nums[i + 1]:
                 return i - 1
+
+    def findPeakElement(self, nums):
+        left, right = 0, len(nums) - 1
+        while left < right:
+            mid = (right + left) / 2
+            if nums[mid] > nums[mid + 1]:
+                right = mid
+            else:
+                left = mid + 1
+
+        return left
 
 
 if __name__ == "__main__":
