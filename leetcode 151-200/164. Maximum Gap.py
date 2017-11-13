@@ -19,6 +19,30 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        if len(nums) < 2:
+            return 0
+        min_val, max_val = min(nums), max(nums)
+        gap = max(1, (max_val - min_val) / (len(nums) - 1))
+        bucket_size = (max_val - min_val) / gap + 1
+        buckets = [{"min": float("inf"), "max": float("-inf")} for _ in xrange(bucket_size)]
+
+        for n in nums:
+            if n in [max_val, min_val]:
+                continue
+            i = (n - min_val) / gap
+            buckets[i]["min"] = min(buckets[i]["min"], n)
+            buckets[i]["max"] = max(buckets[i]["max"], n)
+
+        max_gap, pre_bucket_max = 0, min_val
+        for i in xrange(bucket_size):
+            if buckets[i]["min"] == float("inf") and buckets[i]["max"] == float("-inf"):
+                continue
+            max_gap = max(max_gap, buckets[i]["min"] - pre_bucket_max)
+            pre_bucket_max = buckets[i]["max"]
+
+        max_gap = max(max_gap, max_val - pre_bucket_max)
+
+        return max_gap
 
 
 if __name__ == "__main__":
