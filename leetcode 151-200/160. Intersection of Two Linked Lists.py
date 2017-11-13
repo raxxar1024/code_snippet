@@ -38,6 +38,29 @@ class Solution(object):
         :type head1, head1: ListNode
         :rtype: ListNode
         """
+        p1, p2 = headA, headB
+        t1, t2, begin = None, None, None
+        while p1 and p2:
+            if p1 is p2:
+                begin = p1
+                break
+
+            if p1.next:
+                p1 = p1.next
+            elif t1 is None:
+                t1 = headA
+                p1 = headB
+            else:
+                break
+
+            if p2.next:
+                p2 = p2.next
+            elif t2 is None:
+                t2 = headB
+                p2 = headA
+            else:
+                break
+        return begin
 
 
 if __name__ == "__main__":
