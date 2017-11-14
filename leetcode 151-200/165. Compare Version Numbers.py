@@ -25,22 +25,14 @@ class Solution(object):
         """
         lst_v1 = [int(x) for x in version1.split(".")]
         lst_v2 = [int(x) for x in version2.split(".")]
-        len_1, len_2 = len(lst_v1), len(lst_v2)
-        i = 0
-        while i < min(len_1, len_2):
-            if lst_v1[i] > lst_v2[i]:
-                return 1
-            elif lst_v1[i] < lst_v2[i]:
-                return -1
-            else:
-                i += 1
 
-        if sum(lst_v1[i:]) > sum(lst_v2[i:]):
-            return 1
-        elif sum(lst_v1[i:]) < sum(lst_v2[i:]):
-            return -1
-        else:
-            return 0
+        while len(lst_v1) != len(lst_v2):
+            if len(lst_v1) > len(lst_v2):
+                lst_v2.append(0)
+            else:
+                lst_v1.append(0)
+
+        return cmp(lst_v1, lst_v2)
 
 
 if __name__ == "__main__":
