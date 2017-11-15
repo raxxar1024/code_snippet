@@ -14,7 +14,7 @@ Output: index1=1, index2=2
 
 
 class Solution(object):
-    def twoSum(self, numbers, target):
+    def twoSum_2(self, numbers, target):
         """
         :type numbers: List[int]
         :type target: int
@@ -24,7 +24,7 @@ class Solution(object):
 
         dict_nums = collections.defaultdict(list)
         for i in xrange(len(numbers)):
-            dict_nums[numbers[i]].append(i+1)
+            dict_nums[numbers[i]].append(i + 1)
 
         for num in numbers:
             if num * 2 == target and len(dict_nums[num]) >= 2:
@@ -33,6 +33,18 @@ class Solution(object):
                 return [dict_nums[num][0], dict_nums[target - num][0]]
 
         return []
+
+    def twoSum(self, numbers, target):
+        start, end = 0, len(numbers) - 1
+
+        while start != end:
+            sum = numbers[start] + numbers[end]
+            if sum > target:
+                end -= 1
+            elif sum < target:
+                start += 1
+            else:
+                return [start + 1, end + 1]
 
 
 if __name__ == "__main__":
