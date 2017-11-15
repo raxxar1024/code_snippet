@@ -20,7 +20,21 @@ class Solution(object):
         :type target: int
         :rtype: List[int]
         """
+        import collections
+
+        dict_nums = collections.defaultdict(list)
+        for i in xrange(len(numbers)):
+            dict_nums[numbers[i]].append(i+1)
+
+        for num in numbers:
+            if num * 2 == target and len(dict_nums[num]) >= 2:
+                return [dict_nums[num][0], dict_nums[num][1]]
+            if target - num in dict_nums:
+                return [dict_nums[num][0], dict_nums[target - num][0]]
+
+        return []
 
 
 if __name__ == "__main__":
+    assert Solution().twoSum([0, 0, 3, 4], 0) == [1, 2]
     assert Solution().twoSum([2, 7, 11, 15], 9) == [1, 2]
