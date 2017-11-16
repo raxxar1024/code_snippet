@@ -11,7 +11,7 @@ Special thanks to @ts for adding this problem and creating all test cases.
 
 
 class Solution(object):
-    def majorityElement(self, nums):
+    def majorityElement_2(self, nums):
         """
         :type nums: List[int]
         :rtype: int
@@ -29,6 +29,10 @@ class Solution(object):
                 max_num = num
 
         return max_num
+
+    def majorityElement(self, nums):
+        import collections
+        return sorted(collections.Counter(nums).items(), key=lambda a: a[1], reverse=True)[0][0]
 
 
 if __name__ == "__main__":
