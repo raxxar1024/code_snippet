@@ -23,16 +23,13 @@ class Solution(object):
         :type n: int
         :rtype: str
         """
-        result, alphabet = "", []
-        for i in xrange(26):
-            alphabet.append(chr(65 + i))
+        result, dvd = "", n
 
-        n -= 1
-        while n >= 26:
-            result = alphabet[n % 26] + result
-            n = n / 26 - 1
-        result = alphabet[n] + result
-        return result
+        while dvd > 0:
+            result += chr((dvd - 1) % 26 + ord("A"))
+            dvd = (dvd - 1) / 26
+
+        return result[::-1]
 
 
 if __name__ == "__main__":
