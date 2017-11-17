@@ -15,8 +15,13 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
+        result = 0
+        while n > 0:
+            result += n / 5
+            n /= 5
+        return result
 
 
 if __name__ == "__main__":
-    assert Solution().trailingZeroes(0) == 27
-    assert Solution().trailingZeroes(17) == 2
+    assert Solution().trailingZeroes(17) == 3
+    assert Solution().trailingZeroes(100) == 24
