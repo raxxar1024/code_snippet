@@ -25,16 +25,27 @@ class BSTIterator(object):
         """
         :type root: TreeNode
         """
+        self.stack = []
+        self.push_all(root)
 
     def hasNext(self):
         """
         :rtype: bool
         """
+        return self.stack
 
     def next(self):
         """
         :rtype: int
         """
+        item = self.stack.pop()
+        self.push_all(item.right)
+        return item.val
+
+    def push_all(self, node):
+        while node:
+            self.stack.append(node)
+            node = node.left
 
 
 # Your BSTIterator will be called like this:
@@ -42,12 +53,12 @@ class BSTIterator(object):
 # while i.hasNext(): v.append(i.next())
 
 if __name__ == "__main__":
-    root = TreeNode(1)
+    root = TreeNode(4)
     root.left = TreeNode(2)
-    root.right = TreeNode(3)
-    root.left.left = TreeNode(4)
-    root.left.right = TreeNode(5)
-    root.right.left = TreeNode(6)
+    root.right = TreeNode(6)
+    root.left.left = TreeNode(1)
+    root.left.right = TreeNode(3)
+    root.right.left = TreeNode(5)
     root.right.right = TreeNode(7)
     i, v = BSTIterator(root), []
     while i.hasNext():
