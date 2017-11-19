@@ -41,7 +41,26 @@ class Solution(object):
         :type dungeon: List[List[int]]
         :rtype: int
         """
+        m = len(dungeon)
+        n = len(dungeon[0])
+        hp = [[0 for _ in xrange(n)] for _ in xrange(m)]
+
+        for i in range(m - 1, -1, -1):
+            for j in range(n - 1, -1, -1):
+                if i + 1 == m and j + 1 == n:
+                    hp[i][j] = 1
+                elif i + 1 == m:
+                    hp[i][j] = max(hp[i][j + 1] - dungeon[i][j + 1], 1)
+                elif j + 1 == n:
+                    hp[i][j] = max(hp[i + 1][j] - dungeon[i + 1][j], 1)
+                else:
+                    hp[i][j] = max(min(hp[i + 1][j] - dungeon[i + 1][j], hp[i][j + 1] - dungeon[i][j + 1]),
+                                   1)
+
+        return max(hp[0][0] - dungeon[0][0], 1)
 
 
 if __name__ == "__main__":
-    assert Solution().calculateMinimumHP([[-2, -3, 3], [-5, -10, 1], [10.30, -5]]) == 7
+    assert Solution().calculateMinimumHP([[100]]) == 1
+    assert Solution().calculateMinimumHP([[0, 0]]) == 1
+    assert Solution().calculateMinimumHP([[-2, -3, 3], [-5, -10, 1], [10, 30, -5]]) == 7
