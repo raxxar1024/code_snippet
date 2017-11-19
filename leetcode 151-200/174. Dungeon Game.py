@@ -54,8 +54,7 @@ class Solution(object):
                 elif j + 1 == n:
                     hp[i][j] = max(hp[i + 1][j] - dungeon[i + 1][j], 1)
                 else:
-                    hp[i][j] = max(min(hp[i + 1][j] - dungeon[i + 1][j], hp[i][j + 1] - dungeon[i][j + 1]),
-                                   1)
+                    hp[i][j] = max(min(hp[i + 1][j] - dungeon[i + 1][j], hp[i][j + 1] - dungeon[i][j + 1]), 1)
 
         return max(hp[0][0] - dungeon[0][0], 1)
 
