@@ -20,11 +20,11 @@ class Solution(object):
         :type s: str
         :rtype: List[str]
         """
-        result = []
+        import collections
+        sub_list = []
         for i in xrange(len(s) - 9):
-            if s[i:i + 10] not in result and s[i+1:].find(s[i:i + 10]) != -1:
-                result.append(s[i:i + 10])
-        return result
+            sub_list.append(s[i:i + 10])
+        return [k for k, v in collections.Counter(sub_list).items() if v > 1]
 
 
 if __name__ == "__main__":
