@@ -15,8 +15,12 @@ class Solution:
     # @param {integer[]} nums
     # @return {string}
     def largestNumber(self, nums):
-        return
+        nums = [str(n) for n in nums]
+        nums.sort(cmp=lambda x, y: cmp(y+x, x+y))
+        result = "".join(nums)
+        return result.lstrip("0") or "0"
 
 
 if __name__ == "__main__":
+    assert Solution().largestNumber([0, 0]) == "0"
     assert Solution().largestNumber([3, 30, 34, 5, 9]) == "9534330"
