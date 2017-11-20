@@ -20,7 +20,13 @@ class Solution(object):
         :type s: str
         :rtype: List[str]
         """
+        result = []
+        for i in xrange(len(s) - 9):
+            if s[i:i + 10] not in result and s[i+1:].find(s[i:i + 10]) != -1:
+                result.append(s[i:i + 10])
+        return result
 
 
 if __name__ == "__main__":
+    assert Solution().findRepeatedDnaSequences("AAAAAAAAAAA") == ["AAAAAAAAAA"]
     assert Solution().findRepeatedDnaSequences("AAAAACCCCCAAAAACCCCCCAAAAAGGGTTT") == ["AAAAACCCCC", "CCCCCAAAAA"]
