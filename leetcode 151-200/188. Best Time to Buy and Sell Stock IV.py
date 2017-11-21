@@ -19,6 +19,27 @@ class Solution(object):
         :type prices: List[int]
         :rtype: int
         """
+        if k > len(prices) / 2:
+            return self.maxProfit_n(prices)
+        else:
+            return self.maxProfit_k(k, prices)
+
+    def maxProfit_n(self, prices):
+        profit = 0
+        for i in xrange(len(prices) - 1):
+            profit += max(prices[i + 1] - prices[i], 0)
+        return profit
+
+    def maxProfit_k(self, k, prices):
+        max_buy = [float("-inf") for _ in xrange(k + 1)]
+        max_sell = [0 for _ in xrange(k + 1)]
+
+        for i in xrange(len(prices)):
+            for j in xrange(1, min(k, i / 2 + 1) + 1):
+                max_buy[j] = max(max_buy[j], max_sell[j - 1] - prices[i])
+                max_sell[j] = max(max_sell[j], max_buy[j] + prices[i])
+
+        return max_sell[k]
 
 
 if __name__ == "__main__":
