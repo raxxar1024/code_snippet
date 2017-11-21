@@ -21,7 +21,11 @@ class Solution:
     # @param n, an integer
     # @return an integer
     def reverseBits(self, n):
-        return
+        result, i = 0, 0
+        while i < 32:
+            result, n = (result << 1) + (n & 0x01), n >> 1
+            i += 1
+        return result
 
 
 if __name__ == "__main__":
