@@ -23,7 +23,14 @@ class Solution(object):
         :type k: int
         :rtype: void Do not return anything, modify nums in-place instead.
         """
+        nums[:] = nums[len(nums) - k:] + nums[:len(nums) - k]
 
 
 if __name__ == "__main__":
-    assert Solution().rotate([1, 2, 3, 4, 5, 6, 7], 3) == [5, 6, 7, 1, 2, 3, 4]
+    nums = [1]
+    Solution().rotate(nums, 0)
+    assert nums == [1]
+
+    nums = [1, 2, 3, 4, 5, 6, 7]
+    Solution().rotate(nums, 3)
+    assert nums == [5, 6, 7, 1, 2, 3, 4]
