@@ -10,7 +10,7 @@ Special thanks to @ts for adding this problem and creating all test cases.
 
 
 class Solution(object):
-    def hammingWeight(self, n):
+    def hammingWeight_2(self, n):
         """
         :type n: int
         :rtype: int
@@ -20,6 +20,13 @@ class Solution(object):
             if n & 1 == 1:
                 count += 1
             n >>= 1
+        return count
+
+    def hammingWeight(self, n):
+        count = 0
+        while n:
+            n &= n-1
+            count += 1
         return count
 
 
