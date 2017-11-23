@@ -39,14 +39,16 @@ class Solution(object):
         flag = [[0 for _ in xrange(m)] for _ in xrange(n)]
 
         def flag_island(ii, jj):
+            if grid[ii][jj] == "0" or flag[ii][jj] != 0:
+                return
             flag[ii][jj] = count
-            if ii != n - 1 and grid[ii + 1][jj] == "1" and flag[ii + 1][jj] == 0:
+            if ii != n - 1:
                 flag_island(ii + 1, jj)
-            if ii != 0 and grid[ii - 1][jj] == "1" and flag[ii - 1][jj] == 0:
+            if ii != 0:
                 flag_island(ii - 1, jj)
-            if jj != m - 1 and grid[ii][jj + 1] == "1" and flag[ii][jj + 1] == 0:
+            if jj != m - 1:
                 flag_island(ii, jj + 1)
-            if jj != 0 and grid[ii][jj - 1] == "1" and flag[ii][jj - 1] == 0:
+            if jj != 0:
                 flag_island(ii, jj - 1)
 
         for i in xrange(n):
