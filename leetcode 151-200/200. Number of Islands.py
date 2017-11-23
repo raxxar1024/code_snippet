@@ -31,10 +31,35 @@ class Solution(object):
         :type grid: List[List[str]]
         :rtype: int
         """
+        if not grid:
+            return 0
+        m = len(grid[0])
+        n = len(grid)
+        count = 0
+        flag = [[0 for _ in xrange(m)] for _ in xrange(n)]
+
+        def flag_island(ii, jj):
+            flag[ii][jj] = count
+            if ii != n - 1 and grid[ii + 1][jj] == "1" and flag[ii + 1][jj] == 0:
+                flag_island(ii + 1, jj)
+            if ii != 0 and grid[ii - 1][jj] == "1" and flag[ii - 1][jj] == 0:
+                flag_island(ii - 1, jj)
+            if jj != m - 1 and grid[ii][jj + 1] == "1" and flag[ii][jj + 1] == 0:
+                flag_island(ii, jj + 1)
+            if jj != 0 and grid[ii][jj - 1] == "1" and flag[ii][jj - 1] == 0:
+                flag_island(ii, jj - 1)
+
+        for i in xrange(n):
+            for j in xrange(m):
+                if flag[i][j] == 0 and grid[i][j] == "1":
+                    count += 1
+                    flag_island(i, j)
+
+        return count
 
 
 if __name__ == "__main__":
-    grid = [[1, 1, 1, 1, 0], [1, 1, 0, 1, 0, ], [1, 1, 0, 0, 0], [0, 0, 0, 0, 0]]
+    grid = [["1", "1", "1", "1", "0"], ["1", "1", "0", "1", "0"], ["1", "1", "0", "0", "0"], ["0", "0", "0", "0", "0"]]
     assert Solution().numIslands(grid) == 1
-    grid = [[1, 1, 0, 0, 0], [1, 1, 0, 0, 0, ], [0, 0, 1, 0, 0], [0, 0, 0, 1, 1]]
+    grid = [["1", "1", "0", "0", "0"], ["1", "1", "0", "0", "0"], ["0", "0", "1", "0", "0"], ["0", "0", "0", "1", "1"]]
     assert Solution().numIslands(grid) == 3
