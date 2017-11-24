@@ -26,6 +26,22 @@ class Solution(object):
         :rtype: bool
         """
 
+        def get_sum_of_squares_of_digits(tmp):
+            result = 0
+            while tmp:
+                result += (tmp % 10) * (tmp % 10)
+                tmp //= 10
+            return result
+
+        inter_result = []
+        while n != 1:
+            if n in inter_result:
+                return False
+            else:
+                inter_result.append(n)
+                n = get_sum_of_squares_of_digits(n)
+        return True
+
 
 if __name__ == "__main__":
     assert Solution().isHappy(19) is True
