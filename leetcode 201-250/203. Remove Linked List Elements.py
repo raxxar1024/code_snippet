@@ -25,9 +25,23 @@ class Solution(object):
         :type val: int
         :rtype: ListNode
         """
+        dummy = prev = ListNode(-1)
+        dummy.next = head
+        while head:
+            if head.val == val:
+                head = head.next
+                prev.next = head
+            else:
+                prev, head = prev.next, head.next
+        return dummy.next
 
 
 if __name__ == "__main__":
+    head = ListNode(1)
+    head.next = ListNode(1)
+    res = Solution().removeElements(head, 1)
+    assert res is None
+
     head = ListNode(1)
     head.next = ListNode(2)
     head.next.next = ListNode(6)
@@ -35,9 +49,9 @@ if __name__ == "__main__":
     head.next.next.next.next = ListNode(4)
     head.next.next.next.next.next = ListNode(5)
     head.next.next.next.next.next.next = ListNode(6)
-    Solution().removeElements(head, 6)
-    assert head.val == 1
-    assert head.next.val == 2
-    assert head.next.next.val == 3
-    assert head.next.next.next.val == 4
-    assert head.next.next.next.next.val == 5
+    res = Solution().removeElements(head, 6)
+    assert res.val == 1
+    assert res.next.val == 2
+    assert res.next.next.val == 3
+    assert res.next.next.next.val == 4
+    assert res.next.next.next.next.val == 5
