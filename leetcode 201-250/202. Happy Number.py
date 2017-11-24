@@ -28,19 +28,15 @@ class Solution(object):
 
         def get_sum_of_squares_of_digits(tmp):
             result = 0
-            while tmp:
-                result += (tmp % 10) * (tmp % 10)
-                tmp //= 10
+            for c in str(tmp):
+                result += int(c)**2
             return result
 
-        inter_result = []
-        while n != 1:
-            if n in inter_result:
-                return False
-            else:
-                inter_result.append(n)
-                n = get_sum_of_squares_of_digits(n)
-        return True
+        inter_result = {}
+        while n != 1 and n not in inter_result:
+            inter_result[n] = True
+            n = get_sum_of_squares_of_digits(n)
+        return n == 1
 
 
 if __name__ == "__main__":
