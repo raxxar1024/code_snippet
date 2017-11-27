@@ -17,7 +17,7 @@ class ListNode(object):
 
 
 class Solution(object):
-    def reverseList(self, head):
+    def reverseList_2(self, head):
         """
         :type head: ListNode
         :rtype: ListNode
@@ -26,6 +26,16 @@ class Solution(object):
         while head:
             dummy.next, head.next, head = head, dummy.next, head.next
         return dummy.next
+
+    def reverseList(self, head):
+        return self.reverse_recur(head, None)
+
+    def reverse_recur(self, head, new_head):
+        if head is None:
+            return new_head
+        next = head.next
+        head.next = new_head
+        return self.reverse_recur(next, head)
 
 
 if __name__ == "__main__":
