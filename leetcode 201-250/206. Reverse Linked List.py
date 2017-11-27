@@ -22,6 +22,10 @@ class Solution(object):
         :type head: ListNode
         :rtype: ListNode
         """
+        dummy = ListNode(-1)
+        while head:
+            dummy.next, head.next, head = head, dummy.next, head.next
+        return dummy.next
 
 
 if __name__ == "__main__":
