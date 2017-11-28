@@ -37,6 +37,34 @@ class Solution(object):
         :type prerequisites: List[List[int]]
         :rtype: bool
         """
+        import collections
+        in_degree, out_degree = {}, {}
+        for i, j in prerequisites:
+            if i not in in_degree:
+                in_degree[i] = set()
+            if j not in out_degree:
+                out_degree[j] = set()
+            in_degree[i].add(j)
+            out_degree[j].add(i)
+
+        zero_in_degree_queue = collections.deque()
+        for i in xrange(numCourses):
+            if i not in in_degree:
+                zero_in_degree_queue.append(i)
+
+        while zero_in_degree_queue:
+            prerequisite = zero_in_degree_queue.popleft()
+            if prerequisite in out_degree:
+                for course in out_degree[prerequisite]:
+                    in_degree[course].discard(prerequisite)
+                    if not in_degree[course]:
+                        zero_in_degree_queue.append(course)
+                del out_degree[prerequisite]
+
+        if out_degree:
+            return False
+        else:
+            return True
 
 
 if __name__ == "__main__":
