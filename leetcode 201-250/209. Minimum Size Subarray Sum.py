@@ -23,7 +23,19 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        start = 0
+        sum = 0
+        min_len = float("inf")
+        for i in xrange(len(nums)):
+            sum += nums[i]
+            while sum >= s:
+                min_len = min(i - start + 1, min_len)
+                sum -= nums[start]
+                start += 1
+        return 0 if min_len == float("inf") else min_len
 
 
 if __name__ == "__main__":
+    assert Solution().minSubArrayLen(11, [1, 2, 3, 4, 5]) == 3
+    assert Solution().minSubArrayLen(4, [1, 4, 4]) == 1
     assert Solution().minSubArrayLen(7, [2, 3, 1, 2, 4, 3]) == 2
