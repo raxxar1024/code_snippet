@@ -61,29 +61,19 @@ class WordDictionary(object):
         if not word:
             return True
         else:
-            return self.search_recu(self.root, word)
+            return self.search_recu(self.root, word, 0)
 
-    def search_recu(self, node, word):
-        if len(word) == 1:
-            if word[0] == ".":
-                for c in node.leaves:
-                    if node.leaves[c].is_string:
-                        return True
-                return False
-            if word[0] in node.leaves and node.leaves[word[0]].is_string:
-                return True
-            return False
+    def search_recu(self, node, word, start):
+        if len(word) == start:
+            return node.is_string
+        if word[start] in node.leaves:
+            return self.search_recu(node.leaves[word[start]], word, start + 1)
         else:
-            if word[0] in node.leaves:
-                return self.search_recu(node.leaves[word[0]], word[1:])
-            else:
-                if word[0] == ".":
-                    for c in node.leaves:
-                        if self.search_recu(node.leaves[c], word[1:]):
-                            return True
-                    return False
-                else:
-                    return False
+            if word[start] == ".":
+                for c in node.leaves:
+                    if self.search_recu(node.leaves[c], word, start + 1):
+                        return True
+            return False
 
 
 if __name__ == "__main__":
