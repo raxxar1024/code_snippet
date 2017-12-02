@@ -45,8 +45,38 @@ class Solution(object):
         :type prerequisites: List[List[int]]
         :rtype: List[int]
         """
+        in_degree, out_degree = {}, {}
+        for i, j in prerequisites:
+            if i not in in_degree:
+                in_degree[i] = set()
+            if j not in out_degree:
+                out_degree[j] = set()
+            in_degree[i].add(j)
+            out_degree[j].add(i)
+
+        import collections
+        zero_in_degree_queue = collections.deque()
+        for i in xrange(numCourses):
+            if i not in in_degree:
+                zero_in_degree_queue.append(i)
+
+        res = []
+        while zero_in_degree_queue:
+            prerequisite = zero_in_degree_queue.popleft()
+            res.append(prerequisite)
+
+            if prerequisite in out_degree:
+                for course in out_degree[prerequisite]:
+                    in_degree[course].discard(prerequisite)
+                    if not in_degree[course]:
+                        zero_in_degree_queue.append(course)
+                del out_degree[prerequisite]
+        if out_degree:
+            return []
+        else:
+            return res
 
 
 if __name__ == "__main__":
-    assert Solution().findOrder(2, [[1, 0]]) == [0, 1]
-    assert Solution().findOrder(4, [[1, 0], [2, 0], [3, 1], [3, 2]]) == [0, 2, 1, 3]
+    # assert Solution().findOrder(2, [[1, 0]]) == [0, 1]
+    assert Solution().findOrder(4, [[1, 0], [2, 0], [3, 1], [3, 2]]) == [0, 1, 2, 3]
