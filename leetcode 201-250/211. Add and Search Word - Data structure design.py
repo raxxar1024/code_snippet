@@ -26,11 +26,18 @@ Implement Trie (Prefix Tree) first.
 """
 
 
+class TrieNode(object):
+    def __init__(self):
+        self.is_string = False
+        self.leaves = {}
+
+
 class WordDictionary(object):
     def __init__(self):
         """
         Initialize your data structure here.
         """
+        self.root = TrieNode()
 
     def addWord(self, word):
         """
@@ -38,6 +45,12 @@ class WordDictionary(object):
         :type word: str
         :rtype: void
         """
+        node = self.root
+        for c in word:
+            if c not in node.leaves:
+                node.leaves[c] = TrieNode()
+            node = node.leaves[c]
+        node.is_string = True
 
     def search(self, word):
         """
@@ -45,6 +58,32 @@ class WordDictionary(object):
         :type word: str
         :rtype: bool
         """
+        if not word:
+            return True
+        else:
+            return self.search_recu(self.root, word)
+
+    def search_recu(self, node, word):
+        if len(word) == 1:
+            if word[0] == ".":
+                for c in node.leaves:
+                    if node.leaves[c].is_string:
+                        return True
+                return False
+            if word[0] in node.leaves and node.leaves[word[0]].is_string:
+                return True
+            return False
+        else:
+            if word[0] in node.leaves:
+                return self.search_recu(node.leaves[word[0]], word[1:])
+            else:
+                if word[0] == ".":
+                    for c in node.leaves:
+                        if self.search_recu(node.leaves[c], word[1:]):
+                            return True
+                    return False
+                else:
+                    return False
 
 
 if __name__ == "__main__":
@@ -56,4 +95,3 @@ if __name__ == "__main__":
     assert obj.search("bad") is True
     assert obj.search("bad") is True
     assert obj.search("b..") is True
-    
