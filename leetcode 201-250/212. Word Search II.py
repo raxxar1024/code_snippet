@@ -36,85 +36,55 @@ class TrieNode(object):
         self.is_string = False
         self.leaves = {}
 
-
-class Trie(object):
-    def __init__(self):
-        self.root = TrieNode()
-
     def insert(self, word):
-        node = self.root
+        node = self
         for c in word:
             if c not in node.leaves:
                 node.leaves[c] = TrieNode()
             node = node.leaves[c]
         node.is_string = True
 
-    def search(self, word):
-        node = self.child_search(word)
-        if node:
-            return node.is_string
-        else:
-            return False
-
-    def search_with(self, word):
-        return self.child_search(word) is not None
-
-    def child_search(self, word):
-        node = self.root
-        for c in word:
-            if c in node.leaves:
-                node = node.leaves[c]
-            else:
-                return None
-        return node
-
 
 class Solution(object):
-    def __init__(self):
-        self.result = []
-        self.obj = Trie()
-
     def findWords(self, board, words):
         """
         :type board: List[List[str]]
         :type words: List[str]
         :rtype: List[str]
         """
+        visited = [[False for _ in xrange(len(board[0]))] for _ in xrange(len(board))]
+        result = {}
+        trie = TrieNode()
         for word in words:
-            self.obj.insert(word)
+            trie.insert(word)
 
         for i in xrange(len(board)):
             for j in xrange(len(board[0])):
-                self.check_start_with(i, j, board)
-        return self.result
+                self.findWords_recu(board, trie, i, j, visited, [], result)
 
-    def check_start_with(self, y, x, board):
-        m = len(board[0])
-        n = len(board)
-        visited = [[False for _ in xrange(m)] for _ in xrange(n)]
-        tmp_str = ""
+        return result.keys()
 
-        def check_start_with_recu(visited, tmp_str, y, x):
-            tmp_str += board[y][x]
-            visited[y][x] = True
-            if self.obj.search_with(tmp_str):
-                if self.obj.search(tmp_str):
-                    if tmp_str not in self.result:
-                        self.result.append(tmp_str)
-                if x - 1 >= 0 and visited[y][x - 1] is False:
-                    check_start_with_recu(visited, tmp_str, y, x - 1)
-                    visited[y][x - 1] = False
-                if x + 1 < m and visited[y][x + 1] is False:
-                    check_start_with_recu(visited, tmp_str, y, x + 1)
-                    visited[y][x + 1] = False
-                if y - 1 >= 0 and visited[y - 1][x] is False:
-                    check_start_with_recu(visited, tmp_str, y - 1, x)
-                    visited[y - 1][x] = False
-                if y + 1 < n and visited[y + 1][x] is False:
-                    check_start_with_recu(visited, tmp_str, y + 1, x)
-                    visited[y + 1][x] = False
+    def findWords_recu(self, board, trie, i, j, visited, curr_word, result):
+        if not trie or i < 0 or i >= len(board) or j < 0 or j >= len(board[0]) or visited[i][j]:
+            return
 
-        check_start_with_recu(visited, tmp_str, y, x)
+        if board[i][j] not in trie.leaves:
+            return
+
+        visited[i][j] = True
+        curr_word.append(board[i][j])
+
+        next_node = trie.leaves[board[i][j]]
+        if next_node.is_string:
+            result["".join(curr_word)] = True
+
+        self.findWords_recu(board, next_node, i - 1, j, visited, curr_word, result)
+        self.findWords_recu(board, next_node, i + 1, j, visited, curr_word, result)
+        self.findWords_recu(board, next_node, i, j - 1, visited, curr_word, result)
+        self.findWords_recu(board, next_node, i, j + 1, visited, curr_word, result)
+
+        visited[i][j] = False
+        curr_word.pop()
 
 
 if __name__ == "__main__":
