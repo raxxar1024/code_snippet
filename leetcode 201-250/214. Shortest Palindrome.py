@@ -21,8 +21,16 @@ class Solution(object):
         :type s: str
         :rtype: str
         """
+        rev_s = s[::-1]
+        max_len = 0
+        for i in xrange(len(s) + 1):
+            if s[:i] == s[i - 1::-1]:
+                max_len = i
+        return rev_s[:len(s) - max_len] + s
 
 
 if __name__ == "__main__":
+    assert Solution().shortestPalindrome("aba") == "aba"
+    assert Solution().shortestPalindrome("a") == "a"
     assert Solution().shortestPalindrome("aacecaaa") == "aaacecaaa"
     assert Solution().shortestPalindrome("abcd") == "dcbabcd"
