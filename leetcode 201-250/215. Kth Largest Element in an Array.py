@@ -21,6 +21,7 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
+        return sorted(nums, reverse=True)[k-1]
 
 
 if __name__ == "__main__":
