@@ -22,11 +22,21 @@ class Solution(object):
         :rtype: str
         """
         rev_s = s[::-1]
-        max_len = 0
-        for i in xrange(len(s) + 1):
-            if s[:i] == s[i - 1::-1]:
-                max_len = i
-        return rev_s[:len(s) - max_len] + s
+        l = s + "#" + rev_s
+
+        def get_next():
+            prefix = [-1] * len(l)
+            j = -1
+            for i in xrange(1, len(l)):
+                while j > -1 and l[j + 1] != l[i]:
+                    j = prefix[j]
+                if l[j + 1] == l[i]:
+                    j += 1
+                prefix[i] = j
+            return prefix[-1]
+
+        max_len = get_next()
+        return s[max_len + 1:][::-1] + s
 
 
 if __name__ == "__main__":
