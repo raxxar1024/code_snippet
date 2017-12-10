@@ -25,15 +25,17 @@ class Solution(object):
         l = s + "#" + rev_s
 
         def get_next():
-            prefix = [-1] * len(l)
-            j = -1
-            for i in xrange(1, len(l)):
-                while j > -1 and l[j + 1] != l[i]:
-                    j = prefix[j]
-                if l[j + 1] == l[i]:
+            next_list = [-1] * len(l)
+            j = 0
+            k = -1
+            while j < len(l) - 1:
+                if k == -1 or l[j] == l[k]:
                     j += 1
-                prefix[i] = j
-            return prefix[-1]
+                    k += 1
+                    next_list[j] = k
+                else:
+                    k = next_list[k]
+            return next_list[-1]
 
         max_len = get_next()
         return s[max_len + 1:][::-1] + s
