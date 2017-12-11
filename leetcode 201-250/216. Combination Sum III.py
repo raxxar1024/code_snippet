@@ -30,34 +30,23 @@ class Solution(object):
         :type n: int
         :rtype: List[List[int]]
         """
-        import copy
         result = []
-        nums = [i for i in xrange(1, 10)]
-
-        def combination_recu(tmp_k, tmp_n, candidates, intermediate):
-            if tmp_k == 0:
-                if tmp_n == 0:
-                    intermediate.sort()
-                    if intermediate not in result:
-                        tmp = copy.deepcopy(intermediate)
-                        result.append(tmp)
-                else:
-                    return
-            if tmp_k < 0 or tmp_n < 0:
-                return
-            for candidate in candidates:
-                tmp = copy.deepcopy(candidates)
-                tmp.remove(candidate)
-                intermediate.append(candidate)
-                combination_recu(tmp_k - 1, tmp_n - candidate, tmp, intermediate)
-                intermediate.remove(candidate)
-
-        combination_recu(k, n, nums, [])
+        self.combination_recu(1, k, n, result, [])
         return result
+
+    def combination_recu(self, start, k, n, result, intermediate):
+        if k == 0 and n == 0:
+            result.append(list(intermediate))
+        if k <= 0 and n != 0:
+            return
+        for i in xrange(start, 10):
+            intermediate.append(i)
+            self.combination_recu(i + 1, k - 1, n - i, result, intermediate)
+            intermediate.remove(i)
 
 
 if __name__ == "__main__":
-    assert Solution().combinationSum3(3, 8) == [[1, 2, 3, 4, 5, 6, 7, 8]]
+    assert Solution().combinationSum3(8, 36) == [[1, 2, 3, 4, 5, 6, 7, 8]]
     assert Solution().combinationSum3(3, 15) == [
         [1, 5, 9], [1, 6, 8], [2, 4, 9], [2, 5, 8], [2, 6, 7], [3, 4, 8],
         [3, 5, 7], [4, 5, 6]
