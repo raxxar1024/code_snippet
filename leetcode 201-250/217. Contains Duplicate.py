@@ -7,7 +7,7 @@ and it should return false if every element is distinct.
 
 
 class Solution(object):
-    def containsDuplicate(self, nums):
+    def containsDuplicate_2(self, nums):
         """
         :type nums: List[int]
         :rtype: bool
@@ -19,6 +19,9 @@ class Solution(object):
             else:
                 return True
         return False
+
+    def containsDuplicate(self, nums):
+        return len(nums) > len(set(nums))
 
 
 if __name__ == "__main__":
