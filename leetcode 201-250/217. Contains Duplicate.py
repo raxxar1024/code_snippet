@@ -12,8 +12,15 @@ class Solution(object):
         :type nums: List[int]
         :rtype: bool
         """
+        num_set = {}
+        for num in nums:
+            if num not in num_set:
+                num_set[num] = True
+            else:
+                return True
+        return False
 
 
 if __name__ == "__main__":
-    assert Solution().containsDuplicate([1, 2, 3]) is True
+    assert Solution().containsDuplicate([1, 2, 3]) is False
     assert Solution().containsDuplicate([1, 1, 2, 3]) is True
