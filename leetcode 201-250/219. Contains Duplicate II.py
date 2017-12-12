@@ -13,6 +13,12 @@ class Solution(object):
         :type k: int
         :rtype: bool
         """
+        lookup = {}
+        for i, num in enumerate(nums):
+            if num in lookup and i - lookup[num] <= k:
+                return True
+            lookup[num] = i
+        return False
 
 
 if __name__ == "__main__":
