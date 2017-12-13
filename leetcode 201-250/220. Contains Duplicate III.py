@@ -14,7 +14,13 @@ class Solution(object):
         :type t: int
         :rtype: bool
         """
+        for i in xrange(len(nums) - 1):
+            for j in xrange(i + 1, len(nums)):
+                if abs(nums[i] - nums[j]) <= t and j - i <= k:
+                    return True
+        return False
 
 
 if __name__ == "__main__":
+    assert Solution().containsNearbyAlmostDuplicate([-3, 3], 2, 4) is False
     assert Solution().containsNearbyAlmostDuplicate([1, 2, 3, 1, 2], 3, 1) is True
