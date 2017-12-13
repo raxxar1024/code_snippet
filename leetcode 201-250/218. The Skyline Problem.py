@@ -43,9 +43,30 @@ class Solution(object):
         :type buildings: List[List[int]]
         :rtype: List[List[int]]
         """
+        if not buildings:
+            return []
+        skylines = [0] * (buildings[-1][1] + 1)
+        for building in buildings:
+            for x in xrange(building[0], building[1] + 1):
+                skylines[x] = max(skylines[x], building[2])
+
+        last_skyline = 0
+        result = []
+        for i, skyline in enumerate(skylines):
+            if skyline > last_skyline:
+                result.append([i, skyline])
+                last_skyline = skyline
+            elif skyline < last_skyline:
+                result.append([i - 1, skyline])
+                last_skyline = skyline
+
+        result.append([buildings[-1][1], 0])
+        return result
 
 
 if __name__ == "__main__":
+    assert Solution().getSkyline([[0, 2147483647, 2147483647]]) == [[0, 2147483647], [2147483647, 0]]
+    assert Solution().getSkyline([]) == []
     assert Solution().getSkyline([[2, 9, 10], [3, 7, 15], [5, 12, 12], [15, 20, 10], [19, 24, 8]]) == [
         [2, 10], [3, 15], [7, 12], [12, 0], [15, 10], [20, 8], [24, 0]
     ]
