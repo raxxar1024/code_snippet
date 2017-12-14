@@ -14,13 +14,24 @@ class Solution(object):
         :type t: int
         :rtype: bool
         """
-        for i in xrange(len(nums) - 1):
-            for j in xrange(i + 1, len(nums)):
-                if abs(nums[i] - nums[j]) <= t and j - i <= k:
+        if k < 0 or t < 0:
+            return False
+        import collections
+        num_dicts = collections.OrderedDict()
+
+        for num in nums:
+            bucket = num // max(1, t)
+            for m in (bucket - 1, bucket, bucket + 1):
+                if m in num_dicts and abs(num - num_dicts[m]) <= t:
                     return True
+            num_dicts[bucket] = num
+            if len(num_dicts) > k:
+                num_dicts.popitem(False)
+
         return False
 
 
 if __name__ == "__main__":
+    assert Solution().containsNearbyAlmostDuplicate([-1, -1], 1, 0) is True
     assert Solution().containsNearbyAlmostDuplicate([-3, 3], 2, 4) is False
     assert Solution().containsNearbyAlmostDuplicate([1, 2, 3, 1, 2], 3, 1) is True
