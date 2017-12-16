@@ -23,6 +23,29 @@ class Solution(object):
         :type root: TreeNode
         :rtype: int
         """
+        node, level = root, 0
+        while node:
+            level += 1
+            node = node.right
+
+        left, right = 2 ** level, 2 ** (level + 1) - 1
+        while left < right:
+            mid = (left + right) / 2
+            if self.check_exist(mid, root, level):
+                left = mid + 1
+            else:
+                right = mid
+        return left - 1
+
+    def check_exist(self, mid, root, level):
+        k = 1 << (level - 1)
+        while k > 0:
+            if (mid & k) == 0:
+                root = root.left
+            else:
+                root = root.right
+            k >>= 1
+        return root is not None
 
 
 if __name__ == "__main__":
