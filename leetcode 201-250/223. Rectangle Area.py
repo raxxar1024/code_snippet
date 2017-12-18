@@ -25,8 +25,11 @@ class Solution(object):
         :type H: int
         :rtype: int
         """
+        return (C - A) * (D - B) + (G - E) * (H - F) - \
+               max(0, min(C, G) - max(A, E)) * max(0, min(D, H) - max(B, F))
 
 
 if __name__ == "__main__":
-    assert Solution().computeArea(-3, 0, 3, 4, 0, -1, 9, 2) == 6
+    assert Solution().computeArea(0, 0, 0, 0, -1, -1, 1, 1) == 4
+    assert Solution().computeArea(-3, 0, 3, 4, 0, -1, 9, 2) == 45
     assert Solution().computeArea(-2, -2, 2, 2, -2, -2, 2, 2) == 16
