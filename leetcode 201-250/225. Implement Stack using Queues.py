@@ -28,6 +28,7 @@ class MyStack(object):
         """
         Initialize your data structure here.
         """
+        self.array = []
 
     def push(self, x):
         """
@@ -35,24 +36,34 @@ class MyStack(object):
         :type x: int
         :rtype: void
         """
+        self.array.append(x)
 
     def pop(self):
         """
         Removes the element on top of the stack and returns that element.
         :rtype: int
         """
+        if self.empty():
+            return 0
+        else:
+            return self.array.pop()
 
     def top(self):
         """
         Get the top element.
         :rtype: int
         """
+        if self.empty():
+            return 0
+        else:
+            return self.array[-1]
 
     def empty(self):
         """
         Returns whether the stack is empty.
         :rtype: bool
         """
+        return len(self.array) == 0
 
 
 if __name__ == "__main__":
