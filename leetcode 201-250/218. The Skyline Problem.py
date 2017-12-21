@@ -43,24 +43,21 @@ class Solution(object):
         :type buildings: List[List[int]]
         :rtype: List[List[int]]
         """
-        if not buildings:
-            return []
-        skylines = [0] * (buildings[-1][1] + 1)
-        for building in buildings:
-            for x in xrange(building[0], building[1] + 1):
-                skylines[x] = max(skylines[x], building[2])
+        heights = sorted([(b[0], -b[2]) for b in buildings] + [(b[1], b[2]) for b in buildings],
+                         cmp=lambda x, y: cmp(x[0], y[0]) if x[0] != y[0] else cmp(x[1], y[1]))
 
-        last_skyline = 0
+        height_stack = [0]
         result = []
-        for i, skyline in enumerate(skylines):
-            if skyline > last_skyline:
-                result.append([i, skyline])
-                last_skyline = skyline
-            elif skyline < last_skyline:
-                result.append([i - 1, skyline])
-                last_skyline = skyline
+        for h in heights:
+            if h[1] < 0:
+                if -h[1] > max(height_stack):
+                    result.append([h[0], -h[1]])
+                height_stack.append(-h[1])
+            if h[1] > 0:
+                height_stack.remove(h[1])
+                if h[1] > max(height_stack):
+                    result.append([h[0], max(height_stack)])
 
-        result.append([buildings[-1][1], 0])
         return result
 
 
