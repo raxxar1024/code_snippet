@@ -46,17 +46,19 @@ class Solution(object):
         heights = sorted([(b[0], -b[2]) for b in buildings] + [(b[1], b[2]) for b in buildings],
                          cmp=lambda x, y: cmp(x[0], y[0]) if x[0] != y[0] else cmp(x[1], y[1]))
 
-        height_stack = [0]
-        result = []
+        height_stack, max_height, result = [0], 0, []
         for h in heights:
             if h[1] < 0:
-                if -h[1] > max(height_stack):
+                if -h[1] > max_height:
+                    max_height = -h[1]
                     result.append([h[0], -h[1]])
                 height_stack.append(-h[1])
-            if h[1] > 0:
+            else:
                 height_stack.remove(h[1])
-                if h[1] > max(height_stack):
-                    result.append([h[0], max(height_stack)])
+                if h[1] == max_height:
+                    max_height = max(height_stack)
+                if h[1] > max_height:
+                    result.append([h[0], max_height])
 
         return result
 
