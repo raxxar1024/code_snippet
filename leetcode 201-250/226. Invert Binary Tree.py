@@ -34,6 +34,10 @@ class Solution(object):
         :type root: TreeNode
         :rtype: TreeNode
         """
+        if not root:
+            return root
+        root.left, root.right = self.invertTree(root.right), self.invertTree(root.left)
+        return root
 
 
 if __name__ == "__main__":
