@@ -19,6 +19,26 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[str]
         """
+        if not nums:
+            return []
+
+        start = nums[0]
+        result = []
+        for i in xrange(1, len(nums)):
+            if nums[i] == nums[i - 1] + 1:
+                continue
+            else:
+                if nums[i - 1] == start:
+                    result.append(str(start))
+                else:
+                    result.append("%d->%d" % (start, nums[i - 1]))
+                start = nums[i]
+
+        if nums[-1] == start:
+            result.append(str(start))
+        else:
+            result.append("%d->%d" % (start, nums[-1]))
+        return result
 
 
 if __name__ == "__main__":
