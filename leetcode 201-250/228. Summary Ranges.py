@@ -22,22 +22,19 @@ class Solution(object):
         if not nums:
             return []
 
-        start = nums[0]
+        start, end = nums[0], nums[0]
         result = []
-        for i in xrange(1, len(nums)):
-            if nums[i] == nums[i - 1] + 1:
-                continue
+        for i in xrange(1, len(nums) + 1):
+            if i != len(nums) and nums[i] == end + 1:
+                end = nums[i]
             else:
-                if nums[i - 1] == start:
+                if start == end:
                     result.append(str(start))
                 else:
-                    result.append("%d->%d" % (start, nums[i - 1]))
-                start = nums[i]
+                    result.append("%d->%d" % (start, end))
+                if i != len(nums):
+                    start = end = nums[i]
 
-        if nums[-1] == start:
-            result.append(str(start))
-        else:
-            result.append("%d->%d" % (start, nums[-1]))
         return result
 
 
