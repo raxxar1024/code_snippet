@@ -11,6 +11,8 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[int]
         """
+        import collections
+        return [i[0] for i in collections.Counter(nums).items() if i[1] > len(nums) / 3]
 
 
 if __name__ == "__main__":
