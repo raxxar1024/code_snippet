@@ -13,13 +13,7 @@ class Solution(object):
         :type n: int
         :rtype: bool
         """
-        count = 0
-        shift = 1
-        while n >= shift:
-            if n & shift:
-                count += 1
-            shift <<= 1
-        return count == 1
+        return n > 0 and (n & (n - 1)) == 0
 
 
 if __name__ == "__main__":
