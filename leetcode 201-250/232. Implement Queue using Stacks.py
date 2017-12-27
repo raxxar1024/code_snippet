@@ -23,6 +23,7 @@ class MyQueue(object):
         """
         Initialize your data structure here.
         """
+        self.stack_A, self.stack_B = [], []
 
     def push(self, x):
         """
@@ -30,24 +31,32 @@ class MyQueue(object):
         :type x: int
         :rtype: void
         """
+        self.stack_A.append(x)
 
     def pop(self):
         """
         Removes the element from in front of queue and returns that element.
         :rtype: int
         """
+        self.peek()
+        return self.stack_B.pop()
 
     def peek(self):
         """
         Get the front element.
         :rtype: int
         """
+        if not self.stack_B:
+            while self.stack_A:
+                self.stack_B.append(self.stack_A.pop())
+        return self.stack_B[-1]
 
     def empty(self):
         """
         Returns whether the queue is empty.
         :rtype: bool
         """
+        return not self.stack_A and not self.stack_B
 
 
 if __name__ == "__main__":
