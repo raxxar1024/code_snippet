@@ -29,6 +29,20 @@ class Solution(object):
         :type k: int
         :rtype: int
         """
+        s, curr, rank = [], root, 0
+
+        while s or curr:
+            if curr:
+                s.append(curr)
+                curr = curr.left
+            else:
+                curr = s.pop()
+                rank += 1
+                if rank == k:
+                    return curr.val
+                curr = curr.right
+
+        return float("-inf")
 
 
 if __name__ == "__main__":
