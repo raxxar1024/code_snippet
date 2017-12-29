@@ -20,6 +20,17 @@ class Solution(object):
         :type head: ListNode
         :rtype: bool
         """
+        reverse, fast = None, head
+        while fast and fast.next:
+            fast = fast.next.next
+            head.next, head, reverse = reverse, head.next, head
+
+        tail = head.next if fast else head
+        while tail:
+            if reverse.val != tail.val:
+                return False
+            reverse, tail = reverse.next, tail.next
+        return True
 
 
 if __name__ == "__main__":
