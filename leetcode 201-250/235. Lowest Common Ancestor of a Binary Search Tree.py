@@ -34,6 +34,10 @@ class Solution(object):
         :type q: TreeNode
         :rtype: TreeNode
         """
+        s, e = sorted([p.val, q.val])
+        while not s <= root.val <= e:
+            root = root.left if s <= root.val else root.right
+        return root
 
 
 if __name__ == "__main__":
@@ -48,3 +52,12 @@ if __name__ == "__main__":
     node_8.right = node_9 = TreeNode(9)
     assert Solution().lowestCommonAncestor(node_6, node_2, node_8) == node_6
     assert Solution().lowestCommonAncestor(node_6, node_2, node_4) == node_2
+
+    node_5.left = node_3
+    node_5.right = node_6
+    node_3.left = node_1 = TreeNode(1)
+    node_3.right = node_4
+    node_1.left = None
+    node_1.right = node_2
+    node_2.left = node_2.right = node_4.left = node_4.right = node_6.left = node_6.right = None
+    assert Solution().lowestCommonAncestor(node_5, node_2, node_4) == node_3
