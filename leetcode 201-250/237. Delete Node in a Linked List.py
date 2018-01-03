@@ -20,6 +20,11 @@ class Solution(object):
         :type node: ListNode
         :rtype: void Do not return anything, modify node in-place instead.
         """
+        if node and node.next:
+            node_to_del = node.next
+            node.val = node_to_del.val
+            node.next = node_to_del.next
+            del node_to_del
 
 
 if __name__ == "__main__":
