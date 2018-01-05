@@ -32,7 +32,25 @@ class Solution(object):
         :type k: int
         :rtype: List[int]
         """
+        from collections import deque
+
+        dq = deque()
+        max_numbers = []
+
+        for i in xrange(len(nums)):
+            while dq and nums[i] >= nums[dq[-1]]:
+                dq.pop()
+
+            dq.append(i)
+
+            if i >= k and dq and dq[0] <= i - k:
+                dq.popleft()
+            if i >= k - 1:
+                max_numbers.append(nums[dq[0]])
+
+        return max_numbers
 
 
 if __name__ == "__main__":
-    assert Solution().productExceptSelf([1, 3, -1, -3, 5, 3, 6, 7]) == [3, 3, 5, 5, 6, 7]
+    assert Solution().maxSlidingWindow([1,-1], 1) == [1,-1]
+    assert Solution().maxSlidingWindow([1, 3, -1, -3, 5, 3, 6, 7], 3) == [3, 3, 5, 5, 6, 7]
