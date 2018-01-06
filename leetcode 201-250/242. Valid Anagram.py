@@ -21,6 +21,7 @@ class Solution(object):
         :type t: str
         :rtype: bool
         """
+        return sorted(s) == sorted(t)
 
 
 if __name__ == "__main__":
