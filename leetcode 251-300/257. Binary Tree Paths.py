@@ -33,31 +33,20 @@ class Solution(object):
         :rtype: List[str]
         """
 
-        def binaryTreePath_recu(node):
+        def binaryTreePath_recu(node, path):
             if not node:
-                return []
-            head = "->%d" % node.val
+                return
             if node.left or node.right:
-                tmp_result = []
-                for p in binaryTreePath_recu(node.left):
-                    tmp_result.append(head + p)
-                for p in binaryTreePath_recu(node.right):
-                    tmp_result.append(head + p)
-                return tmp_result
+                binaryTreePath_recu(node.left, path + [str(node.val)])
+                binaryTreePath_recu(node.right, path + [str(node.val)])
             else:
-                return [head]
+                result.append("->".join(path + [str(node.val)]))
 
         if not root:
             return []
-        if root.left or root.right:
-            result = []
-            for path in binaryTreePath_recu(root.left):
-                result.append(str(root.val) + path)
-            for path in binaryTreePath_recu(root.right):
-                result.append(str(root.val) + path)
-            return result
-        else:
-            return [str(root.val)]
+        result = []
+        binaryTreePath_recu(root, [])
+        return result
 
 
 if __name__ == "__main__":
