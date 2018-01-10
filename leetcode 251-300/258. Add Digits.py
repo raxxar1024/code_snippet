@@ -20,14 +20,10 @@ class Solution(object):
         :type num: int
         :rtype: int
         """
-        while num > 9:
-            tmp = 0
-            while num > 0:
-                tmp += num % 10
-                num //= 10
-            num = tmp
-        return num
+        return (num - 1) % 9 + 1 if num > 0 else 0
 
 
 if __name__ == "__main__":
+    assert Solution().addDigits(0) == 0
+    assert Solution().addDigits(9) == 9
     assert Solution().addDigits(38) == 2
