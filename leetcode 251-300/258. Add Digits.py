@@ -20,6 +20,13 @@ class Solution(object):
         :type num: int
         :rtype: int
         """
+        while num > 9:
+            tmp = 0
+            while num > 0:
+                tmp += num % 10
+                num //= 10
+            num = tmp
+        return num
 
 
 if __name__ == "__main__":
