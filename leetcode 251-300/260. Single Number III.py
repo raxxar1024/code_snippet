@@ -23,6 +23,16 @@ class Solution(object):
         :type nums: List[int]
         :rtype: List[int]
         """
+        import operator
+        x_xor_y = reduce(operator.xor, nums)
+        bit = x_xor_y & -x_xor_y
+        x, y = 0, 0
+        for num in nums:
+            if num & bit:
+                x ^= num
+            else:
+                y ^= num
+        return [x, y]
 
 
 if __name__ == "__main__":
