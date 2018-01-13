@@ -18,9 +18,16 @@ class Solution(object):
         :type num: int
         :rtype: bool
         """
+        if num == 0:
+            return False
+        for i in [2, 3, 5]:
+            while num % i == 0:
+                num /= i
+        return num == 1
 
 
 if __name__ == "__main__":
+    assert Solution().isUgly(0) is False
     assert Solution().isUgly(6) is True
     assert Solution().isUgly(8) is True
     assert Solution().isUgly(14) is False
