@@ -25,6 +25,7 @@ class Solution(object):
         :type nums: List[int]
         :rtype: int
         """
+        return sum(xrange(len(nums)+1)) - sum(nums)
 
 
 if __name__ == "__main__":
