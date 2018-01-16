@@ -25,6 +25,14 @@ class Solution(object):
         :type citations: List[int]
         :rtype: int
         """
+        citations.sort(reverse=True)
+        h = 0
+        for i in range(len(citations)):
+            if citations[i] > i:
+                h = i + 1
+            else:
+                break
+        return h
 
 
 if __name__ == "__main__":
