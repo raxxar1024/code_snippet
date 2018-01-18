@@ -15,6 +15,14 @@ class Solution(object):
         :type n: int
         :rtype: int
         """
+        dp = [float("inf") for _ in range(n + 1)]
+        dp[0] = 0
+        for i in range(n + 1):
+            j = 1
+            while n >= i + j * j:
+                dp[i + j * j] = min(dp[i] + 1, dp[i + j * j])
+                j += 1
+        return dp[-1]
 
 
 if __name__ == "__main__":
