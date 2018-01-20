@@ -10,7 +10,7 @@ Special thanks to @jianchao.li.fighter for adding this problem and creating all 
 
 
 class Solution(object):
-    def numSquares(self, n):
+    def numSquares_2(self, n):
         """
         :type n: int
         :rtype: int
@@ -23,6 +23,16 @@ class Solution(object):
                 dp[i + j * j] = min(dp[i] + 1, dp[i + j * j])
                 j += 1
         return dp[-1]
+
+    def numSquares(self, n):
+        """
+        :type n: int
+        :rtype: int
+        """
+        num = [0]
+        while len(num) <= n:
+            num.append(min(num[-i * i] for i in range(1, int(len(num) ** 0.5 + 1))) + 1)
+        return num[n]
 
 
 if __name__ == "__main__":
