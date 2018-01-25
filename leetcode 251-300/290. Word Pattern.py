@@ -24,6 +24,19 @@ class Solution(object):
         :type str: str
         :rtype: bool
         """
+        words = str.split(" ")
+        if len(words) != len(pattern):
+            return False
+        dict_pattern = {}
+        for i in range(len(words)):
+            if pattern[i] in dict_pattern:
+                if dict_pattern[pattern[i]] != words[i]:
+                    return False
+            else:
+                if words[i] in dict_pattern.values():
+                    return False
+                dict_pattern[pattern[i]] = words[i]
+        return True
 
 
 if __name__ == "__main__":
