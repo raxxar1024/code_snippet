@@ -32,6 +32,31 @@ class Solution(object):
         :type board: List[List[int]]
         :rtype: void Do not return anything, modify board in-place instead.
         """
+        """
+        0:dead->dead
+        1:live->live
+        2:live->dead
+        3:dead->live
+        """
+        m = len(board)
+        n = len(board[0])
+        for i in range(m):
+            for j in range(n):
+                cnt = 0
+                for I in range(max(i - 1, 0), min(i + 2, m)):
+                    for J in range(max(j - 1, 0), min(j + 2, n)):
+                        if i == I and j == J:
+                            continue
+                        if board[I][J] in [1, 2]:
+                            cnt += 1
+                if board[i][j] == 1 and (cnt < 2 or 3 < cnt):
+                    board[i][j] = 2
+                elif board[i][j] == 0 and cnt == 3:
+                    board[i][j] = 3
+
+        for i in range(m):
+            for j in range(n):
+                board[i][j] %= 2
 
 
 if __name__ == "__main__":
