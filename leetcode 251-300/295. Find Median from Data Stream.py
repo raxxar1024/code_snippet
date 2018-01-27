@@ -31,17 +31,26 @@ class MedianFinder(object):
         """
         initialize your data structure here.
         """
+        self.nums = []
+        self.length = 0
 
     def addNum(self, num):
         """
         :type num: int
         :rtype: void
         """
+        self.nums.append(num)
+        self.nums.sort()
+        self.length += 1
 
     def findMedian(self):
         """
         :rtype: float
         """
+        if self.length % 2 == 0:
+            return (self.nums[self.length / 2] + self.nums[self.length / 2 - 1]) / 2.0
+        else:
+            return self.nums[self.length / 2]
 
 
 if __name__ == "__main__":
