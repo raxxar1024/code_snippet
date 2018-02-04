@@ -18,6 +18,26 @@ Special thanks to @pbrother for adding this problem and creating all test cases.
 
 class Solution(object):
     def lengthOfLIS(self, nums):
+        LIS = []
+
+        def insert(num):
+            left, right = 0, len(LIS) - 1
+            while left <= right:
+                mid = (left + right) / 2
+                if num <= LIS[mid]:
+                    right = mid - 1
+                else:
+                    left = mid + 1
+            if len(LIS) == left:
+                LIS.append(num)
+            else:
+                LIS[left] = num
+
+        for num in nums:
+            insert(num)
+        return len(LIS)
+
+    def lengthOfLIS_2(self, nums):
         """
         :type nums: List[int]
         :rtype: int
