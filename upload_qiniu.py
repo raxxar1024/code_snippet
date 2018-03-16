@@ -18,12 +18,38 @@ def upload_file(file_name):
     # 生成上传 Token，可以指定过期时间等
     token = q.upload_token(bucket_name, key, 3600)
     # 要上传文件的本地路径
-    localfile = './' + file_name
+    localfile = file_name
     ret, info = put_file(token, key, localfile)
     print(info)
     assert ret['key'] == key
     assert ret['hash'] == etag(localfile)
 
 
+# 生成upload文件夹的zip
+def gen_upload_zip():
+    return
+
+
+# 按时间生成的几个文件
+from datetime import datetime
+
+
+def gen_backup_name():
+    now = datetime.now()
+    prefix_name = "%04d-%02d-%02d@04_00" % (now.year, now.month, now.day)
+    return [
+               prefix_name + ".properties",
+               prefix_name + ".zip",
+               # prefix_name + "FanRuanReport.zip"
+           ], now
+
+
 if __name__ == "__main__":
-    upload_file("2018-03-14@18_08.zip")
+    lst_file_name, now = gen_backup_name()
+    for file_name in lst_file_name:
+        upload_file("D:\Seeyon\A8\Backup\%d\%d/" % (now.year, now.month) + file_name)
+
+
+        # upload_file("2018-03-16@04_00.properties")
+        # upload_file("2018-03-14@18_08.zip")
+        # upload_file("2018-03-14@18_08FanRuanReport.zip")
