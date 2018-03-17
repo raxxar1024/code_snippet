@@ -4,7 +4,7 @@ import smtplib
 from email.header import Header
 from email.mime.text import MIMEText
 
-from config import EMAIL_PWD, EMAIL_PORT, EMAIL_HOST, EMAIL_ACCOUNT, RECV_ACCOUNT, Access_Key, Secret_Key, Bucket_Name
+from config import EMAIL_PWD, EMAIL_PORT, EMAIL_HOST, EMAIL_ACCOUNT, Access_Key, Secret_Key, Bucket_Name
 
 
 def upload_file(file_name):
@@ -28,48 +28,25 @@ def upload_file(file_name):
     assert ret['hash'] == etag(localfile)
 
 
-import os, os.path
-import zipfile
-
-
-def zip_dir(dirname, zipfilename):
-    filelist = []
-    if os.path.isfile(dirname):
-        filelist.append(dirname)
-    else:
-        for root, dirs, files in os.walk(dirname):
-            for name in files:
-                filelist.append(os.path.join(root, name))
-
-    zf = zipfile.ZipFile(zipfilename, "w", zipfile.zlib.DEFLATED)
-    for tar in filelist:
-        arcname = tar[len(dirname):]
-        # print arcname
-        zf.write(tar, arcname)
-    zf.close()
-
-
-def gen_prefix():
-    now = datetime.now()
+def gen_prefix(now):
     prefix_name = "D:\Seeyon\A8\Backup\%d\%d\%04d-%02d-%02d@04_00" % (now.year, now.month, now.year, now.month, now.day)
     return prefix_name
 
 
 # 生成upload文件夹的zip
-def gen_upload_file_zip():
-    prefix_name = gen_prefix()
-    zip_dir('D:\Seeyon\A8\base\upload', prefix_name + "upload_file.zip")
-    return prefix_name + "upload_file.zip"
+def gen_upload_file_zip(now):
+    return "D:\Seeyon\A8\Backup\%04d%02d%02d_upload_file.zip" % (now.year, now.month, now.day)
 
 
 # 按时间生成的几个文件
 def gen_backup_name():
-    prefix_name = gen_prefix()
+    now = datetime.now()
+    prefix_name = gen_prefix(now)
     return [
         prefix_name + ".properties",
         prefix_name + ".zip",
         prefix_name + "FanRuanReport.zip",
-        gen_upload_file_zip()
+        gen_upload_file_zip(now)
     ]
 
 
