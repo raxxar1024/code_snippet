@@ -49,21 +49,28 @@ def zip_dir(dirname, zipfilename):
     zf.close()
 
 
+def gen_prefix():
+    now = datetime.now()
+    prefix_name = "D:\Seeyon\A8\Backup\%d\%d\%04d-%02d-%02d@04_00" % (now.year, now.month, now.year, now.month, now.day)
+    return prefix_name
+
+
 # 生成upload文件夹的zip
-def gen_upload_zip():
-    zip_dir('E:/python/learning', 'E:/python/learning/zip.zip')
-    return 'E:/python/learning/zip.zip'
+def gen_upload_file_zip():
+    prefix_name = gen_prefix()
+    zip_dir('D:\Seeyon\A8\base\upload', prefix_name + "upload_file.zip")
+    return prefix_name + "upload_file.zip"
 
 
 # 按时间生成的几个文件
 def gen_backup_name():
-    now = datetime.now()
-    prefix_name = "%04d-%02d-%02d@04_00" % (now.year, now.month, now.day)
+    prefix_name = gen_prefix()
     return [
-               prefix_name + ".properties",
-               prefix_name + ".zip",
-               # prefix_name + "FanRuanReport.zip"
-           ], now
+        prefix_name + ".properties",
+        prefix_name + ".zip",
+        prefix_name + "FanRuanReport.zip",
+        gen_upload_file_zip()
+    ]
 
 
 def send_alert_mail(sub, content, to_list):
@@ -99,8 +106,8 @@ def send_alert_mail(sub, content, to_list):
 
 if __name__ == "__main__":
     try:
-        lst_file_name, now = gen_backup_name()
+        lst_file_name = gen_backup_name()
         for file_name in lst_file_name:
-            upload_file("D:\Seeyon\A8\Backup\%d\%d/" % (now.year, now.month) + file_name)
+            upload_file(file_name)
     except:
         send_alert_mail("告警", "备份到七牛云失败", RECV_ACCOUNT)
