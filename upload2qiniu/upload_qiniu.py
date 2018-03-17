@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-
-Access_Key = "2ADNY-ZDGQLg7kO0kR76HKescEULSynwPntZotb1"
-Secret_Key = "W-72fNXMzWsGuuGVqk52nZ6Ftha89GLEeuxTMTPj"
-Bucket_Name = "upload-test"
+from datetime import datetime
+import smtplib
+from email.header import Header
+from email.mime.text import MIMEText
+
+from config import EMAIL_PWD, EMAIL_PORT, EMAIL_HOST, EMAIL_ACCOUNT, RECV_ACCOUNT, Access_Key, Secret_Key, Bucket_Name
 
 
 def upload_file(file_name):
@@ -25,9 +28,31 @@ def upload_file(file_name):
     assert ret['hash'] == etag(localfile)
 
 
+import os, os.path
+import zipfile
+
+
+def zip_dir(dirname, zipfilename):
+    filelist = []
+    if os.path.isfile(dirname):
+        filelist.append(dirname)
+    else:
+        for root, dirs, files in os.walk(dirname):
+            for name in files:
+                filelist.append(os.path.join(root, name))
+
+    zf = zipfile.ZipFile(zipfilename, "w", zipfile.zlib.DEFLATED)
+    for tar in filelist:
+        arcname = tar[len(dirname):]
+        # print arcname
+        zf.write(tar, arcname)
+    zf.close()
+
+
 # 生成upload文件夹的zip
 def gen_upload_zip():
-    return
+    zip_dir('E:/python/learning', 'E:/python/learning/zip.zip')
+    return 'E:/python/learning/zip.zip'
 
 
 # 按时间生成的几个文件
@@ -39,14 +64,6 @@ def gen_backup_name():
                prefix_name + ".zip",
                # prefix_name + "FanRuanReport.zip"
            ], now
-
-
-from datetime import datetime
-import smtplib
-from email.header import Header
-from email.mime.text import MIMEText
-
-from config import EMAIL_PWD, EMAIL_PORT, EMAIL_HOST, EMAIL_ACCOUNT
 
 
 def send_alert_mail(sub, content, to_list):
@@ -86,10 +103,4 @@ if __name__ == "__main__":
         for file_name in lst_file_name:
             upload_file("D:\Seeyon\A8\Backup\%d\%d/" % (now.year, now.month) + file_name)
     except:
-        send_alert_mail()
-
-
-
-        # upload_file("2018-03-16@04_00.properties")
-        # upload_file("2018-03-14@18_08.zip")
-        # upload_file("2018-03-14@18_08FanRuanReport.zip")
+        send_alert_mail("告警", "备份到七牛云失败", RECV_ACCOUNT)
