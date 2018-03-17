@@ -31,9 +31,6 @@ def gen_upload_zip():
 
 
 # 按时间生成的几个文件
-from datetime import datetime
-
-
 def gen_backup_name():
     now = datetime.now()
     prefix_name = "%04d-%02d-%02d@04_00" % (now.year, now.month, now.day)
@@ -44,10 +41,53 @@ def gen_backup_name():
            ], now
 
 
+from datetime import datetime
+import smtplib
+from email.header import Header
+from email.mime.text import MIMEText
+
+from config import EMAIL_PWD, EMAIL_PORT, EMAIL_HOST, EMAIL_ACCOUNT
+
+
+def send_alert_mail(sub, content, to_list):
+    # Create SMTP Object
+    smtp = smtplib.SMTP()
+    print 'connecting ...'
+
+    # show the debug log
+    smtp.set_debuglevel(1)
+
+    # connet
+    try:
+        print smtp.connect(EMAIL_HOST, EMAIL_PORT)
+    except:
+        print 'CONNECT ERROR ****'
+    # gmail uses ssl
+    smtp.starttls()
+    # login with username & password
+    try:
+        print 'loginning ...'
+        smtp.login(EMAIL_ACCOUNT, EMAIL_PWD)
+    except:
+        print 'LOGIN ERROR ****'
+    # fill content with MIMEText's object
+    msg = MIMEText(content, 'plain', 'utf-8')
+    msg['From'] = '%s <%s>' % (EMAIL_ACCOUNT, EMAIL_ACCOUNT)
+    msg['To'] = '%s <%s>' % (to_list, to_list)
+    msg['Subject'] = Header(sub, 'utf8').encode()
+    print msg.as_string()
+    smtp.sendmail(EMAIL_ACCOUNT, to_list, msg.as_string())
+    smtp.quit()
+
+
 if __name__ == "__main__":
-    lst_file_name, now = gen_backup_name()
-    for file_name in lst_file_name:
-        upload_file("D:\Seeyon\A8\Backup\%d\%d/" % (now.year, now.month) + file_name)
+    try:
+        lst_file_name, now = gen_backup_name()
+        for file_name in lst_file_name:
+            upload_file("D:\Seeyon\A8\Backup\%d\%d/" % (now.year, now.month) + file_name)
+    except:
+        send_alert_mail()
+
 
 
         # upload_file("2018-03-16@04_00.properties")
