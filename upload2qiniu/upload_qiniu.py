@@ -4,7 +4,7 @@ import smtplib
 from email.header import Header
 from email.mime.text import MIMEText
 
-from config import EMAIL_PWD, EMAIL_PORT, EMAIL_HOST, EMAIL_ACCOUNT, Access_Key, Secret_Key, Bucket_Name
+from config import EMAIL_PWD, EMAIL_PORT, EMAIL_HOST, EMAIL_ACCOUNT, RECV_ACCOUNT, Access_Key, Secret_Key, Bucket_Name
 
 
 def upload_file(file_name):
