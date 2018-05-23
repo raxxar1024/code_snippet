@@ -72,12 +72,21 @@ def getFileCRC(_path, block_size):
     read_data = f.read(block_size)
     f.close()
     read_data_arr = [ord(c) for c in read_data]
+    a = sum(read_data_arr)
     print hex(CalcCRC(read_data_arr, block_size))
     return hex(CalcCRC(read_data_arr, block_size))
 
 
+def get_checksum(_path, block_size):
+    f = open(_path, "rb")
+    read_data = f.read(block_size)
+    f.close()
+    read_data_arr = [ord(c) for c in read_data]
+    return sum(read_data_arr)
+
+
 if __name__ == "__main__":
-    getFileCRC("R000", 20)
+    getFileCRC("R000", 0x4060)
     # WriteFileData = open('1.dat', 'wb')
     #
     # FileType = 0x8000
