@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-
 from socket import *
+import struct
+from datetime import datetime
+import time
 
 HOST = '192.168.1.92'
 PORT = 5005
@@ -17,17 +20,11 @@ def send_cmd(cmd):
 
         if not data:
             break
-        print " ".join(["%02x" % (ord(x)) for x in data])
-        print data
+
+        print "%s: " % datetime.now() + " ".join(["%02x" % (ord(_)) for _ in data])
+        time.sleep(1)
     tcpCliSock.close()
 
-
-# A5 A5 A5 A5 A5 A5 A5 A5
-# fe ff 00 80 f0 00 fe ff 00 00 00 00 0E 00 00 00
-# 01 a9 01 00 00 50 30 30 30 00 00 01 00 01
-# 3C 65
-# 5a
-import struct
 
 table = [
     0X0000, 0XC0C1, 0XC181, 0X0140, 0XC301, 0X03C0, 0X0280, 0XC241,
@@ -78,26 +75,35 @@ def CalcCRC(data, size):
 
 
 if __name__ == "__main__":
+    Reserved = 0x0
+
+    DstAddr = 0xFFFE
+    SrcAddr = 0x8000
+    ProtocolVer = 0xf0
+    DeviceType = 0x0666
+    DataLen = 0xe
+
     RtnReq = 0x01
     CmdGroup = 0xA9
     Cmd = 0x01
-    Reserved = 0x0
     BlockName = "R001"
-    VariableBlockLoc = 0x8000
-    BlockContNum = 0x8000
+    VariableBlockLoc = 0x0
+    BlockContNum = 0x01
     Status = 0x1
 
-    part_1 = struct.pack("HHBBHIIBBBBB4sBBBBB", 0xfffe, 0x8000, 0xf0, 0x00, 0x666, 0x0, 0x0e,
+    part_1 = struct.pack("2H2BH2I3B2B4sBBBBB",
+                         DstAddr, SrcAddr, ProtocolVer, Reserved, DeviceType, Reserved, DataLen,
                          RtnReq, CmdGroup, Cmd, Reserved, Reserved,
-                         BlockName, 0x00, 0x00, 0x01, 0x00, Status)
+                         BlockName, VariableBlockLoc, 0, BlockContNum, 0, Status)
     print " ".join([hex(ord(x)) for x in part_1])
 
     crc = CalcCRC(part_1, len(part_1))
     print hex(crc)
 
-    cmd = struct.pack("QHHBBHIIBBBBB4sBBBBBHB", 0xA5A5A5A5A5A5A5A5, 0xfffe, 0x8000, 0xf0, 0x00, 0x666, 0x0, 0x0e,
+    cmd = struct.pack("Q2H2BH2I3B2B4sBBBBBHB", 0xA5A5A5A5A5A5A5A5,
+                      DstAddr, SrcAddr, ProtocolVer, Reserved, DeviceType, Reserved, DataLen,
                       RtnReq, CmdGroup, Cmd, Reserved, Reserved,
-                      BlockName, 0x00, 0x00, 0x01, 0x00, Status,
+                      BlockName, VariableBlockLoc, 0, BlockContNum, 0, Status,
                       crc, 0x5a)
     print " ".join(["%02x" % (ord(x)) for x in cmd])
     send_cmd(cmd)
