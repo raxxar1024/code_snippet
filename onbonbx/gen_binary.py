@@ -135,10 +135,10 @@ if __name__ == "__main__":
     file_name = 'R001'
     gen_file_1st(file_name)
 
-    check_sum = get_checksum(file_name, 0xc090) & 0xffff
+    check_sum = get_checksum(file_name, 0xc090) & 0xffffffff
     crc = getFileCRC(file_name, 0xc090)
 
     WriteFileData = open(file_name, 'a')
-    WriteFileData.write(struct.pack("H", check_sum))
+    WriteFileData.write(struct.pack("I", check_sum))
     # WriteFileData.write(struct.pack("H", crc))
     WriteFileData.close()
