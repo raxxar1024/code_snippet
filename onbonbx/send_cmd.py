@@ -14,8 +14,10 @@ def send_cmd(cmd):
     while True:
         tcpCliSock.send(cmd)
         data = tcpCliSock.recv(BUFSIZE)
+
         if not data:
             break
+        print " ".join(["%02x" % (ord(x)) for x in data])
         print data
     tcpCliSock.close()
 
@@ -80,21 +82,20 @@ if __name__ == "__main__":
     CmdGroup = 0xA9
     Cmd = 0x01
     Reserved = 0x0
-    BlockName = "P0000"
+    BlockName = "R001"
     VariableBlockLoc = 0x8000
     BlockContNum = 0x8000
     Status = 0x1
 
-    part_1 = struct.pack("QHHBBHIIBBBBB4sBBBBB", 0xA5A5A5A5A5A5A5A5, 0xfffe, 0x8000, 0xf0, 0x00, 0xfffe, 0x0, 0x0e,
+    part_1 = struct.pack("HHBBHIIBBBBB4sBBBBB", 0xfffe, 0x8000, 0xf0, 0x00, 0x666, 0x0, 0x0e,
                          RtnReq, CmdGroup, Cmd, Reserved, Reserved,
                          BlockName, 0x00, 0x00, 0x01, 0x00, Status)
     print " ".join([hex(ord(x)) for x in part_1])
 
-    # crc = CalcCRC(part_1, len(part_1))
-    crc = 0x653C
+    crc = CalcCRC(part_1, len(part_1))
     print hex(crc)
 
-    cmd = struct.pack("QHHBBHIIBBBBB4sBBBBBHB", 0xA5A5A5A5A5A5A5A5, 0xfffe, 0x8000, 0xf0, 0x00, 0xfffe, 0x0, 0x0e,
+    cmd = struct.pack("QHHBBHIIBBBBB4sBBBBBHB", 0xA5A5A5A5A5A5A5A5, 0xfffe, 0x8000, 0xf0, 0x00, 0x666, 0x0, 0x0e,
                       RtnReq, CmdGroup, Cmd, Reserved, Reserved,
                       BlockName, 0x00, 0x00, 0x01, 0x00, Status,
                       crc, 0x5a)
