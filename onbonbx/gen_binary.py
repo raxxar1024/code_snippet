@@ -86,44 +86,53 @@ def get_checksum(_path, block_size):
 
 
 if __name__ == "__main__":
-    getFileCRC("R000", 0x4060)
-    # WriteFileData = open('1.dat', 'wb')
-    #
-    # FileType = 0x8000
-    # WriteFileData.write(struct.pack("H", FileType))
-    #
-    # Version = 0x10
-    # WriteFileData.write(struct.pack("B", Version))
-    #
-    # Reserved = 0x00
-    # for i in xrange(61):
-    #     WriteFileData.write(struct.pack("B", Reserved))
-    #
-    # PreviewWidth = 128
-    # WriteFileData.write(struct.pack("H", PreviewWidth))
-    #
-    # PreviewHeight = 96
-    # WriteFileData.write(struct.pack("H", PreviewHeight))
-    #
-    # BlockCount = 0x00
-    # WriteFileData.write(struct.pack("H", BlockCount))
-    #
-    # Reserved = 0x00
-    # for i in xrange(10 + 48):
-    #     WriteFileData.write(struct.pack("B", Reserved))
-    #
-    # Block0_PixCount = 0x01
-    # WriteFileData.write(struct.pack("H", Block0_PixCount))
-    #
-    # DefaultColor_R = 0xff
-    # WriteFileData.write(struct.pack("B", DefaultColor_R))
-    # DefaultColor_G = 0x00
-    # WriteFileData.write(struct.pack("B", DefaultColor_G))
-    # DefaultColor_B = 0x00
-    # WriteFileData.write(struct.pack("B", DefaultColor_B))
-    #
-    # Reserved = 0x00
-    # for i in xrange(11):
-    #     WriteFileData.write(struct.pack("B", Reserved))
-    #
-    # WriteFileData.close()
+    # getFileCRC("R000", 0x4060)
+    import struct
+    file_name = '1.dat'
+    WriteFileData = open(file_name, 'wb')
+
+    FileType = 0x8000
+    WriteFileData.write(struct.pack("H", FileType))
+
+    Version = 0x10
+    WriteFileData.write(struct.pack("B", Version))
+
+    Reserved = 0x00
+    for i in xrange(61):
+        WriteFileData.write(struct.pack("B", Reserved))
+
+    PreviewWidth = 128
+    WriteFileData.write(struct.pack("H", PreviewWidth))
+
+    PreviewHeight = 96
+    WriteFileData.write(struct.pack("H", PreviewHeight))
+
+    BlockCount = 0x1
+    WriteFileData.write(struct.pack("H", BlockCount))
+
+    Reserved = 0x00
+    for i in xrange(10 + 48):
+        WriteFileData.write(struct.pack("B", Reserved))
+
+    Block0_PixCount = PreviewWidth*PreviewHeight
+    WriteFileData.write(struct.pack("H", Block0_PixCount))
+
+    DefaultColor_R = 0xff
+    WriteFileData.write(struct.pack("B", DefaultColor_R))
+    DefaultColor_G = 0x00
+    WriteFileData.write(struct.pack("B", DefaultColor_G))
+    DefaultColor_B = 0x00
+    WriteFileData.write(struct.pack("B", DefaultColor_B))
+
+    Reserved = 0x00
+    for i in xrange(11):
+        WriteFileData.write(struct.pack("B", Reserved))
+
+    for i in xrange(PreviewHeight):
+        for j in xrange(PreviewWidth):
+            WriteFileData.write(struct.pack("H", j))
+            WriteFileData.write(struct.pack("H", i))
+
+    check_sum = get_checksum(file_name, 0xc090) & 0xffff
+    WriteFileData.write(struct.pack("H", check_sum))
+    WriteFileData.close()
