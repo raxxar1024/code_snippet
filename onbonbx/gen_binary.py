@@ -18,6 +18,7 @@
 
 
 
+import struct
 
 table = [
     0X0000, 0XC0C1, 0XC181, 0X0140, 0XC301, 0X03C0, 0X0280, 0XC241,
@@ -72,9 +73,7 @@ def getFileCRC(_path, block_size):
     read_data = f.read(block_size)
     f.close()
     read_data_arr = [ord(c) for c in read_data]
-    a = sum(read_data_arr)
-    print hex(CalcCRC(read_data_arr, block_size))
-    return hex(CalcCRC(read_data_arr, block_size))
+    return CalcCRC(read_data_arr, block_size)
 
 
 def get_checksum(_path, block_size):
@@ -85,10 +84,7 @@ def get_checksum(_path, block_size):
     return sum(read_data_arr)
 
 
-if __name__ == "__main__":
-    # getFileCRC("R000", 0x4060)
-    import struct
-    file_name = '1.dat'
+def gen_file_1st(file_name):
     WriteFileData = open(file_name, 'wb')
 
     FileType = 0x8000
@@ -114,7 +110,7 @@ if __name__ == "__main__":
     for i in xrange(10 + 48):
         WriteFileData.write(struct.pack("B", Reserved))
 
-    Block0_PixCount = PreviewWidth*PreviewHeight
+    Block0_PixCount = PreviewWidth * PreviewHeight
     WriteFileData.write(struct.pack("H", Block0_PixCount))
 
     DefaultColor_R = 0xff
@@ -132,7 +128,17 @@ if __name__ == "__main__":
         for j in xrange(PreviewWidth):
             WriteFileData.write(struct.pack("H", j))
             WriteFileData.write(struct.pack("H", i))
+    WriteFileData.close()
+
+
+if __name__ == "__main__":
+    file_name = 'R001'
+    gen_file_1st(file_name)
 
     check_sum = get_checksum(file_name, 0xc090) & 0xffff
+    crc = getFileCRC(file_name, 0xc090)
+
+    WriteFileData = open(file_name, 'a')
     WriteFileData.write(struct.pack("H", check_sum))
+    # WriteFileData.write(struct.pack("H", crc))
     WriteFileData.close()

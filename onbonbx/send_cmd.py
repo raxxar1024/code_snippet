@@ -28,6 +28,6 @@ if __name__ == "__main__":
     BlockUnit = 0x1
     import struct
 
-    cmd = struct.pack(">BBBHH", RtnReq, CmdGroup, Cmd, Reserved, BlockUnit)
+    cmd = struct.pack(">BBBHB", RtnReq, CmdGroup, Cmd, Reserved, BlockUnit)
     print " ".join([hex(ord(x)) for x in cmd])
     send_cmd(cmd)
