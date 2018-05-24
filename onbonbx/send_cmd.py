@@ -17,11 +17,9 @@ def send_cmd(cmd):
     while True:
         tcpCliSock.send(cmd)
         data = tcpCliSock.recv(BUFSIZE)
-
         if data:
             print "%s: " % datetime.now() + " ".join(["%02x" % (ord(_)) for _ in data])
             break
-
         time.sleep(1)
     tcpCliSock.close()
 
@@ -74,55 +72,33 @@ def CalcCRC(data, size):
     return crc
 
 
-if __name__ == "__main__":
+def gen_cmd_0(r_file_name):
     Reserved = 0x0
 
     DstAddr = 0xFFFE
     SrcAddr = 0x8000
     ProtocolVer = 0xf0
     DeviceType = 0x0666
-    DataLen = 0xe
+    DataLen = 0x15
 
     RtnReq = 0x01
     CmdGroup = 0xA9
-    Cmd = 0x01
-    BlockName = "R001"
-    VariableBlockLoc = 0x0
-    BlockContNum = 0x01
-    Status = 0x1
+    Cmd = 0x00
 
-    # part_1 = struct.pack("2H2BH2I3B2B4sBBBBB",
-    #                      DstAddr, SrcAddr, ProtocolVer, Reserved, DeviceType, Reserved, DataLen,
-    #                      RtnReq, CmdGroup, Cmd, Reserved, Reserved,
-    #                      BlockName, VariableBlockLoc, 0, BlockContNum, 0, Status)
-    # print " ".join([hex(ord(x)) for x in part_1])
-    #
-    # crc = CalcCRC(part_1, len(part_1))
-    # print hex(crc)
-    #
-    # cmd = struct.pack("Q2H2BH2I3B2B4sBBBBBHB", 0xA5A5A5A5A5A5A5A5,
-    #                   DstAddr, SrcAddr, ProtocolVer, Reserved, DeviceType, Reserved, DataLen,
-    #                   RtnReq, CmdGroup, Cmd, Reserved, Reserved,
-    #                   BlockName, VariableBlockLoc, 0, BlockContNum, 0, Status,
-    #                   crc, 0x5a)
-    #
-    # print " ".join(["%02x" % (ord(x)) for x in cmd])
-    # send_cmd(cmd)
+    play_mode = 0x1
+    data_len_2 = 0xd
 
-    DeviceType = 0xfffe
-    DataLen = 0x15
-    Cmd = 0x0
-    BlockName = "R001"
+    BlockName = r_file_name
     BlockX = 0x0
     BlockY = 0x0
     BlockWidth = 0x100
     BlockHeight = 0x40
     BlockStayTime = 0xff
 
-    part_1 = struct.pack("2H2BH2I3B2BBH4sHHHHB",
+    part_1 = struct.pack("<2H2BH2I3BHBH4s4HB",
                          DstAddr, SrcAddr, ProtocolVer, Reserved, DeviceType, Reserved, DataLen,
-                         RtnReq, CmdGroup, Cmd, Reserved, Reserved,
-                         0x1, 0xd,
+                         RtnReq, CmdGroup, Cmd, Reserved,
+                         play_mode, data_len_2,
                          BlockName, BlockX, BlockY, BlockWidth, BlockHeight, BlockStayTime
                          )
     print " ".join(["%02x" % (ord(x)) for x in part_1])
@@ -130,12 +106,53 @@ if __name__ == "__main__":
     crc = CalcCRC(part_1, len(part_1))
     print hex(crc)
 
-    cmd = struct.pack("<Q2H2BH2I3B2BBH4sHHHHBHB", 0xA5A5A5A5A5A5A5A5,
+    cmd = struct.pack("<Q2H2BH2I3BHBH4s4HBHB", 0xA5A5A5A5A5A5A5A5,
                       DstAddr, SrcAddr, ProtocolVer, Reserved, DeviceType, Reserved, DataLen,
-                      RtnReq, CmdGroup, Cmd, Reserved, Reserved,
-                      0x1, 0xd,
+                      RtnReq, CmdGroup, Cmd, Reserved,
+                      play_mode, data_len_2,
                       BlockName, BlockX, BlockY, BlockWidth, BlockHeight, BlockStayTime,
                       crc, 0x5a)
 
     print " ".join(["%02x" % (ord(x)) for x in cmd])
-    send_cmd(cmd)
+    return cmd
+
+
+# def gen_cmd_1(r_file_name):
+#     Reserved = 0x0
+#
+#     DstAddr = 0xFFFE
+#     SrcAddr = 0x8000
+#     ProtocolVer = 0xf0
+#     DeviceType = 0x0666
+#     DataLen = 0xe
+#
+#     RtnReq = 0x01
+#     CmdGroup = 0xA9
+#     Cmd = 0x01
+#     BlockName = r_file_name
+#     VariableBlockLoc = 0x0
+#     BlockContNum = 0x01
+#     Status = 0x1
+#
+#     part_1 = struct.pack("<2H2BH2I3BH4s2HB",
+#                          DstAddr, SrcAddr, ProtocolVer, Reserved, DeviceType, Reserved, DataLen,
+#                          RtnReq, CmdGroup, Cmd, Reserved,
+#                          BlockName, VariableBlockLoc, BlockContNum, Status)
+#     print " ".join([hex(ord(x)) for x in part_1])
+#
+#     crc = CalcCRC(part_1, len(part_1))
+#     print hex(crc)
+#
+#     cmd = struct.pack("<Q2H2BH2I3BH4s2HBHB", 0xA5A5A5A5A5A5A5A5,
+#                       DstAddr, SrcAddr, ProtocolVer, Reserved, DeviceType, Reserved, DataLen,
+#                       RtnReq, CmdGroup, Cmd, Reserved,
+#                       BlockName, VariableBlockLoc, BlockContNum, Status,
+#                       crc, 0x5a)
+#
+#     print " ".join(["%02x" % (ord(x)) for x in cmd])
+#     return cmd
+
+
+if __name__ == "__main__":
+    # send_cmd(gen_cmd_0("R001"))
+    send_cmd(gen_cmd_0("R002"))
