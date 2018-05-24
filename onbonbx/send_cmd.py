@@ -18,10 +18,10 @@ def send_cmd(cmd):
         tcpCliSock.send(cmd)
         data = tcpCliSock.recv(BUFSIZE)
 
-        if not data:
+        if data:
+            print "%s: " % datetime.now() + " ".join(["%02x" % (ord(_)) for _ in data])
             break
 
-        print "%s: " % datetime.now() + " ".join(["%02x" % (ord(_)) for _ in data])
         time.sleep(1)
     tcpCliSock.close()
 
@@ -91,19 +91,51 @@ if __name__ == "__main__":
     BlockContNum = 0x01
     Status = 0x1
 
-    part_1 = struct.pack("2H2BH2I3B2B4sBBBBB",
+    # part_1 = struct.pack("2H2BH2I3B2B4sBBBBB",
+    #                      DstAddr, SrcAddr, ProtocolVer, Reserved, DeviceType, Reserved, DataLen,
+    #                      RtnReq, CmdGroup, Cmd, Reserved, Reserved,
+    #                      BlockName, VariableBlockLoc, 0, BlockContNum, 0, Status)
+    # print " ".join([hex(ord(x)) for x in part_1])
+    #
+    # crc = CalcCRC(part_1, len(part_1))
+    # print hex(crc)
+    #
+    # cmd = struct.pack("Q2H2BH2I3B2B4sBBBBBHB", 0xA5A5A5A5A5A5A5A5,
+    #                   DstAddr, SrcAddr, ProtocolVer, Reserved, DeviceType, Reserved, DataLen,
+    #                   RtnReq, CmdGroup, Cmd, Reserved, Reserved,
+    #                   BlockName, VariableBlockLoc, 0, BlockContNum, 0, Status,
+    #                   crc, 0x5a)
+    #
+    # print " ".join(["%02x" % (ord(x)) for x in cmd])
+    # send_cmd(cmd)
+
+    DeviceType = 0xfffe
+    DataLen = 0x15
+    Cmd = 0x0
+    BlockName = "R001"
+    BlockX = 0x0
+    BlockY = 0x0
+    BlockWidth = 0x100
+    BlockHeight = 0x40
+    BlockStayTime = 0xff
+
+    part_1 = struct.pack("2H2BH2I3B2BBH4sHHHHB",
                          DstAddr, SrcAddr, ProtocolVer, Reserved, DeviceType, Reserved, DataLen,
                          RtnReq, CmdGroup, Cmd, Reserved, Reserved,
-                         BlockName, VariableBlockLoc, 0, BlockContNum, 0, Status)
-    print " ".join([hex(ord(x)) for x in part_1])
+                         0x1, 0xd,
+                         BlockName, BlockX, BlockY, BlockWidth, BlockHeight, BlockStayTime
+                         )
+    print " ".join(["%02x" % (ord(x)) for x in part_1])
 
     crc = CalcCRC(part_1, len(part_1))
     print hex(crc)
 
-    cmd = struct.pack("Q2H2BH2I3B2B4sBBBBBHB", 0xA5A5A5A5A5A5A5A5,
+    cmd = struct.pack("<Q2H2BH2I3B2BBH4sHHHHBHB", 0xA5A5A5A5A5A5A5A5,
                       DstAddr, SrcAddr, ProtocolVer, Reserved, DeviceType, Reserved, DataLen,
                       RtnReq, CmdGroup, Cmd, Reserved, Reserved,
-                      BlockName, VariableBlockLoc, 0, BlockContNum, 0, Status,
+                      0x1, 0xd,
+                      BlockName, BlockX, BlockY, BlockWidth, BlockHeight, BlockStayTime,
                       crc, 0x5a)
+
     print " ".join(["%02x" % (ord(x)) for x in cmd])
     send_cmd(cmd)
