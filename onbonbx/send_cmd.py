@@ -72,7 +72,7 @@ def CalcCRC(data, size):
     return crc
 
 
-def gen_cmd_0(r_file_name):
+def gen_cmd_0(r_file_name, BlockX, BlockY, BlockWidth, BlockHeight):
     Reserved = 0x0
 
     DstAddr = 0xFFFE
@@ -89,10 +89,10 @@ def gen_cmd_0(r_file_name):
     data_len_2 = 0xd
 
     BlockName = r_file_name
-    BlockX = 0x0
-    BlockY = 0x0
-    BlockWidth = 0x100
-    BlockHeight = 0x40
+    BlockX = BlockX
+    BlockY = BlockY
+    BlockWidth = BlockWidth
+    BlockHeight = BlockHeight
     BlockStayTime = 0xff
 
     part_1 = struct.pack("<2H2BH2I3BHBH4s4HB",
@@ -154,5 +154,11 @@ def gen_cmd_0(r_file_name):
 
 
 if __name__ == "__main__":
-    # send_cmd(gen_cmd_0("R001"))
-    send_cmd(gen_cmd_0("R002"))
+    send_cmd(gen_cmd_0("R003", 0, 0, 128, 96))
+    time.sleep(1)
+    send_cmd(gen_cmd_0("R004", 0, 0, 128, 96))
+    time.sleep(1)
+    send_cmd(gen_cmd_0("R005", 0, 0, 128, 96))
+    time.sleep(1)
+    send_cmd(gen_cmd_0("R006", 0, 0, 128, 96))
+    time.sleep(1)
