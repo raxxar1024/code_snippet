@@ -84,7 +84,7 @@ def get_checksum(_path, block_size):
     return sum(read_data_arr)
 
 
-def gen_file_1st(file_name):
+def gen_file_1st(file_name, R_color, G_color, B_color):
     WriteFileData = open(file_name, 'wb')
 
     FileType = 0x8000
@@ -113,11 +113,11 @@ def gen_file_1st(file_name):
     Block0_PixCount = PreviewWidth * PreviewHeight
     WriteFileData.write(struct.pack("H", Block0_PixCount))
 
-    DefaultColor_R = 0xff
+    DefaultColor_R = R_color
     WriteFileData.write(struct.pack("B", DefaultColor_R))
-    DefaultColor_G = 0x00
+    DefaultColor_G = G_color
     WriteFileData.write(struct.pack("B", DefaultColor_G))
-    DefaultColor_B = 0x00
+    DefaultColor_B = B_color
     WriteFileData.write(struct.pack("B", DefaultColor_B))
 
     Reserved = 0x00
@@ -133,12 +133,21 @@ def gen_file_1st(file_name):
 
 if __name__ == "__main__":
     file_name = 'R001'
-    gen_file_1st(file_name)
+    gen_file_1st(file_name, R_color=0xff, G_color=0x00, B_color=0x00)
 
     check_sum = get_checksum(file_name, 0xc090) & 0xffffffff
     crc = getFileCRC(file_name, 0xc090)
 
     WriteFileData = open(file_name, 'a')
     WriteFileData.write(struct.pack("I", check_sum))
-    # WriteFileData.write(struct.pack("H", crc))
+    WriteFileData.close()
+
+    file_name = 'R002'
+    gen_file_1st(file_name, R_color=0x00, G_color=0xff, B_color=0x00)
+
+    check_sum = get_checksum(file_name, 0xc090) & 0xffffffff
+    crc = getFileCRC(file_name, 0xc090)
+
+    WriteFileData = open(file_name, 'a')
+    WriteFileData.write(struct.pack("I", check_sum))
     WriteFileData.close()
