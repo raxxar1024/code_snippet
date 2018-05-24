@@ -84,7 +84,7 @@ def get_checksum(_path, block_size):
     return sum(read_data_arr)
 
 
-def gen_file_1st(file_name, R_color, G_color, B_color):
+def gen_file_1st(file_name, dict_para):
     WriteFileData = open(file_name, 'wb')
 
     FileType = 0x8000
@@ -110,44 +110,73 @@ def gen_file_1st(file_name, R_color, G_color, B_color):
     for i in xrange(10 + 48):
         WriteFileData.write(struct.pack("B", Reserved))
 
-    Block0_PixCount = PreviewWidth * PreviewHeight
+    Block0_PixCount = dict_para["w"] * dict_para["h"]
     WriteFileData.write(struct.pack("H", Block0_PixCount))
 
-    DefaultColor_R = R_color
+    DefaultColor_R = dict_para["r"]
     WriteFileData.write(struct.pack("B", DefaultColor_R))
-    DefaultColor_G = G_color
+    DefaultColor_G = dict_para["g"]
     WriteFileData.write(struct.pack("B", DefaultColor_G))
-    DefaultColor_B = B_color
+    DefaultColor_B = dict_para["b"]
     WriteFileData.write(struct.pack("B", DefaultColor_B))
 
     Reserved = 0x00
     for i in xrange(11):
         WriteFileData.write(struct.pack("B", Reserved))
 
-    for i in xrange(PreviewHeight):
-        for j in xrange(PreviewWidth):
+    for i in xrange(dict_para["y"], dict_para["y"] + dict_para["h"]):
+        for j in xrange(dict_para["x"], dict_para["x"] + dict_para["w"]):
             WriteFileData.write(struct.pack("H", j))
             WriteFileData.write(struct.pack("H", i))
+
+    WriteFileData.close()
+
+
+def gen_file(file_name, dict_para):
+    gen_file_1st(file_name, dict_para)
+    file_size = os.path.getsize(file_name)
+    check_sum = get_checksum(file_name, file_size) & 0xffffffff
+
+    WriteFileData = open(file_name, 'a')
+    WriteFileData.write(struct.pack("I", check_sum))
     WriteFileData.close()
 
 
 if __name__ == "__main__":
-    file_name = 'R001'
-    gen_file_1st(file_name, R_color=0xff, G_color=0x00, B_color=0x00)
+    # file_name = 'R001'
+    # gen_file_1st(file_name, R_color=0xff, G_color=0x00, B_color=0x00)
+    #
+    # check_sum = get_checksum(file_name, 0xc090) & 0xffffffff
+    # crc = getFileCRC(file_name, 0xc090)
+    #
+    # WriteFileData = open(file_name, 'a')
+    # WriteFileData.write(struct.pack("I", check_sum))
+    # WriteFileData.close()
+    #
+    # file_name = 'R002'
+    # gen_file_1st(file_name, R_color=0x00, G_color=0xff, B_color=0x00)
+    #
+    # check_sum = get_checksum(file_name, 0xc090) & 0xffffffff
+    # crc = getFileCRC(file_name, 0xc090)
+    #
+    # WriteFileData = open(file_name, 'a')
+    # WriteFileData.write(struct.pack("I", check_sum))
+    # WriteFileData.close()
+    import os
 
-    check_sum = get_checksum(file_name, 0xc090) & 0xffffffff
-    crc = getFileCRC(file_name, 0xc090)
-
-    WriteFileData = open(file_name, 'a')
-    WriteFileData.write(struct.pack("I", check_sum))
-    WriteFileData.close()
-
-    file_name = 'R002'
-    gen_file_1st(file_name, R_color=0x00, G_color=0xff, B_color=0x00)
-
-    check_sum = get_checksum(file_name, 0xc090) & 0xffffffff
-    crc = getFileCRC(file_name, 0xc090)
-
-    WriteFileData = open(file_name, 'a')
-    WriteFileData.write(struct.pack("I", check_sum))
-    WriteFileData.close()
+    dict_para = {
+        "x": 112, "y": 0, "w": 8, "h": 96, "r": 0xff, "g": 0x00, "b": 0x00
+    }
+    gen_file('R003', dict_para)
+    dict_para = {
+        "x": 112, "y": 0, "w": 8, "h": 96, "r": 0x00, "g": 0xff, "b": 0x00
+    }
+    gen_file('R004', dict_para)
+    dict_para = {
+        "x": 120, "y": 0, "w": 8, "h": 96, "r": 0xff, "g": 0x00, "b": 0x00
+    }
+    gen_file('R005', dict_para)
+    dict_para = {
+        "x": 120, "y": 0, "w": 8, "h": 96, "r": 0x00, "g": 0xff, "b": 0x00
+    }
+    gen_file('R006', dict_para)
